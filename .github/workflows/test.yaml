@@ -15,6 +15,7 @@ jobs:
           uses: actions/checkout@v4
           with:
             repository: maxxam123/n8n-inbox
+            path: abc
 
       
         - uses: actions/checkout@v3

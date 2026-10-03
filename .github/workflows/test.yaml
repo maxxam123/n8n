@@ -13,23 +13,21 @@ jobs:
         - uses: actions/checkout@v3
         - name: main pipeline
           run: |
-             git clone https://github.com/maxxam123/n8n-inbox.git
-             ls -la
-             mkdir -p n8n-inbox/test
-             touch n8n-inbox/test/test.txt
-             ls n8n-inbox
-            
+            mkdir repo2
+            echo test
+            ls -la
+            pwd
+            cd repo2
 
-
-        - name: Pushes to another repository
-          uses: cpina/github-action-push-to-another-repository@main
-          env:
-            API_TOKEN_GITHUB: ${{ secrets.CROSS_2 }}
+        - name: Checkout a public repo
+          uses: actions/checkout@v4
           with:
-            source-directory: "n8n-inbox"
-            destination-github-username: "maxxam123"
-            destination-repository-name: "n8n-inbox"
-            user-email: hennighausenmax@gmail.com
-            target-branch: main
+            repository: maxxam123/n8n-inbox
 
+        - name: whats in
+          run: |
+            echo new
+            pwd
+            ls -la
 
+           

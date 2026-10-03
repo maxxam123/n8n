@@ -29,5 +29,7 @@ jobs:
         - name: main pipeline2
           run: |
             ls -la
+            cp -r abc ten
+            ls -la ten
             
            

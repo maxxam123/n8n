@@ -13,24 +13,8 @@ jobs:
         - uses: actions/checkout@v3
         - name: main pipeline
           run: |
-            mkdir repo2
-            echo test
-            ls -la
-            pwd
-            cd repo2
-
-        - name: Checkout a public repo
-          uses: actions/checkout@v4
-          with:
-            repository: maxxam123/n8n-inbox
-            path: ten
-
-        - name: whats in
-          run: |
-            echo new
-            pwd
-            ls -la
-            touch onetwo
+            mkdir ten
+            touch ten/ten.txt
 
         - name: Pushes to another repository
           uses: cpina/github-action-push-to-another-repository@main

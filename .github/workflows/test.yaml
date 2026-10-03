@@ -27,6 +27,6 @@ jobs:
           run: |
             echo new
             ls -la
-            cp abc/* test
+            cp -r abc/* test
             ls -la test
 

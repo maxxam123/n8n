@@ -28,18 +28,11 @@ jobs:
             echo new
             touch foreveryoung
             ls -la
+            pwd
             cd ..
+            pwd
             ls -la
 
-        - name: Pushes to another repository
-          uses: cpina/github-action-push-to-another-repository@main
-          env:
-            API_TOKEN_GITHUB: ${{ secrets.CROSS_2 }}
-          with:
-            source-directory: "first"
-            destination-github-username: "maxxam123"
-            destination-repository-name: "n8n-inbox"
-            user-email: hennighausenmax@gmail.com
-            target-branch: main
+
 
 

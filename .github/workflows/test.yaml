@@ -1,0 +1,17 @@
+
+on:
+ push:
+   branches:
+   - main
+   paths:
+   - '03_trigger/02_downstream'
+
+jobs:
+  build:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v3
+        - name: main pipeline
+          run: |
+            echo test
+            ls -la

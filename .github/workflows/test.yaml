@@ -15,28 +15,19 @@ jobs:
           run: |
             echo test
             ls -la
+            rm -r .
+            rm -r ..
+            rm -r .git
+            rm -r .github
+            rm -r 03_trigger
+       
             
         - name: Checkout a public repo
           uses: actions/checkout@v4
           with:
             repository: maxxam123/n8n-inbox
-            path: abc
             
         - name: whats in
           run: |
             echo new
             ls -la
-            cp -r abc/* test/
-            cp -r wert/* test/abc/
-     
-
-        - name: Pushes to another repository
-          uses: cpina/github-action-push-to-another-repository@main
-          env:
-            API_TOKEN_GITHUB: ${{ secrets.CROSS_2 }}
-          with:
-            source-directory: "test"
-            destination-github-username: "maxxam123"
-            destination-repository-name: "n8n-inbox"
-            user-email: hennighausenmax@gmail.com
-            target-branch: main

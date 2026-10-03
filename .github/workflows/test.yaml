@@ -23,6 +23,7 @@ jobs:
           uses: actions/checkout@v4
           with:
             repository: maxxam123/n8n-inbox
+            repo: ten
 
         - name: whats in
           run: |
@@ -36,7 +37,7 @@ jobs:
           env:
             API_TOKEN_GITHUB: ${{ secrets.CROSS_2 }}
           with:
-            source-directory: "repo2"
+            source-directory: "ten"
             destination-github-username: "maxxam123"
             destination-repository-name: "n8n-inbox"
             user-email: hennighausenmax@gmail.com

@@ -10,7 +10,13 @@ jobs:
   build:
       runs-on: ubuntu-latest
       steps:
-       
+
+        - name: first
+          run: |
+            echo new
+            ls -la
+            mkdir first
+            cd first
             
         - name: Checkout a public repo
           uses: actions/checkout@v4
@@ -20,6 +26,8 @@ jobs:
         - name: whats in
           run: |
             echo new
+            ls -la
+            cd ..
             ls -la
 
 

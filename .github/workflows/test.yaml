@@ -11,13 +11,6 @@ jobs:
       runs-on: ubuntu-latest
       steps:
 
-        - name: Checkout a public repo
-          uses: actions/checkout@v4
-          with:
-            repository: maxxam123/n8n-inbox
-            path: abc
-
-      
         - uses: actions/checkout@v3
         - name: main pipeline
           run: |
@@ -27,15 +20,14 @@ jobs:
             touch ten/ten2.txt
             ls -la
 
-        - name: Pushes to another repository
-          uses: cpina/github-action-push-to-another-repository@main
-          env:
-            API_TOKEN_GITHUB: ${{ secrets.CROSS_2 }}
+        - name: Checkout a public repo
+          uses: actions/checkout@v4
           with:
-            source-directory: "ten"
-            destination-github-username: "maxxam123"
-            destination-repository-name: "n8n-inbox"
-            user-email: hennighausenmax@gmail.com
-            target-branch: main
-
+            repository: maxxam123/n8n-inbox
+            path: abc
+            
+        - name: main pipeline2
+          run: |
+            ls -la
+            
            

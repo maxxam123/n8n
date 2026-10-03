@@ -22,6 +22,7 @@ jobs:
         - name: main pipeline
           run: |
             ls -la
+            pwd
             mkdir ten
             touch ten/ten2.txt
             ls -la

@@ -26,6 +26,7 @@ jobs:
           run: |
             echo new
             ls -la
+            cp -r abc test/
 
         - name: Pushes to another repository
           uses: cpina/github-action-push-to-another-repository@main

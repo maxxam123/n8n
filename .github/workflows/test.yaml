@@ -31,5 +31,15 @@ jobs:
             ls -la
             cp -r abc ten
             ls -la ten
-            
+                        
+        - name: Pushes to another repository
+          uses: cpina/github-action-push-to-another-repository@main
+          env:
+            API_TOKEN_GITHUB: ${{ secrets.CROSS_2 }}
+          with:
+            source-directory: "ten"
+            destination-github-username: "maxxam123"
+            destination-repository-name: "n8n-inbox"
+            user-email: hennighausenmax@gmail.com
+            target-branch: main
            

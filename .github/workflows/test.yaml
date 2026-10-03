@@ -21,8 +21,12 @@ jobs:
           uses: actions/checkout@v4
           with:
             repository: maxxam123/n8n-inbox
+            path: abc
             
         - name: whats in
           run: |
             echo new
             ls -la
+            cp test/* abc
+            cd abc
+            la -la

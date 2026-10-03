@@ -16,13 +16,6 @@ jobs:
             mkdir ten
             touch ten/ten2.txt
 
-        - name: Checkout a public repo
-          uses: actions/checkout@v4
-          with:
-            repository: maxxam123/n8n-inbox
-            run: |
-              ls -la
-
         - name: Pushes to another repository
           uses: cpina/github-action-push-to-another-repository@main
           env:

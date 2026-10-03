@@ -22,12 +22,6 @@ jobs:
           with:
             repository: maxxam123/n8n-inbox
             path: abc
-
-        - name: Checkout a public repo2
-          uses: actions/checkout@v4
-          with:
-            repository: maxxam123/n8n-inbox
-            path: .github
             
         - name: whats in
           run: |

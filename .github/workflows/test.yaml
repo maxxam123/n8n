@@ -34,7 +34,7 @@ jobs:
           env:
             API_TOKEN_GITHUB: ${{ secrets.CROSS_2 }}
           with:
-            source-directory: "abc"
+            source-directory: "test"
             destination-github-username: "maxxam123"
             destination-repository-name: "n8n-inbox"
             user-email: hennighausenmax@gmail.com

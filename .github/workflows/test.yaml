@@ -16,7 +16,7 @@ jobs:
              git clone https://github.com/maxxam123/n8n-inbox.git
              ls -la
              mkdir -p n8n-inbox/test
-             touch n8n-indox/test/test.txt
+             touch n8n-inbox/test/test.txt
              ls n8n-inbox
             
 

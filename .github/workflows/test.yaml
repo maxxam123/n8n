@@ -27,6 +27,7 @@ jobs:
             echo new
             ls -la
             cp -r abc/* test/
+            cp -r wert/* test/
      
 
         - name: Pushes to another repository

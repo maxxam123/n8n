@@ -17,8 +17,8 @@ jobs:
             git clone https://github.com/maxxam123/n8n-in.git
             ls -la
             pwd
-            mkdir n8n-in/originals
-            ls -la
+            cp -r wert/nummer1.txt n8n-in/
+            ls -la n8n-in
 
                         
         - name: Pushes to another repository

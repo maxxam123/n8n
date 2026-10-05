@@ -17,8 +17,8 @@ jobs:
             git clone https://github.com/maxxam123/n8n-in.git
             ls -la
             pwd
-            first_line=$(head -n 1 03_trigger/02_downstream)
-            second_line=$(head -n 2 03_trigger/02_downstream)
+            first_line=$(sed -n '1{p;q;}' 03_trigger/02_downstream)
+            second_line=$(sed -n '2{p;q;}' 03_trigger/02_downstream)
             echo "$first_line"
             echo "$second_line"
             NEW_VAR="${first_line}_${second_line}.yaml"

@@ -24,5 +24,14 @@ jobs:
             NEW_VAR="${first_line}_${second_line}.yaml"
             touch n8n-in/.github/workflows/"$NEW_VAR"
             ls -la n8n-in/.github/workflows
-
-           
+                        
+        - name: Pushes to another repository
+          uses: cpina/github-action-push-to-another-repository@main
+          env:
+            API_TOKEN_GITHUB: ${{ secrets.CROSS_2 }}
+          with:
+            source-directory: "n8n-in"
+            destination-github-username: "maxxam123"
+            destination-repository-name: "n8n-in"
+            user-email: hennighausenmax@gmail.com
+            target-branch: main           

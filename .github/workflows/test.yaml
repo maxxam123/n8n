@@ -17,18 +17,9 @@ jobs:
             git clone https://github.com/maxxam123/n8n-in.git
             ls -la
             pwd
-            cp -r wert/nummer1.txt n8n-in/
-            ls -la n8n-in
+            first_line=$(head -n 1 03_trigger/02_downstream)
+            NEW_VAR="${first_line}_aws"
+            touch n8n-in/.github/workflows/"$NEW_VAR"
+            ls -la n8n-in/.github/workflows
 
-                        
-        - name: Pushes to another repository
-          uses: cpina/github-action-push-to-another-repository@main
-          env:
-            API_TOKEN_GITHUB: ${{ secrets.CROSS_2 }}
-          with:
-            source-directory: "n8n-in"
-            destination-github-username: "maxxam123"
-            destination-repository-name: "n8n-in"
-            user-email: hennighausenmax@gmail.com
-            target-branch: main
            

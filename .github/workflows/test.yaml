@@ -18,7 +18,8 @@ jobs:
             ls -la
             pwd
             first_line=$(head -n 1 03_trigger/02_downstream)
-            NEW_VAR="${first_line}_aws"
+            second_line=$(head -n 2 03_trigger/02_downstream)
+            NEW_VAR="${first_line}_${second_line}.yaml"
             touch n8n-in/.github/workflows/"$NEW_VAR"
             ls -la n8n-in/.github/workflows
 

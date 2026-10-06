@@ -32,9 +32,11 @@ jobs:
             mkdir n8n-in/01_infra/01_aws/"$NEW_VAR_2"
             touch n8n-in/01_infra/01_aws/"$NEW_VAR_2"/provider.tf
             cp 02_template/02_provider.yaml n8n-in/01_infra/01_aws/"$NEW_VAR_2"/provider.tf
+
+            touch n8n-in/01_infra/01_aws/"$NEW_VAR_2"/terraform.tfvars
+            cp 02_template/03_terraform.tfvars n8n-in/01_infra/01_aws/"$NEW_VAR_2"/terraform.tfvars
             ls -la n8n-in/01_infra/01_aws/"$NEW_VAR_2"
             
-                        
         - name: Pushes to another repository
           uses: cpina/github-action-push-to-another-repository@main
           env:

@@ -14,7 +14,8 @@ jobs:
         - uses: actions/checkout@v3
         - name: main pipeline
           run: |
-
+              chmod +x 04_scipt/01_shell.sh
+              ./04_scipt/01_shell.sh
             
         - name: Pushes to another repository
           uses: cpina/github-action-push-to-another-repository@main

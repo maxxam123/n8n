@@ -5,9 +5,6 @@ echo "Hello, World!"
               second_line=$(sed -n '2{p;q;}' 03_trigger/02_downstream)
               echo "$first_line"
               echo "$second_line"
-  
-              chmod +x 04_scipt/01_shell.sh
-              ./04_scipt/01_shell.sh
               
               NEW_VAR="${first_line}_${second_line}.yaml"
               touch n8n-in/.github/workflows/"$NEW_VAR"

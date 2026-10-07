@@ -3,8 +3,8 @@ on:
    branches:
    - main
    paths:
-   - '01_infraaaaaaaaaa/01-upstream/VAR_1/VAR_2/terraform.tfvars'
-   - '01_infraaaaaaaaaa/01-upstream/VAR_1/VAR_2/gitops'
+   - '01_infraaaaaaaaaa/01-aws/VAR_1/VAR_2/terraform.tfvars'
+   - '01_infraaaaaaaaaa/01-aws/VAR_1/VAR_2/gitops'
 
 env:
  AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}

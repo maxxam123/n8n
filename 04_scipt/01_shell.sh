@@ -7,6 +7,7 @@ echo "Hello, World!"
               echo "$second_line"
               
               NEW_VAR="${first_line}_${second_line}.yaml"
+              pwd
               ls -la 
               ls -la n8n-in
               ls -la n8n-in/.github

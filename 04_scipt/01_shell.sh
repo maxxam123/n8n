@@ -13,7 +13,7 @@ echo "Hello, World!"
               
               if [ "$second_line" == "aws" ]; then
               
-              NEW_VAR="${second_line}_${first_line}_${fourth_line}.yaml"
+              NEW_VAR="${second_line}_${fourth_line}_${first_line}.yaml"
               touch n8n-in/.github/workflows/"$NEW_VAR"
               cp 02_template/aws/01_pipeline.yaml n8n-in/.github/workflows/"$NEW_VAR"
               sed -i "s/VAR_2/$third_line/g" n8n-in/.github/workflows/"$NEW_VAR"

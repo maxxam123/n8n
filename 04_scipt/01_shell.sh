@@ -20,13 +20,13 @@ echo "Hello, World!"
               ls -la n8n-in/.github/workflows
 
               NEW_VAR_2="${first_line}_${second_line}_upstream"
-              mkdir n8n-in/01_infra/01_aws/"$NEW_VAR_2"
-              touch n8n-in/01_infra/01_aws/"$NEW_VAR_2"/provider.tf
-              cp 02_template/aws/02_provider.yaml n8n-in/01_infra/01_aws/"$NEW_VAR_2"/provider.tf
+              mkdir n8n-in/01_infra/01_aws/01_vpc/"$NEW_VAR_2"
+              touch n8n-in/01_infra/01_aws/01_vpc/"$NEW_VAR_2"/provider.tf
+              cp 02_template/aws/02_provider.yaml n8n-in/01_infra/01_aws/01_vpc/"$NEW_VAR_2"/provider.tf
 
-              touch n8n-in/01_infra/01_aws/"$NEW_VAR_2"/terraform.tfvars
-              cp 02_template/aws/03_terraform.tfvars n8n-in/01_infra/01_aws/"$NEW_VAR_2"/terraform.tfvars
-              ls -la n8n-in/01_infra/01_aws/"$NEW_VAR_2"
+              touch n8n-in/01_infra/01_aws/01_vpc/"$NEW_VAR_2"/terraform.tfvars
+              cp 02_template/aws/03_terraform.tfvars n8n-in/01_infra/01_aws/01_vpc/"$NEW_VAR_2"/terraform.tfvars
+              ls -la n8n-in/01_infra/01_aws/01_vpc/"$NEW_VAR_2"
               fi
 
               if [ "$second_line" == "gcp" ]; then

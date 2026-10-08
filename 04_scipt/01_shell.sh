@@ -21,7 +21,7 @@ echo "Hello, World!"
               ls -la n8n-in/.github/workflows
 
               if [ "$fourth_line" == "vpc" ]; then
-              NEW_VAR_2="${first_line}_${second_line}_upstream"
+              NEW_VAR_2="${first_line}_${second_line}_${fourth_line}"
               mkdir n8n-in/01_infra/01_aws/01_vpc/"$NEW_VAR_2"
               touch n8n-in/01_infra/01_aws/01_vpc/"$NEW_VAR_2"/provider.tf
               cp 02_template/aws/02_provider.yaml n8n-in/01_infra/01_aws/01_vpc/"$NEW_VAR_2"/provider.tf
@@ -32,7 +32,7 @@ echo "Hello, World!"
               fi
 
               if [ "$fourth_line" == "vm" ]; then
-              NEW_VAR_2="${first_line}_${second_line}_upstream"
+              NEW_VAR_2="${first_line}_${second_line}_${fourth_line}"
               mkdir n8n-in/01_infra/01_aws/02_vm/"$NEW_VAR_2"
               touch n8n-in/01_infra/01_aws/02_vm/"$NEW_VAR_2"/provider.tf
               cp 02_template/aws/02_provider.yaml n8n-in/01_infra/01_aws/02_vm/"$NEW_VAR_2"/provider.tf

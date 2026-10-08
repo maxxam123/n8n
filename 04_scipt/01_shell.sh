@@ -19,6 +19,7 @@ echo "Hello, World!"
               sed -i "s/VAR_2/$third_line/g" n8n-in/.github/workflows/"$NEW_VAR"
               sed -i "s/VAR_1/$second_line/g" n8n-in/.github/workflows/"$NEW_VAR"
               ls -la n8n-in/.github/workflows
+              fi
 
               if [ "$fourth_line" == "vpc" ]; then
               NEW_VAR_2="${first_line}_${second_line}_${fourth_line}"
@@ -40,7 +41,6 @@ echo "Hello, World!"
               touch n8n-in/01_infra/01_aws/02_vm/"$NEW_VAR_2"/terraform.tfvars
               cp 02_template/aws/03_terraform.tfvars n8n-in/01_infra/01_aws/02_vm/"$NEW_VAR_2"/terraform.tfvars
               ls -la n8n-in/01_infra/01_aws/02_vm/"$NEW_VAR_2"
-              fi
               fi
 
               if [ "$second_line" == "gcp" ]; then

@@ -1,0 +1,28 @@
+on:
+ push:
+   branches:
+   - main
+   paths:
+   - '03_trigger/03_delete'
+
+jobs:
+  build:
+      runs-on: ubuntu-latest
+      steps:
+
+        - uses: actions/checkout@v3
+        - name: main pipeline
+          run: |
+              chmod +x 04_scipt/02_shell.sh
+              ./04_scipt/02_shell.sh
+            
+        - name: Pushes to another repository
+          uses: cpina/github-action-push-to-another-repository@main
+          env:
+            API_TOKEN_GITHUB: ${{ secrets.CROSS_2 }}
+          with:
+            source-directory: "n8n-in"
+            destination-github-username: "maxxam123"
+            destination-repository-name: "n8n-in"
+            user-email: hennighausenmax@gmail.com
+            target-branch: main           

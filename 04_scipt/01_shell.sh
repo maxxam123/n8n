@@ -45,19 +45,22 @@ echo "Hello, World!"
 
               if [ "$second_line" == "gcp" ]; then
               
-              NEW_VAR_GCP="${second_line}_${first_line}.yaml"
+              NEW_VAR_GCP="${second_line}_${fourth_line}_${first_line}.yaml"
               touch n8n-in/.github/workflows/"$NEW_VAR_GCP"
               cp 02_template/gcp/01_pipeline.yaml n8n-in/.github/workflows/"$NEW_VAR_GCP"
               sed -i "s/VAR_2/$third_line/g" n8n-in/.github/workflows/"$NEW_VAR_GCP"
               sed -i "s/VAR_1/$second_line/g" n8n-in/.github/workflows/"$NEW_VAR_GCP"
               ls -la n8n-in/.github/workflows
+              fi
 
-              NEW_VAR_GCP_2="${first_line}_${second_line}_upstream"
-              mkdir n8n-in/01_infra/02_gcp/"$NEW_VAR_GCP_2"
-              touch n8n-in/01_infra/02_gcp/"$NEW_VAR_GCP_2"/provider.tf
-              cp 02_template/gcp/02_provider.yaml n8n-in/01_infra/02_gcp/"$NEW_VAR_GCP_2"/provider.tf
+              if [ "$fourth_line" == "gvpc" ]; then
 
-              touch n8n-in/01_infra/02_gcp/"$NEW_VAR_GCP_2"/terraform.tfvars
-              cp 02_template/gcp/03_terraform.tfvars n8n-in/01_infra/02_gcp/"$NEW_VAR_GCP_2"/terraform.tfvars
-              ls -la n8n-in/01_infra/02_gcp/"$NEW_VAR_GCP_2"
+              NEW_VAR_GCP_2="${first_line}_${second_line}_${fourth_line}"
+              mkdir n8n-in/01_infra/02_gcp/01_gvpc/"$NEW_VAR_GCP_2"
+              touch n8n-in/01_infra/02_gcp/01_gvpc/"$NEW_VAR_GCP_2"/provider.tf
+              cp 02_template/gcp/02_provider.yaml n8n-in/01_infra/02_gcp/01_gvpc/"$NEW_VAR_GCP_2"/provider.tf
+
+              touch n8n-in/01_infra/02_gcp/01_gvpc/"$NEW_VAR_GCP_2"/terraform.tfvars
+              cp 02_template/gcp/03_terraform.tfvars n8n-in/01_infra/02_gcp/01_gvpc/"$NEW_VAR_GCP_2"/terraform.tfvars
+              ls -la n8n-in/01_infra/02_gcp/01_gvpc/"$NEW_VAR_GCP_2"
               fi

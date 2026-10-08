@@ -64,3 +64,14 @@ echo "Hello, World!"
               cp 02_template/gcp/03_terraform.tfvars n8n-in/01_infra/02_gcp/01_gvpc/"$NEW_VAR_GCP_2"/terraform.tfvars
               ls -la n8n-in/01_infra/02_gcp/01_gvpc/"$NEW_VAR_GCP_2"
               fi
+             
+              if [ "$fourth_line" == "gvm" ]; then
+              NEW_VAR_2="${first_line}_${second_line}_${fourth_line}"
+              mkdir n8n-in/01_infra/02_gcp/02_gvm/"$NEW_VAR_2"
+              touch n8n-in/01_infra/02_gcp/02_gvm/"$NEW_VAR_2"/provider.tf
+              cp 02_template/gcp/02_provider.yaml n8n-in/01_infra/02_gcp/02_gvm/"$NEW_VAR_2"/provider.tf
+
+              touch n8n-in/01_infra/02_gcp/02_gvm/"$NEW_VAR_2"/terraform.tfvars
+              cp 02_template/aws/03_terraform.tfvars n8n-in/01_infra/02_gcp/02_gvm/"$NEW_VAR_2"/terraform.tfvars
+              ls -la n8n-in/01_infra/02_gcp/02_gvm/"$NEW_VAR_2"
+              fi

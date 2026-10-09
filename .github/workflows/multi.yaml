@@ -25,7 +25,12 @@ jobs:
               - '03_trigger/06_test'
 
   # 2. Call the test workflow conditionally based on the path
-  trigger-test-workflow:
+  trigger-test-workflow-1:
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.backend == 'true' }}
     uses: ./.github/workflows/test1.yaml # Points to the moved file
+
+  trigger-test-workflow-2:
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.frontend == 'true' }}
+    uses: ./.github/workflows/test2.yaml # Points to your second workflow fi

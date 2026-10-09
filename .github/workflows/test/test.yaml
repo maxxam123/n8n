@@ -1,18 +1,12 @@
+# .github/workflows/test.yaml
+name: Test Pipeline
 
 on:
- push:
-   branches:
-   - main
-   paths:
-   - '../03_trigger/04_test'
+  workflow_call: # Required to accept triggers from other workflows
 
 jobs:
-  build:
-      runs-on: ubuntu-latest
-      steps:
-
-        - uses: actions/checkout@v3
-        - name: main pipeline
-          run: |
-              chmod +x 04_scipt/03_shell.sh
-              ./04_scipt/03_shell.sh
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run test suite
+        run: echo "Running tests..."

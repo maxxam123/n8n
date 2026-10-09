@@ -13,8 +13,8 @@ jobs:
   detect-changes:
     runs-on: ubuntu-latest
     outputs:
-      backend: ${{ steps.filter.outputs.backend }}
-      frontend: ${{ steps.filter.outputs.frontend }}
+      aws-vpc: ${{ steps.filter.outputs.aws-vpc }}
+      aws-vm: ${{ steps.filter.outputs.aws-vm }}
       backend2: ${{ steps.filter.outputs.backend2 }}
       frontend2: ${{ steps.filter.outputs.frontend2 }}
     steps:
@@ -23,9 +23,9 @@ jobs:
         id: filter
         with:
           filters: |
-            backend:
+            aws-vpc:
               - '03_trigger/aws/01_vpc'
-            frontend:
+            aws-vm:
               - '03_trigger/aws/02_vm'
             backend2:
               - '03_trigger/gcp/gvm'
@@ -33,15 +33,15 @@ jobs:
               - '03_trigger/gcp/gvpc'
 
   # 2. Call the test workflow conditionally based on the path
-  trigger-test-workflow-1:
+  trigger-test-workflow-aws-vpc:
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.backend == 'true' }}
+    if: ${{ needs.detect-changes.outputs.aws-vpc == 'true' }}
     uses: ./.github/workflows/aws-vpc.yaml # Points to the moved file
     secrets: inherit 
 
-  trigger-test-workflow-2:
+  trigger-test-workflow-aws-vm:
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.frontend == 'true' }}
+    if: ${{ needs.detect-changes.outputs.aws-vm == 'true' }}
     uses: ./.github/workflows/aws-vm.yaml # Points to your second workflow fi
     secrets: inherit 
 

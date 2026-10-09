@@ -37,11 +37,13 @@ jobs:
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.backend == 'true' }}
     uses: ./.github/workflows/aws-vpc.yaml # Points to the moved file
+    secrets: inherit 
 
   trigger-test-workflow-2:
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.frontend == 'true' }}
     uses: ./.github/workflows/aws-vm.yaml # Points to your second workflow fi
+    secrets: inherit 
 
       # 2. Call the test workflow conditionally based on the path
   trigger-test-workflow-3:

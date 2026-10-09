@@ -29,8 +29,3 @@ jobs:
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.backend == 'true' }}
     uses: ./.github/workflows/test1.yaml # Points to the moved file
-
-  trigger-test-workflow1:
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.frontend == 'true' }}
-    uses: ./.github/workflows/test2.yaml # Points to the moved file

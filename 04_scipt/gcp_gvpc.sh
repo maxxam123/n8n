@@ -14,6 +14,10 @@ echo "Hello, World!"
               # sed -i "s/VAR_1/$second_line/g" n8n-in/.github/workflows/"$NEW_VAR"
 
               NEW_VAR_2="${first_line}_gcp_gvpc"
+              ls n8n-in/01_infra
+              ls n8n-in/01_infra/02_gcp
+              ls n8n-in/01_infra/02_gcp/01_gvpc
+              
               mkdir n8n-in/01_infra/02_gcp/01_gvpc/"$NEW_VAR_2"
               touch n8n-in/01_infra/02_gcp/01_gvpc/"$NEW_VAR_2"/provider.tf
               cp 02_template/aws/02_provider.yaml n8n-in/01_infra/02_gcp/01_gvpc/"$NEW_VAR_2"/provider.tf

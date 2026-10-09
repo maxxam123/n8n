@@ -3,8 +3,10 @@ on:
     branches:
       - main
     paths:
-      - '03_trigger/05_test'
-      - '03_trigger/06_test'
+      - '03_trigger/aws/01_vpc'
+      - '03_trigger/aws/02_vm'
+      - '03_trigger/gcp/gvm'
+      - '03_trigger/gcp/gvpc'
 
 jobs:
   # 1. First, check which paths changed
@@ -13,6 +15,8 @@ jobs:
     outputs:
       backend: ${{ steps.filter.outputs.backend }}
       frontend: ${{ steps.filter.outputs.frontend }}
+      backend2: ${{ steps.filter.outputs.backend2 }}
+      frontend2: ${{ steps.filter.outputs.frontend2 }}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
@@ -20,17 +24,32 @@ jobs:
         with:
           filters: |
             backend:
-              - '03_trigger/05_test'
+              - '03_trigger/aws/01_vpc'
             frontend:
-              - '03_trigger/06_test'
+              - '03_trigger/aws/02_vm'
+            backend2:
+              - '03_trigger/gcp/gvm'
+            frontend2:
+              - '03_trigger/gcp/gvpc'
 
   # 2. Call the test workflow conditionally based on the path
   trigger-test-workflow-1:
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.backend == 'true' }}
-    uses: ./.github/workflows/test1.yaml # Points to the moved file
+    uses: ./.github/workflows/aws-vpc.yaml # Points to the moved file
 
   trigger-test-workflow-2:
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.frontend == 'true' }}
-    uses: ./.github/workflows/test2.yaml # Points to your second workflow fi
+    uses: ./.github/workflows/aws-vm.yaml # Points to your second workflow fi
+
+      # 2. Call the test workflow conditionally based on the path
+  trigger-test-workflow-3:
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.backend2 == 'true' }}
+    uses: ./.github/workflows/gcp-gvm.yaml # Points to the moved file
+
+  trigger-test-workflow-4:
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.frontend2 == 'true' }}
+    uses: ./.github/workflows/gcp-gvpc.yaml # Points to your second workflow fi

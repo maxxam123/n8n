@@ -9,4 +9,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run test suite
-        run: echo "Running tests..."
+        run: echo "aws-vpc..."

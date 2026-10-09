@@ -1,0 +1,31 @@
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '03_trigger/05_test'
+      - '03_trigger/06_test'
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Detects which specific path triggered the run
+      - uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            backend: '03_trigger/05_test'
+            common: '03_trigger/06_test'
+
+      # This step only runs if backend changed
+      - name: Step for Backend
+        if: steps.changes.outputs.backend == 'true'
+        run: echo "Processing backend updates..."
+
+      # This step only runs if common changed
+      - name: Step for Common
+        if: steps.changes.outputs.common == 'true'
+        run: echo "Processing common updates..."

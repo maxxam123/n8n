@@ -1,0 +1,12 @@
+# .github/workflows/test.yaml
+name: Test Pipeline
+
+on:
+  workflow_call: # Required to accept triggers from other workflows
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run test suite
+        run: echo "Running tests..."

@@ -28,9 +28,9 @@ jobs:
             aws-vm:
               - '03_trigger/aws/02_vm'
             gcp-gvpc:
-              - '03_trigger/gcp/gvm'
-            gcp-gvm:
               - '03_trigger/gcp/gvpc'
+            gcp-gvm:
+              - '03_trigger/gcp/gvm'
 
   # 2. Call the test workflow conditionally based on the path
   trigger-test-workflow-aws-vpc:

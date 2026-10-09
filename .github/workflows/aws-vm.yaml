@@ -3,9 +3,6 @@ name: Test Pipeline
 
 on:
   workflow_call:
-    secrets:
-      CROSS_2:
-        required: true
 
 jobs:
   build:

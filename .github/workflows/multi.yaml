@@ -15,8 +15,8 @@ jobs:
     outputs:
       aws-vpc: ${{ steps.filter.outputs.aws-vpc }}
       aws-vm: ${{ steps.filter.outputs.aws-vm }}
-      backend2: ${{ steps.filter.outputs.backend2 }}
-      frontend2: ${{ steps.filter.outputs.frontend2 }}
+      gcp-gvpc: ${{ steps.filter.outputs.gcp-gvpc }}
+      gcp-gvm: ${{ steps.filter.outputs.gcp-gvm }}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
@@ -27,9 +27,9 @@ jobs:
               - '03_trigger/aws/01_vpc'
             aws-vm:
               - '03_trigger/aws/02_vm'
-            backend2:
+            gcp-gvpc:
               - '03_trigger/gcp/gvm'
-            frontend2:
+            gcp-gvm:
               - '03_trigger/gcp/gvpc'
 
   # 2. Call the test workflow conditionally based on the path
@@ -46,12 +46,12 @@ jobs:
     secrets: inherit 
 
       # 2. Call the test workflow conditionally based on the path
-  trigger-test-workflow-3:
+  trigger-test-workflow-gcp-gvpc:
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.backend2 == 'true' }}
+    if: ${{ needs.detect-changes.outputs.gcp-gvpc == 'true' }}
     uses: ./.github/workflows/gcp-gvm.yaml # Points to the moved file
 
-  trigger-test-workflow-4:
+  trigger-test-workflow-gcp-gvm:
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.frontend2 == 'true' }}
+    if: ${{ needs.detect-changes.outputs.gcp-gvm == 'true' }}
     uses: ./.github/workflows/gcp-gvpc.yaml # Points to your second workflow fi

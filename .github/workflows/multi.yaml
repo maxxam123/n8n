@@ -49,9 +49,13 @@ jobs:
   trigger-test-workflow-gcp-gvpc:
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.gcp-gvpc == 'true' }}
-    uses: ./.github/workflows/gcp-gvm.yaml # Points to the moved file
+    uses: ./.github/workflows/gcp-gvpc.yaml # Points to the moved file
+    secrets: inherit 
 
   trigger-test-workflow-gcp-gvm:
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.gcp-gvm == 'true' }}
-    uses: ./.github/workflows/gcp-gvpc.yaml # Points to your second workflow fi
+    uses: ./.github/workflows/gcp-gvm.yaml # Points to your second workflow fi
+    secrets: inherit 
+
+    

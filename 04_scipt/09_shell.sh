@@ -16,7 +16,7 @@ echo "Hello, World!"
               NEW_VAR_2="${first_line}_aws_vm"
               mkdir n8n-in/01_infra/01_aws/02_vm/"$NEW_VAR_2"
               touch n8n-in/01_infra/01_aws/02_vm/"$NEW_VAR_2"/provider.tf
-              cp 02_template/aws/02_provider.yaml n8n-in/01_infra/01_aws/01_vpc/"$NEW_VAR_2"/provider.tf
+              cp 02_template/aws/02_provider.yaml n8n-in/01_infra/01_aws/02_vm/"$NEW_VAR_2"/provider.tf
 
-              touch n8n-in/01_infra/01_aws/01_vpc/"$NEW_VAR_2"/terraform.tfvars
-              cp 02_template/aws/03_terraform.tfvars n8n-in/01_infra/01_aws/01_vpc/"$NEW_VAR_2"/terraform.tfvars
+              touch n8n-in/01_infra/01_aws/02_vm/"$NEW_VAR_2"/terraform.tfvars
+              cp 02_template/aws/03_terraform.tfvars n8n-in/01_infra/01_aws/02_vm/"$NEW_VAR_2"/terraform.tfvars

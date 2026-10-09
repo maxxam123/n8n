@@ -7,26 +7,22 @@ on:
       - '03_trigger/06_test'
 
 jobs:
-  Build:
+  # 1. First, check which paths changed
+  detect-changes:
     runs-on: ubuntu-latest
+    outputs:
+      backend: ${{ steps.filter.outputs.backend }}
     steps:
       - uses: actions/checkout@v4
-
-      # Detects which specific path triggered the run
       - uses: dorny/paths-filter@v3
-        id: changes
+        id: filter
         with:
           filters: |
-            backend: '03_trigger/05_test'
-            common: '03_trigger/06_test'
+            backend:
+              - '03_trigger/05_test'
 
-      # This step only runs if backend changed
-      - name: Step for Backend
-        if: steps.changes.outputs.backend == 'true'
-        # uses: ./.github/workflows/test/test.yaml # Points to the moved file
-        run: echo "Processing backend updates..."
-
-      # This step only runs if common changed
-      - name: Step for Common
-        if: steps.changes.outputs.common == 'true'
-        run: echo "Processing common updates..."
+  # 2. Call the test workflow conditionally based on the path
+  trigger-test-workflow:
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.backend == 'true' }}
+    uses: ./.github/workflows/test1.yaml # Points to the moved file

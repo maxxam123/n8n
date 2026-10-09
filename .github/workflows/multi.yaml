@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       backend: ${{ steps.filter.outputs.backend }}
+      frontend: ${{ steps.filter.outputs.frontend }}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
@@ -20,9 +21,16 @@ jobs:
           filters: |
             backend:
               - '03_trigger/05_test'
+            frontend:
+              - '03_trigger/06_test'
 
   # 2. Call the test workflow conditionally based on the path
   trigger-test-workflow:
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.backend == 'true' }}
     uses: ./.github/workflows/test1.yaml # Points to the moved file
+
+  trigger-test-workflow1:
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.frontend == 'true' }}
+    uses: ./.github/workflows/test2.yaml # Points to the moved file

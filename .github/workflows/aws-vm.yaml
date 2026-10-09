@@ -3,10 +3,13 @@ name: Test Pipeline
 
 on:
   workflow_call: # Required to accept triggers from other workflows
-
+  
 jobs:
-  run-tests:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Run test suite
-        run: ls -la
+  build:
+      runs-on: ubuntu-latest
+      steps:
+
+        - uses: actions/checkout@v3
+        - name: main pipeline
+          run: |
+              ls -la

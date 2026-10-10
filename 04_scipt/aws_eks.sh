@@ -19,5 +19,11 @@ echo "Hello, World!"
               cp 02_template/aws/03_terraform.tfvars n8n-in/01_infra/01_aws/03_eks/"$NEW_VAR_2"/terraform.tfvars
 
               mkdir n8n-in/02_temp/01_aws/03_eks/"$NEW_VAR_2"
-              touch n8n-in/02_temp/01_aws/03_eks/"$NEW_VAR_2"/provider.tf
+              touch n8n-in/02_temp/01_aws/03_eks/"$NEW_VAR_2"/01_locals.tf
               cp 02_template/aws/eks/terraform/01_locals.tf n8n-in/02_temp/01_aws/03_eks/"$NEW_VAR_2"/01_locals.tf
+
+              touch n8n-in/02_temp/01_aws/03_eks/"$NEW_VAR_2"/02_variables.tf
+              cp 02_template/aws/eks/terraform/02_variables.tf n8n-in/02_temp/01_aws/03_eks/"$NEW_VAR_2"/02_variables.tf
+
+              touch n8n-in/02_temp/01_aws/03_eks/"$NEW_VAR_2"/03_main.tf
+              cp 02_template/aws/eks/terraform/03_main.tf n8n-in/02_temp/01_aws/03_eks/"$NEW_VAR_2"/03_main.tf

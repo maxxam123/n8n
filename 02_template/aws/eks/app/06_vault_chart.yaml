@@ -1,0 +1,26 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: 02-aws-upstream-vault-helm
+  namespace: default
+spec:
+  destination:
+    namespace: ingress
+    server: https://kubernetes.default.svc
+    # server: https://HTTPS
+  project: default
+  source:
+    helm:
+      valueFiles:
+      - values.yaml
+    path: 04_git/aws/01-upstream/02-aws-upstream/bootstrap/vault/charts
+    repoURL: 'https://github.com/maxxam123/gitops.git'
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

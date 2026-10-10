@@ -6,7 +6,7 @@ echo "Hello, World!"
               
               NEW_VAR="aws_eks_${first_line}.yaml"
               touch n8n-in/.github/workflows/"$NEW_VAR"
-              cp 02_template/aws/eks/app/01_pipeline.yaml n8n-in/.github/workflows/"$NEW_VAR"
+              cp 02_template/aws/eks/pipeline/pipeline.yaml n8n-in/.github/workflows/"$NEW_VAR"
               # sed -i "s/VAR_2/$third_line/g" n8n-in/.github/workflows/"$NEW_VAR"
               # sed -i "s/VAR_1/$second_line/g" n8n-in/.github/workflows/"$NEW_VAR"
 

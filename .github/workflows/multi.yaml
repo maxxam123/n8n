@@ -5,6 +5,7 @@ on:
     paths:
       - '03_trigger/aws/01_vpc'
       - '03_trigger/aws/02_vm'
+      - '03_trigger/aws/03_eks'
       - '03_trigger/gcp/gvm'
       - '03_trigger/gcp/gvpc'
 
@@ -15,6 +16,7 @@ jobs:
     outputs:
       aws-vpc: ${{ steps.filter.outputs.aws-vpc }}
       aws-vm: ${{ steps.filter.outputs.aws-vm }}
+      aws-eks: ${{ steps.filter.outputs.aws-eks }}
       gcp-gvpc: ${{ steps.filter.outputs.gcp-gvpc }}
       gcp-gvm: ${{ steps.filter.outputs.gcp-gvm }}
     steps:
@@ -27,6 +29,8 @@ jobs:
               - '03_trigger/aws/01_vpc'
             aws-vm:
               - '03_trigger/aws/02_vm'
+            aws-eks:
+              - '03_trigger/aws/03_eks'
             gcp-gvpc:
               - '03_trigger/gcp/gvpc'
             gcp-gvm:
@@ -45,7 +49,12 @@ jobs:
     uses: ./.github/workflows/aws-vm.yaml # Points to your second workflow fi
     secrets: inherit 
 
-      # 2. Call the test workflow conditionally based on the path
+  trigger-test-workflow-aws-eks:
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.aws-eks == 'true' }}
+    uses: ./.github/workflows/aws-eks.yaml # Points to your second workflow fi
+    secrets: inherit 
+
   trigger-test-workflow-gcp-gvpc:
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.gcp-gvpc == 'true' }}

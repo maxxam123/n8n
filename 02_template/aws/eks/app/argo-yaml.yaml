@@ -1,0 +1,23 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: 02-aws-upstream-argocd-yaml NAME
+  namespace: default  
+spec:
+  destination:
+    namespace: default
+    server: https://kubernetes.default.svc
+    # server: https://HTTPS
+  project: default
+  source:
+    path: 04_git/aws/01-upstream/02-aws-upstream/bootstrap/argocd/yaml PATH
+    repoURL: 'https://github.com/maxxam123/gitops.git' REPO
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

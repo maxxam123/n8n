@@ -9,14 +9,17 @@ echo "Hello, World!"
               
               NEW_VAR="aws_vm_${first_line}.yaml"
               touch n8n-in/.github/workflows/"$NEW_VAR"
-              cp 02_template/aws/01_pipeline.yaml n8n-in/.github/workflows/"$NEW_VAR"
+              cp 02_template/aws/vm/pipeline/pipeline.yaml n8n-in/.github/workflows/"$NEW_VAR"
               # sed -i "s/VAR_2/$third_line/g" n8n-in/.github/workflows/"$NEW_VAR"
               # sed -i "s/VAR_1/$second_line/g" n8n-in/.github/workflows/"$NEW_VAR"
 
               NEW_VAR_2="${first_line}_aws_vm"
               mkdir n8n-in/01_infra/01_aws/02_vm/"$NEW_VAR_2"
-              touch n8n-in/01_infra/01_aws/02_vm/"$NEW_VAR_2"/provider.tf
-              cp 02_template/aws/02_provider.yaml n8n-in/01_infra/01_aws/02_vm/"$NEW_VAR_2"/provider.tf
+              touch n8n-in/01_infra/01_aws/02_vm/"$NEW_VAR_2"/01_locals.tf
+              cp 02_template/aws/vm/terraform/01_locals.tf n8n-in/01_infra/01_aws/02_vm/"$NEW_VAR_2"/01_locals.tf
 
-              touch n8n-in/01_infra/01_aws/02_vm/"$NEW_VAR_2"/terraform.tfvars
-              cp 02_template/aws/03_terraform.tfvars n8n-in/01_infra/01_aws/02_vm/"$NEW_VAR_2"/terraform.tfvars
+              touch n8n-in/01_infra/01_aws/02_vm/"$NEW_VAR_2"/02_variables.tf
+              cp 02_template/aws/vm/terraform/02_variables.tf n8n-in/01_infra/01_aws/02_vm/"$NEW_VAR_2"/02_variables.tf
+              
+              touch n8n-in/01_infra/01_aws/02_vm/"$NEW_VAR_2"/03_main.tf
+              cp 02_template/aws/vm/terraform/03_main.tf n8n-in/01_infra/01_aws/02_vm/"$NEW_VAR_2"/03_main.tf

@@ -17,8 +17,8 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.CROSS_2 }} # Or ${{ github.token }}
         run: |
-          echo "FIRST_LINE=$(sed -n '1{p;q;}' 03_trigger/gh-01)" >> $GITHUB_ENV
-          echo "$first_line"
+          FIRST_LINE=$(sed -n '1{p;q;}' 03_trigger/gh-01)
+          echo "my_variable=$FIRST_LINE" >> $GITHUB_OUTPUT
           gh repo create $FIRST_LINE --add-readme --private
           mkdir $FIRST_LINE
 
@@ -27,8 +27,8 @@ jobs:
           GH_TOKEN: ${{ secrets.CROSS_2 }}
           SECRET_VALUE: ${{ secrets.AWS_API_KEY }}
         run: |
-          echo "The saved line is: $FIRST_LINE"
-          echo -n "$SECRET_VALUE" | gh secret set AWS_API_KEY_TEST_2 -R maxxam123/$FIRST_LINE
+          echo "The saved line is: ${{ steps.step_one.outputs.my_variable }}"
+          echo -n "$SECRET_VALUE" | gh secret set AWS_API_KEY_TEST_2 -R maxxam123/test-repo-test-1
 
       - name: Clone External Private Repo
         uses: actions/checkout@v4

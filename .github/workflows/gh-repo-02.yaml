@@ -13,9 +13,12 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run GitHub CLI Command
+        id: step_one
         env:
           GH_TOKEN: ${{ secrets.CROSS_2 }} # Or ${{ github.token }}
         run: |
+          first_line=$(sed -n '1{p;q;}' 03_trigger/gh-01)
+          echo "$first_line"
           gh repo create test-repo-test-1 --add-readme --private
           mkdir test-repo-test-1
 
@@ -24,6 +27,7 @@ jobs:
           GH_TOKEN: ${{ secrets.CROSS_2 }}
           SECRET_VALUE: ${{ secrets.AWS_API_KEY }}
         run: |
+          echo "${{ steps.step_one.outputs.first_line }}"
           echo -n "$SECRET_VALUE" | gh secret set AWS_API_KEY_TEST_2 -R maxxam123/test-repo-test-1
 
       - name: Clone External Private Repo
@@ -36,6 +40,7 @@ jobs:
 
       - name: run test
         run: |
+          echo "${{ steps.step_one.outputs.first_line }}"
           ls -la
           ls -la test-repo-test-1
           mkdir test-repo-test-1/test

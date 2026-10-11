@@ -22,9 +22,9 @@ jobs:
 
       - name: Run GitHub 2
         env:
-          GH_TOKEN_2: ${{ secrets.AWS_API_KEY }} # Or ${{ github.token }}
+          SECRET_VALUE: ${{ secrets.AWS_API_KEY }}
         run: |
-          echo -n "$GH_TOKEN_2" | gh secret set AWS_API_KEY_TEST_2 -R maxxam123/test-repo-test-1
+          echo -n "$SECRET_VALUE" | gh secret set AWS_API_KEY_TEST_2 -R maxxam123/test-repo-test-1
 
       - name: Clone External Private Repo
         uses: actions/checkout@v4

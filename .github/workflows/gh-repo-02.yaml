@@ -18,10 +18,10 @@ jobs:
         run: |
           gh repo create test-repo-test-1 --add-readme --private
           mkdir test-repo-test-1
-          echo -n "$GH_TOKEN" | gh secret set AWS_API_KEY_TEST_2 -R maxxam123/test-repo-test-1
 
-      - name: Run GitHub 2
+      - name: Set AWS API Key Secret
         env:
+          GH_TOKEN: ${{ secrets.CROSS_2 }}
           SECRET_VALUE: ${{ secrets.AWS_API_KEY }}
         run: |
           echo -n "$SECRET_VALUE" | gh secret set AWS_API_KEY_TEST_2 -R maxxam123/test-repo-test-1

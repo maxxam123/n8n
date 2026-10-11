@@ -28,7 +28,7 @@ jobs:
           SECRET_VALUE: ${{ secrets.AWS_API_KEY }}
         run: |
           echo "The saved line is: ${{ steps.step_one.outputs.my_variable }}"
-          echo -n "$SECRET_VALUE" | gh secret set AWS_API_KEY_TEST_2 -R maxxam123/{{ steps.step_one.outputs.my_variable }}
+          echo -n "$SECRET_VALUE" | gh secret set AWS_API_KEY_TEST_2 -R "maxxam123/{{ steps.step_one.outputs.my_variable }}"
 
       - name: Clone External Private Repo
         uses: actions/checkout@v4

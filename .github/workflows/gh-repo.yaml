@@ -18,5 +18,8 @@ jobs:
         run: |
           gh issue list
           gh repo view
-          gh repo create test-repo-test-1 --public
-          gh secret set AWS_API_KEY_TEST -R maxxam123/test-repo-test-1 < 03_trigger/07_test
+          gh repo create test-repo-test-2 --public --clone
+          gh secret set AWS_API_KEY_TEST_2 -R maxxam123/test-repo-test-1 < 03_trigger/07_test
+          ls -la
+          mkdir test
+          ls -la

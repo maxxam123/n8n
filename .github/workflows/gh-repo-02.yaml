@@ -43,11 +43,15 @@ jobs:
 
       - name: run test
         run: |
+          SECOND_LINE=$(sed -n '2{p;q;}' 03_trigger/gh-01)
+          THIRD_LINE=$(sed -n '3{p;q;}' 03_trigger/gh-01)
           ls -la
           ls -la ${{ env.GLOBAL_FIRST_LINE }}
-          mkdir ${{ env.GLOBAL_FIRST_LINE }}/test
-          touch ${{ env.GLOBAL_FIRST_LINE }}/test/test.txt
-          
+          mkdir -p ${{ env.GLOBAL_FIRST_LINE }}/.github/workflows
+          touch ${{ env.GLOBAL_FIRST_LINE }}/.github/workflows/test.txt
+          mkdir -p ${{ env.GLOBAL_FIRST_LINE }}/01_infra/$SECOND_LINE/01-$THIRD_LINE
+          touch ${{ env.GLOBAL_FIRST_LINE }}/01_infra/$SECOND_LINE/01-$THIRD_LINE/text.txt          
+
       - name: Pushes to another repository
         uses: cpina/github-action-push-to-another-repository@main
         env:

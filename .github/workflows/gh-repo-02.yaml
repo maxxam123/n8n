@@ -17,7 +17,7 @@ jobs:
           GH_TOKEN: ${{ secrets.CROSS_2 }} # Or ${{ github.token }}
         run: |
           gh repo create test-repo-test-1 --add-readme --private
-          git clone https://x-access-token:$GH_TOKEN@://github.com<maxxam123>/<test-repo-test-1>.git
+          git clone https://x-access-token:$GH_TOKEN@://github.com/maxxam123/test-repo-test-1.git
 
           ls -la test-repo-test-1
           mkdir test-repo-test-1/test
@@ -33,7 +33,8 @@ jobs:
           destination-repository-name: "test-repo-test-1"
           user-email: hennighausenmax@gmail.com
           target-branch: main 
-          
+
+                    # <maxxam123>
                     # git clone https://github.com/maxxam123/test-repo-test-1.git
                     # gh repo create test-repo-test-1 --public --add-readme
                     # gh secret set AWS_API_KEY_TEST_2 -R maxxam123/test-repo-test-1 < 03_trigger/07_test

@@ -16,6 +16,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.CROSS_2 }} # Or ${{ github.token }}
         run: |
+          gh repo create test-repo-test-1 --add-readme --private
           mkdir test-repo-test-1
 
       - name: Clone External Private Repo

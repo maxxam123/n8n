@@ -17,7 +17,7 @@ jobs:
           GH_TOKEN: ${{ secrets.CROSS_2 }} # Or ${{ github.token }}
         run: |
           gh repo create test-repo-test-2 --public --clone
-          ls -la
-          mkdir test
-          ls -la
+          ls -la test-repo-test-2
+          mkdir test-repo-test-2/test
+          ls -la test-repo-test-2
         # gh secret set AWS_API_KEY_TEST_2 -R maxxam123/test-repo-test-1 < 03_trigger/07_test

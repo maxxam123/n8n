@@ -30,6 +30,8 @@ jobs:
         run: |
           ls -la
           ls -la test-repo-test-1
+          mkdir test-repo-test-1/test
+          touch test-repo-test-1/test/test.txt
           
       - name: Pushes to another repository
         uses: cpina/github-action-push-to-another-repository@main

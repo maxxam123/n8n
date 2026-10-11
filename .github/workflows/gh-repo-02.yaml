@@ -26,11 +26,14 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.CROSS_2 }}
           SECRET_VALUE: ${{ secrets.AWS_API_KEY }}
+          MY_LINE: ${{ steps.step_one.outputs.first_line }}
         run: |
-          echo "${{ steps.step_one.outputs.first_line }}"
+          echo "$MY_LINE"
           echo -n "$SECRET_VALUE" | gh secret set AWS_API_KEY_TEST_2 -R maxxam123/test-repo-test-1
 
       - name: Clone External Private Repo
+        env:
+          MY_LINE: ${{ steps.step_one.outputs.first_line }}
         uses: actions/checkout@v4
         with:
           repository: 'maxxam123/test-repo-test-1'
@@ -39,8 +42,10 @@ jobs:
           ref: 'main' # Optional: Specify branch, tag, or SHA
 
       - name: run test
+        env:
+          MY_LINE: ${{ steps.step_one.outputs.first_line }}
         run: |
-          echo "${{ steps.step_one.outputs.first_line }}"
+          echo "$MY_LINE"
           ls -la
           ls -la test-repo-test-1
           mkdir test-repo-test-1/test
@@ -50,6 +55,7 @@ jobs:
         uses: cpina/github-action-push-to-another-repository@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.CROSS_2 }}
+          MY_LINE: ${{ steps.step_one.outputs.first_line }}
         with:
           source-directory: "test-repo-test-1"
           destination-github-username: "maxxam123"

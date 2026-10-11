@@ -22,13 +22,16 @@ jobs:
           gh repo create $FIRST_LINE --add-readme --private
           mkdir $FIRST_LINE
 
+          echo "GLOBAL_FIRST_LINE<<EOF" >> $GITHUB_ENV
+          echo "$FIRST_LINE" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
       - name: Set AWS API Key Secret
         env:
           GH_TOKEN: ${{ secrets.CROSS_2 }}
           SECRET_VALUE: ${{ secrets.AWS_API_KEY }}
         run: |
-          echo "The saved line is: ${{ steps.step_one.outputs.my_variable }}"
-          echo -n "$SECRET_VALUE" | gh secret set AWS_API_KEY_TEST_2 -R "maxxam123/{{ steps.step_one.outputs.my_variable }}"
+          echo -n "$SECRET_VALUE" | gh secret set AWS_API_KEY_TEST_2 -R "maxxam123/${{ env.GLOBAL_FIRST_LINE }}"
 
       - name: Clone External Private Repo
         uses: actions/checkout@v4

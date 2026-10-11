@@ -45,9 +45,9 @@ jobs:
         run: |
           echo "The saved line is: $FIRST_LINE"
           ls -la
-          ls -la test-repo-test-1
-          mkdir test-repo-test-1/test
-          touch test-repo-test-1/test/test.txt
+          ls -la ${{ env.GLOBAL_FIRST_LINE }}
+          mkdir ${{ env.GLOBAL_FIRST_LINE }}/test
+          touch ${{ env.GLOBAL_FIRST_LINE }}/test/test.txt
           
       - name: Pushes to another repository
         uses: cpina/github-action-push-to-another-repository@main

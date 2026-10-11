@@ -43,7 +43,6 @@ jobs:
 
       - name: run test
         run: |
-          echo "The saved line is: $FIRST_LINE"
           ls -la
           ls -la ${{ env.GLOBAL_FIRST_LINE }}
           mkdir ${{ env.GLOBAL_FIRST_LINE }}/test

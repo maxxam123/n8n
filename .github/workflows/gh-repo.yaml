@@ -20,6 +20,7 @@ jobs:
           git clone https://github.com/maxxam123/test-repo-test-3.git
           ls -la test-repo-test-3
           mkdir test-repo-test-3/test
+          touch test-repo-test-3/test/test.txt
           ls -la test-repo-test-3
       - name: Pushes to another repository
         uses: cpina/github-action-push-to-another-repository@main

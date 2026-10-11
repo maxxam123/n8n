@@ -1,8 +1,9 @@
-# .github/workflows/test.yaml
-name: Test Pipeline
-
 on:
-  workflow_call:
+  push:
+    branches:
+      - main
+    paths:
+      - '03_trigger/gh-01'
 
 jobs:
   build:

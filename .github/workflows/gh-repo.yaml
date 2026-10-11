@@ -19,3 +19,4 @@ jobs:
           gh issue list
           gh repo view
           gh repo create test-repo-test --public
+          gh secret set AWS_API_KEY < 03_trigger/07_test

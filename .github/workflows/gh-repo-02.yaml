@@ -17,7 +17,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.CROSS_2 }} # Or ${{ github.token }}
         run: |
-          first_line=$(sed -n '1{p;q;}' 03_trigger/gh-01)
+          echo "FIRST_LINE=$(sed -n '1{p;q;}' 03_trigger/gh-01)" >> $GITHUB_ENV
           echo "$first_line"
           gh repo create test-repo-test-1 --add-readme --private
           mkdir test-repo-test-1
@@ -26,14 +26,11 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.CROSS_2 }}
           SECRET_VALUE: ${{ secrets.AWS_API_KEY }}
-          MY_LINE: ${{ steps.step_one.outputs.first_line }}
         run: |
-          echo "$MY_LINE"
+          echo "The saved line is: $FIRST_LINE"
           echo -n "$SECRET_VALUE" | gh secret set AWS_API_KEY_TEST_2 -R maxxam123/test-repo-test-1
 
       - name: Clone External Private Repo
-        env:
-          MY_LINE: ${{ steps.step_one.outputs.first_line }}
         uses: actions/checkout@v4
         with:
           repository: 'maxxam123/test-repo-test-1'
@@ -42,10 +39,8 @@ jobs:
           ref: 'main' # Optional: Specify branch, tag, or SHA
 
       - name: run test
-        env:
-          MY_LINE: ${{ steps.step_one.outputs.first_line }}
         run: |
-          echo "$MY_LINE"
+          echo "The saved line is: $FIRST_LINE"
           ls -la
           ls -la test-repo-test-1
           mkdir test-repo-test-1/test
@@ -55,7 +50,6 @@ jobs:
         uses: cpina/github-action-push-to-another-repository@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.CROSS_2 }}
-          MY_LINE: ${{ steps.step_one.outputs.first_line }}
         with:
           source-directory: "test-repo-test-1"
           destination-github-username: "maxxam123"

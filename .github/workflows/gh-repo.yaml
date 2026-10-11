@@ -18,3 +18,4 @@ jobs:
         run: |
           gh issue list
           gh repo view
+          gh repo create test-repo-test --public

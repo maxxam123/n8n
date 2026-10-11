@@ -36,9 +36,9 @@ jobs:
       - name: Clone External Private Repo
         uses: actions/checkout@v4
         with:
-          repository: 'maxxam123/test-repo-test-1'
+          repository: 'maxxam123/${{ env.GLOBAL_FIRST_LINE }}'
           token: ${{ secrets.CROSS_2 }} # Your stored PAT Secret
-          path: 'test-repo-test-1' # Folder where the repo will be cloned
+          path: '${{ env.GLOBAL_FIRST_LINE }}' # Folder where the repo will be cloned
           ref: 'main' # Optional: Specify branch, tag, or SHA
 
       - name: run test

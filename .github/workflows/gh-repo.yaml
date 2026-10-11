@@ -3,7 +3,7 @@ on:
     branches:
       - main
     paths:
-      - '03_trigger/gh-01'
+      - '03_trigger/gh-0111111'
 
 jobs:
   cli-example:

@@ -16,12 +16,22 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.CROSS_2 }} # Or ${{ github.token }}
         run: |
-          gh repo create test-repo-test-1 --add-readme --private
-          git clone https://maxxam123:GH_TOKEN@github.com/maxxam123/test-repo-test-1.git
+          mkdir test
+
+      - name: Clone External Private Repo
+        uses: actions/checkout@v4
+        with:
+          repository: 'maxxam123/test-repo-test-1'
+          token: ${{ secrets.CROSS_2 }} # Your stored PAT Secret
+          path: 'test' # Folder where the repo will be cloned
+          ref: 'main' # Optional: Specify branch, tag, or SHA
+
+      - name: run test
+        run: |
+          ls -la
+          ls -la test
           ls -la test-repo-test-1
-          mkdir test-repo-test-1/test
-          touch test-repo-test-1/test/test.txt
-          ls -la test-repo-test-1
+          
       - name: Pushes to another repository
         uses: cpina/github-action-push-to-another-repository@main
         env:

@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Define input files
-GROUPS_FILE="02_template/aws/vpc/terraform/groups.txt"
-USERS_FILE="02_template/aws/vpc/terraform/users.txt"
+GROUPS_FILE="02_template/aws/iam/terraform/groups.txt"
+USERS_FILE="02_template/aws/iam/terraform/users.txt"
 
 # Define output target file
 OUTPUT_FILE="locals.tf"

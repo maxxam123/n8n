@@ -9,6 +9,11 @@ jobs:
       runs-on: ubuntu-latest
       steps:
 
+      - uses: actions/checkout@v3
+      - name: main pipeline
+        run: |
+          ls -la
+          
       - name: Run GitHub CLI Command
         id: step_one
         env:
@@ -27,7 +32,6 @@ jobs:
           path: '${{ env.GLOBAL_FIRST_LINE }}' # Folder where the repo will be cloned
           ref: 'main' # Optional: Specify branch, tag, or SHA
 
-      - uses: actions/checkout@v3
       - name: main pipeline
         run: |
           chmod +x 04_scipt/aws_vpc.sh

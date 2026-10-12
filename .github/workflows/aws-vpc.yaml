@@ -19,7 +19,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.CROSS_2 }} # Or ${{ github.token }}
         run: |
-          FIRST_LINE=$(sed -n '1{p;q;}' 03_trigger/aws/01_vpc
+          FIRST_LINE=$(sed -n '1{p;q;}' 03_trigger/aws/01_vpc)
           echo "my_variable=$FIRST_LINE" >> $GITHUB_OUTPUT
           gh repo list
 

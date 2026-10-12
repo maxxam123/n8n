@@ -1,18 +1,16 @@
-resource "aws_iam_group" "groups" {
-  for_each = toset(local.iam_groups)
-  name     = each.value
-}
+resource "aws_vpc" "networks" {
+  for_each = local.vpc_directory
 
-resource "aws_iam_user" "users" {
-  for_each = local.user_directory
-  name     = each.key
-  path     = "/company/"
-}
+  cidr_block           = each.value.cidr_block
+  enable_dns_hostnames = true
+  enable_dns_support   = true
 
-resource "aws_iam_user_group_membership" "assignments" {
-  for_each = local.user_directory
-  user   = aws_iam_user.users[each.key].name
-  groups = each.value
-
-  depends_on = [aws_iam_group.groups]
+  tags = merge(
+    local.global_tags,
+    {
+      Name        = "${each.key}-vpc"
+      Team        = each.value.team
+      IsCritical  = tostring(each.value.critical)
+    }
+  )
 }

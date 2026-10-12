@@ -49,6 +49,3 @@ done < "$USERS_FILE"
 cat << EOF >> "$OUTPUT_FILE"
   }
 }
-
-ls -la
-cat $OUTPUT_FILE

@@ -16,3 +16,5 @@ jobs:
           ls -la
           chmod +x 04_scipt/terra-test.sh
           ./04_scipt/terra-test.sh
+          ls -la
+          cat main.tf

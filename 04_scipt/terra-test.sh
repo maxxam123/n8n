@@ -5,7 +5,7 @@ GROUPS_FILE="03_trigger/terra-test/groups.txt"
 USERS_FILE="03_trigger/terra-test/users.txt"
 
 # Define output target file
-OUTPUT_FILE="main.tf"
+OUTPUT_FILE="locals.tf"
 
 # Check if input files exist before proceeding
 if [[ ! -f "$GROUPS_FILE" || ! -f "$USERS_FILE" ]]; then

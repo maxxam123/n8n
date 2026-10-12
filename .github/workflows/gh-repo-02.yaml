@@ -50,7 +50,9 @@ jobs:
           mkdir -p ${{ env.GLOBAL_FIRST_LINE }}/.github/workflows
           touch ${{ env.GLOBAL_FIRST_LINE }}/.github/workflows/test.txt
           mkdir -p ${{ env.GLOBAL_FIRST_LINE }}/01_infra/$SECOND_LINE/01-$THIRD_LINE
-          touch ${{ env.GLOBAL_FIRST_LINE }}/01_infra/$SECOND_LINE/01-$THIRD_LINE/text.txt          
+          touch ${{ env.GLOBAL_FIRST_LINE }}/01_infra/$SECOND_LINE/01-$THIRD_LINE/text.txt
+          chmod +x 04_scipt/struc1.sh
+          ./04_scipt/struc1.sh
 
       - name: Pushes to another repository
         uses: cpina/github-action-push-to-another-repository@main

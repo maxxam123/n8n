@@ -46,7 +46,7 @@ jobs:
         run: |
           chmod +x 04_scipt/struc.sh
           ./04_scipt/struc.sh
-          cp -r 01-infra/* "{{ env.GLOBAL_FIRST_LINE }}/01-infra/"
-          ls -la "{{ env.GLOBAL_FIRST_LINE }}"
-          ls -la "{{ env.GLOBAL_FIRST_LINE }}/01-infra"
+          cp -r 01-infra/* "${{ env.GLOBAL_FIRST_LINE }}/01-infra/"
+          ls -la "${{ env.GLOBAL_FIRST_LINE }}"
+          ls -la "${{ env.GLOBAL_FIRST_LINE }}/01-infra"
           

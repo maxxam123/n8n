@@ -4,7 +4,6 @@ on:
       - main
     paths:
       - '03_trigger/aws/01_vpc'
-      - '03_trigger/aws/02_vm'
 
 jobs:
   # 1. First, check which paths changed
@@ -12,7 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       aws-vpc: ${{ steps.filter.outputs.aws-vpc }}
-      aws-vm: ${{ steps.filter.outputs.aws-vm }}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
@@ -21,18 +19,10 @@ jobs:
           filters: |
             aws-vpc:
               - '03_trigger/aws/01_vpc'
-            aws-vm:
-              - '03_trigger/aws/02_vm'
 
   # 2. Call the test workflow conditionally based on the path
   trigger-test-workflow-aws-vpc:
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.aws-vpc == 'true' }}
     uses: ./.github/workflows/aws-vpc.yaml # Points to the moved file
-    secrets: inherit 
-
-  trigger-test-workflow-aws-vm:
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.aws-vm == 'true' }}
-    uses: ./.github/workflows/aws-vm.yaml # Points to your second workflow fi
     secrets: inherit    

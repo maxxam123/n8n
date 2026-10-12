@@ -24,4 +24,4 @@ echo "Hello, World!"
 
               ls -la
               ls -la ${second_line}
-              ls -la ${second_line}/01-infra/aws/o1_vpc/$NEW_VAR_2
+              ls -la ${second_line}/01-infra/aws/01_vpc/$NEW_VAR_2

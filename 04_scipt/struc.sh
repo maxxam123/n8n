@@ -54,5 +54,5 @@ echo "Successfully built folder structure!"
 ls -la
 ls -la .github
 ls -la 01-infra
-ls -la 01-infra/aws
+ls -la 01-infra/test-repo-01
 

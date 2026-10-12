@@ -48,33 +48,11 @@ for i in "${!platforms[@]}"; do
     done
 done
 
-# 5. Dynamically construct and write the tree structure layout to the 'project' file
-cat << 'EOF' > project
-.github
-	workflows
-		test.txt
-01-infra
-EOF
+echo "Successfully built folder structure!"
 
-for i in "${!platforms[@]}"; do
-    platform="${platforms[$i]}"
-    echo "	$platform" >> project
-    
-    components_line="${lines[$((i + 1))]}"
-    read -r -a components <<< "$components_line"
-    
-    index=1
-    for component in "${components[@]}"; do
-        padded_index=$(printf "%02d" "$index")
-        echo "		${padded_index}_$component" >> project
-        ((index++))
-    done
-done
-
-echo "Successfully built folder structure and wrote structural tree layout to 'project'!"
 
 ls -la
-ls -la project
-ls -la project/project
-ls -la project/project/01-infra/aws
+ls -la .github
+ls -la 01-infra
+ls -la 01-infra/aws
 

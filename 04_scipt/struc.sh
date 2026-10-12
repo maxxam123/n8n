@@ -9,17 +9,17 @@ if [ ! -f "$CONFIG_FILE" ]; then
     exit 1
 fi
 
-# 1. Create the fixed GitHub workflow directories
+# 1. Create the physical GitHub workflow directories and test file
 mkdir -p .github/workflows
 touch .github/workflows/test.txt
 
-# 2. Read the configuration file into an array of lines, trimming carriage returns
+# 2. Read the configuration file into an array of lines, stripping Windows carriage returns (\r)
 mapfile -t lines < <(tr -d '\r' < "$CONFIG_FILE")
 
-# 3. Parse the first line to get the platforms/groups (e.g., "aws" and "gcp")
+# 3. Parse the first line to get the platforms (e.g., "aws" and "gcp")
 read -r -a platforms <<< "${lines[0]}"
 
-# 4. Loop through each platform to build the infra directory structure
+# 4. Loop through each platform to build the actual 01-infra directory structure
 for i in "${!platforms[@]}"; do
     platform="${platforms[$i]}"
     
@@ -29,30 +29,49 @@ for i in "${!platforms[@]}"; do
     # Read the components list into an array
     read -r -a components <<< "$components_line"
     
-    # Loop through the components and assign a 2-digit padded prefix
+    # Loop through components and assign a 2-digit padded prefix
     index=1
     for component in "${components[@]}"; do
-        # Format the index with a leading zero (e.g., 01, 02)
         padded_index=$(printf "%02d" "$index")
         
-        # Build the exact target folder path
+        # Build and create the physical folder path
         target_dir="01-infra/$platform/${padded_index}_$component"
-        
-        # Create the directory structure seamlessly
         mkdir -p "$target_dir"
-        
-        # (Optional) Drop a .gitkeep file inside so Git tracks the empty folder
-        touch "$target_dir/.gitkeep"
+        touch "$target_dir/.gitkeep" # Ensure Git tracks empty directories
         
         ((index++))
     done
 done
 
-echo "Successfully built folder structure!"
+# 5. Dynamically construct and write the EXACT desired tree structure layout to 'project'
+# Use literal tabs (\t) inside the heredoc structure
+cat << 'EOF' > project
+.github
+	workflows
+		test.txt
+01-infra
+EOF
 
+# Append the infra components into the project file with matching tab indentation
+for i in "${!platforms[@]}"; do
+    platform="${platforms[$i]}"
+    echo -e "\t$platform" >> project
+    
+    components_line="${lines[$((i + 1))]}"
+    read -r -a components <<< "$components_line"
+    
+    index=1
+    for component in "${components[@]}"; do
+        padded_index=$(printf "%02d" "$index")
+        echo -e "\t\t${padded_index}_$component" >> project
+        ((index++))
+done
+done
+
+echo "Successfully built folder structure and wrote structural tree layout to 'project'!"
 
 ls -la
 ls -la .github
 ls -la 01-infra
-ls -la 01-infra/test-repo-01
+ls -la 01-infra/aws
 

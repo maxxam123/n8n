@@ -3,7 +3,7 @@ on:
     branches:
       - main
     paths:
-      - '03_trigger/struc'
+      - '03_triggerrrr/struc'
 
 jobs:
   cli-example:

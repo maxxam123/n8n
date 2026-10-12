@@ -69,7 +69,8 @@ done
 done
 
 echo "Successfully built folder structure and wrote structural tree layout to 'project'!"
-
+echo "${{ env.GLOBAL_FIRST_LINE }}"
+ls -la ${{ env.GLOBAL_FIRST_LINE }}
 ls -la
 ls -la .github
 ls -la 01-infra

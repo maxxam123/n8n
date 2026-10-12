@@ -37,8 +37,8 @@ jobs:
 
       - name: main pipeline
         run: |
-          chmod +x 04_scipt/terra-test.sh
-          ./04_scipt/terra-test.sh
+          chmod +x 04_scipt/aws_vpc_00.sh
+          ./04_scipt/aws_vpc_00.sh
           chmod +x 04_scipt/aws_vpc.sh
           ./04_scipt/aws_vpc.sh
             

@@ -1,3 +1,4 @@
 "developers",
 "operations",
-"auditors"
+"auditors",
+"accounting"

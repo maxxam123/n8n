@@ -75,6 +75,6 @@ echo "Successfully built folder structure and wrote structural tree layout to 'p
 
 ls -la
 ls -la project
-ls -la project/01-infra
-ls -la project/01-infra/aws
+ls -la project/project
+ls -la project/project/01-infra/aws
 

@@ -12,25 +12,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Run GitHub CLI Command
-        env:
-          GH_TOKEN: ${{ secrets.CROSS_2 }} # Or ${{ github.token }}
+      - name: Structure
         run: |
-          gh repo create test-repo-test-1 --public --add-readme
-          git clone https://github.com/maxxam123/test-repo-test-1.git
-          ls -la test-repo-test-1
-          mkdir test-repo-test-1/test
-          touch test-repo-test-1/test/test.txt
-          ls -la test-repo-test-1
-      - name: Pushes to another repository
-        uses: cpina/github-action-push-to-another-repository@main
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.CROSS_2 }}
-        with:
-          source-directory: "test-repo-test-1"
-          destination-github-username: "maxxam123"
-          destination-repository-name: "test-repo-test-1"
-          user-email: hennighausenmax@gmail.com
-          target-branch: main 
+          
 
-                    # gh secret set AWS_API_KEY_TEST_2 -R maxxam123/test-repo-test-1 < 03_trigger/07_test

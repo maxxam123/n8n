@@ -3,16 +3,12 @@ on:
    branches:
    - main
    paths:
-   - '01_infraaaaaaaaaa/01-aws/VAR_1/VAR_2/terraform.tfvars'
-   - '01_infraaaaaaaaaa/01-aws/VAR_1/VAR_2/gitops'
+   - '01-infra/aws/01_vpc/REPO2/locals.tffffffff'
 
 env:
  AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
  AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
  GITHUB: ${{ secrets.GITHUB }}
- AWS_VELERO_01: ${{ secrets.VELERO01 }}
- AWS_VELERO_02: ${{ secrets.VELERO02 }}
- AWS_VELERO_03: ${{ secrets.VELERO03 }}
 
 jobs:
  build:
@@ -21,7 +17,7 @@ jobs:
    defaults:
      run:
        shell: bash
-       working-directory: 01_infra/01-upstream/VAR_1/VAR_2/
+       working-directory: 01_infra/aws/01_vpc/REPO2/
    steps:
      - name: test
        uses: actions/checkout@v3

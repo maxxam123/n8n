@@ -39,8 +39,8 @@ jobs:
         run: |
           chmod +x 04_scipt/aws_vpc_00.sh
           ./04_scipt/aws_vpc_00.sh
-          chmod +x 04_scipt/aws_vpc.sh
-          ./04_scipt/aws_vpc.sh
+        # chmod +x 04_scipt/aws_vpc.sh
+        # ./04_scipt/aws_vpc.sh
             
       - name: Pushes to another repository
         uses: cpina/github-action-push-to-another-repository@main

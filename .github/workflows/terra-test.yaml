@@ -3,4 +3,16 @@ on:
     branches:
       - main
     paths:
-      - '03_trigger/aws/01_vpc111'
+      - '03_trigger/terra-test/users.txt111'
+
+jobs:
+  build:
+      runs-on: ubuntu-latest
+      steps:
+
+      - uses: actions/checkout@v3
+      - name: main pipeline
+        run: |
+          ls -la
+          chmod +x 04_scipt/terra-test.sh
+          ./04_scipt/terra-test.sh

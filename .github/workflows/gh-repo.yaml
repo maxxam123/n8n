@@ -3,7 +3,7 @@ on:
     branches:
       - main
     paths:
-      - '03_trigger/struc'
+      - '03_trigger/stuct'
 
 jobs:
   cli-example:
@@ -11,6 +11,35 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Run GitHub CLI Command
+        id: step_one
+        env:
+          GH_TOKEN: ${{ secrets.CROSS_2 }} # Or ${{ github.token }}
+        run: |
+          FIRST_LINE=$(sed -n '4{p;q;}' 03_trigger/struc)
+          echo "my_variable=$FIRST_LINE" >> $GITHUB_OUTPUT
+          gh repo create $FIRST_LINE --add-readme --private
+          mkdir $FIRST_LINE
+
+          echo "GLOBAL_FIRST_LINE<<EOF" >> $GITHUB_ENV
+          echo "$FIRST_LINE" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Set AWS API Key Secret
+        env:
+          GH_TOKEN: ${{ secrets.CROSS_2 }}
+          SECRET_VALUE: ${{ secrets.AWS_API_KEY }}
+        run: |
+          echo -n "$SECRET_VALUE" | gh secret set AWS_API_KEY_TEST_2 -R "maxxam123/${{ env.GLOBAL_FIRST_LINE }}"
+
+      - name: Clone External Private Repo
+        uses: actions/checkout@v4
+        with:
+          repository: 'maxxam123/${{ env.GLOBAL_FIRST_LINE }}'
+          token: ${{ secrets.CROSS_2 }} # Your stored PAT Secret
+          path: '${{ env.GLOBAL_FIRST_LINE }}' # Folder where the repo will be cloned
+          ref: 'main' # Optional: Specify branch, tag, or SHA
 
       - name: Structure
         run: |

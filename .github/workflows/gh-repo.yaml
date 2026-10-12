@@ -3,7 +3,7 @@ on:
     branches:
       - main
     paths:
-      - '03_triggerrrrrrrr/gh-01'
+      - '03_trigger/struc'
 
 jobs:
   cli-example:
@@ -14,5 +14,6 @@ jobs:
 
       - name: Structure
         run: |
-          
+          chmod +x 04_scipt/struc.sh
+          ./04_scipt/struc.sh
 

@@ -1,6 +1,6 @@
 aws gpc
-vpc vm eks ecr
-gvpc gvm gke
-test-repo-01
+vpc vm eks ecr iam
+gvpc gvm gke gcr
+test-repo-02
 
 

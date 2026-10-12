@@ -1,4 +1,3 @@
 "alice.smith"   = ["developers", "operations"]
 "bob.jones"     = ["developers"]
 "charlie.brown" = ["auditors"]
-

@@ -1,1 +1,6 @@
-a
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '03_trigger/aws/01_vpc111'

@@ -5,9 +5,6 @@ on:
     paths:
       - '03_trigger/aws/01_vpc'
       - '03_trigger/aws/02_vm'
-      - '03_trigger/aws/03_eks'
-      - '03_trigger/gcp/gvm'
-      - '03_trigger/gcp/gvpc'
 
 jobs:
   # 1. First, check which paths changed
@@ -16,9 +13,6 @@ jobs:
     outputs:
       aws-vpc: ${{ steps.filter.outputs.aws-vpc }}
       aws-vm: ${{ steps.filter.outputs.aws-vm }}
-      aws-eks: ${{ steps.filter.outputs.aws-eks }}
-      gcp-gvpc: ${{ steps.filter.outputs.gcp-gvpc }}
-      gcp-gvm: ${{ steps.filter.outputs.gcp-gvm }}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
@@ -29,12 +23,6 @@ jobs:
               - '03_trigger/aws/01_vpc'
             aws-vm:
               - '03_trigger/aws/02_vm'
-            aws-eks:
-              - '03_trigger/aws/03_eks'
-            gcp-gvpc:
-              - '03_trigger/gcp/gvpc'
-            gcp-gvm:
-              - '03_trigger/gcp/gvm'
 
   # 2. Call the test workflow conditionally based on the path
   trigger-test-workflow-aws-vpc:
@@ -47,24 +35,4 @@ jobs:
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.aws-vm == 'true' }}
     uses: ./.github/workflows/aws-vm.yaml # Points to your second workflow fi
-    secrets: inherit 
-
-  trigger-test-workflow-aws-eks:
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.aws-eks == 'true' }}
-    uses: ./.github/workflows/aws-eks.yaml # Points to your second workflow fi
-    secrets: inherit 
-
-  trigger-test-workflow-gcp-gvpc:
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.gcp-gvpc == 'true' }}
-    uses: ./.github/workflows/gcp-gvpc.yaml # Points to the moved file
-    secrets: inherit 
-
-  trigger-test-workflow-gcp-gvm:
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.gcp-gvm == 'true' }}
-    uses: ./.github/workflows/gcp-gvm.yaml # Points to your second workflow fi
-    secrets: inherit 
-
-    
+    secrets: inherit    

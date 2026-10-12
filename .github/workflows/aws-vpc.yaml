@@ -37,10 +37,10 @@ jobs:
 
       - name: main pipeline
         run: |
-          chmod +x 04_scipt/iam_template.sh
-          ./04_scipt/iam_template.sh
-          chmod +x 04_scipt/iam.sh
-          ./04_scipt/iam.sh
+          chmod +x 04_scipt/vpc_template.sh
+          ./04_scipt/vpc_template.sh
+          chmod +x 04_scipt/vpc.sh
+          ./04_scipt/vpc.sh
             
       - name: Pushes to another repository
         uses: cpina/github-action-push-to-another-repository@main

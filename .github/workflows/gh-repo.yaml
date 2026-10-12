@@ -21,7 +21,6 @@ jobs:
           echo "my_variable=$FIRST_LINE" >> $GITHUB_OUTPUT
           gh repo create $FIRST_LINE --add-readme --private
           mkdir $FIRST_LINE
-          mkdir $FIRST_LINE/01-infra
 
           echo "GLOBAL_FIRST_LINE<<EOF" >> $GITHUB_ENV
           echo "$FIRST_LINE" >> $GITHUB_ENV
@@ -48,7 +47,8 @@ jobs:
           ./04_scipt/struc.sh
           ls -la
           ls -la "${{ env.GLOBAL_FIRST_LINE }}"
+          mkdir "${{ env.GLOBAL_FIRST_LINE }}/01-infra"
           ls -la "${{ env.GLOBAL_FIRST_LINE }}/01-infra"
-
-        # cp -r 01-infra/* "${{ env.GLOBAL_FIRST_LINE }}/01-infra/"
+          cp -r 01-infra/* "${{ env.GLOBAL_FIRST_LINE }}/01-infra/"
+          ls -la "${{ env.GLOBAL_FIRST_LINE }}/01-infra"
           

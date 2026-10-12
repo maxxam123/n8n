@@ -8,13 +8,14 @@ echo "Hello, World!"
               fourth_line=$(sed -n '4{p;q;}' 03_trigger/aws/01_vpc)
               
               NEW_VAR="aws_vpc_${first_line}.yaml"
+              NEW_VAR_2="${first_line}_aws_vpc"
               
               touch ${second_line}/.github/workflows/"$NEW_VAR"
               cp 02_template/aws/vpc/pipeline/pipeline.yaml ${second_line}/.github/workflows/"$NEW_VAR"
+              sed -i "s/REPO/$NEW_VAR_2/g" ${second_line}/.github/workflows/"$NEW_VAR"
               # sed -i "s/VAR_2/$third_line/g" n8n-in/.github/workflows/"$NEW_VAR"
               # sed -i "s/VAR_1/$second_line/g" n8n-in/.github/workflows/"$NEW_VAR"
 
-              NEW_VAR_2="${first_line}_aws_vpc"
               mkdir ${second_line}/01-infra/aws/01_vpc/"$NEW_VAR_2"
               ls -la ${second_line}/01-infra/aws/01_vpc
               cp locals.tf ${second_line}/01-infra/aws/01_vpc/"$NEW_VAR_2"/locals.tf

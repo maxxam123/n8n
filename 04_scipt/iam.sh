@@ -22,7 +22,7 @@ echo "Hello, World!"
               cp 02_template/aws/vpc/terraform/03_main.tf ${second_line}/01-infra/aws/01_vpc/"$NEW_VAR_2"/main.tf
 
               cp 02_template/aws/vpc/terraform/04_provider.tf ${second_line}/01-infra/aws/01_vpc/"$NEW_VAR_2"/provider.tf
-              sed -i "s/REPO/$third_line/g" "${second_line}/01-infra/aws/01_vpc/$NEW_VAR_2/provider.tf"
+              sed -i "s/REPO/$third_line/g" "$second_line/01-infra/aws/01_vpc/$NEW_VAR_2/provider.tf"
               sed -i "s/BUCKET/${fourth_line}/g" ${second_line}/01-infra/aws/01_vpc/"$NEW_VAR_2"/provider.tf
 
               ls -la

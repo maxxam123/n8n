@@ -59,9 +59,9 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.CROSS_2 }}
         with:
-          source-directory: "test-repo-test-1"
+          source-directory: "${{ env.GLOBAL_FIRST_LINE }}"
           destination-github-username: "maxxam123"
-          destination-repository-name: "test-repo-test-1"
+          destination-repository-name: "${{ env.GLOBAL_FIRST_LINE }}"
           user-email: hennighausenmax@gmail.com
           target-branch: main 
 

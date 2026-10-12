@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Define input files
-GROUPS_FILE="groups.txt"
-USERS_FILE="users.txt"
+GROUPS_FILE="03_trigger/terra-test/groups.txt"
+USERS_FILE="03_trigger/terra-test/users.txt"
 
 # Define output target file
 OUTPUT_FILE="main.tf"
@@ -49,3 +49,6 @@ done < "$USERS_FILE"
 cat << EOF >> "$OUTPUT_FILE"
   }
 }
+
+ls -la
+cat $OUTPUT_FILE

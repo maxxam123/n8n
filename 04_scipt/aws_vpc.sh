@@ -12,9 +12,11 @@ echo "Hello, World!"
               # sed -i "s/VAR_1/$second_line/g" n8n-in/.github/workflows/"$NEW_VAR"
 
               NEW_VAR_2="${first_line}_aws_vpc"
-              cp main.tf ${second_line}/01-infra/aws/01_vpc/"$NEW_VAR_2"/main.tf
+              cp locals.tf ${second_line}/01-infra/aws/01_vpc/"$NEW_VAR_2"/locals.tf
+              
+              cp 02_template/aws/vpc/terraform/03_main.tf ${second_line}/01-infra/aws/01_vpc/"$NEW_VAR_2"/main.tf
 
-              cp 03_trigger/terra-test/users.txt ${second_line}/01-infra/aws/01_vpc/"$NEW_VAR_2"/users.txt
+              cp 02_template/aws/vpc/terraform/04_provider.tf ${second_line}/01-infra/aws/01_vpc/"$NEW_VAR_2"/provider.tf
 
               ls -la
               ls -la ${second_line}

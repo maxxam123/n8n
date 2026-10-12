@@ -20,8 +20,11 @@ jobs:
           GH_TOKEN: ${{ secrets.CROSS_2 }} # Or ${{ github.token }}
         run: |
           FIRST_LINE=$(sed -n '2{p;q;}' 03_trigger/aws/01_vpc
+          echo "my_variable=$FIRST_LINE" >> $GITHUB_OUTPUT
+          gh repo list
+
           echo "GLOBAL_FIRST_LINE<<EOF" >> $GITHUB_ENV
-          echo "$FIRST_LINE" >> $GITHUB_ENV
+          echo "$FIRST_LINE" >> $GITHUB_ENV  
           echo "EOF" >> $GITHUB_ENV
 
       - name: Clone External Private Repo

@@ -3,7 +3,7 @@ on:
    branches:
    - main
    paths:
-   - '01-infra/aws/01_vpc/REPO2/locals.tffffffff'
+   - '01-infra/aws/05_iam/REPO2/locals.tffffffff'
 
 env:
  AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
@@ -17,7 +17,7 @@ jobs:
    defaults:
      run:
        shell: bash
-       working-directory: 01_infra/aws/01_vpc/REPO2/
+       working-directory: 01_infra/aws/05_iam/REPO2/
    steps:
      - name: test
        uses: actions/checkout@v3

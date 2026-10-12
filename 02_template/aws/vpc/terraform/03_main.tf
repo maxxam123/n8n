@@ -1,14 +1,18 @@
-resource "aws_iam_group" "team_group" {
-  name = "${local.team_name}-group"
+resource "aws_iam_group" "groups" {
+  for_each = toset(local.iam_groups)
+  name     = each.value
 }
 
-resource "aws_iam_user" "team_users" {
-  for_each = local.iam_users
-  name = each.value # references the current username in the loop
+resource "aws_iam_user" "users" {
+  for_each = local.user_directory
+  name     = each.key
+  path     = "/company/"
 }
 
-resource "aws_iam_user_group_membership" "team_assignment" {
-  for_each = local.iam_users
-  user   = aws_iam_user.team_users[each.value].name
-  groups = [aws_iam_group.team_group.name]
+resource "aws_iam_user_group_membership" "assignments" {
+  for_each = local.user_directory
+  user   = aws_iam_user.users[each.key].name
+  groups = each.value
+
+  depends_on = [aws_iam_group.groups]
 }

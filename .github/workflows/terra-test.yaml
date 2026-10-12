@@ -3,7 +3,7 @@ on:
     branches:
       - main
     paths:
-      - '03_trigger/terra-test/users.txt111'
+      - '03_trigger/terra-test/users.txt'
 
 jobs:
   build:

@@ -5,8 +5,8 @@ provider "aws" {
 terraform {
 
   backend "s3" {
-    bucket = "dunhuang-gansu-terraform-state"
-    key    = "global/SVC/terraform.tfstate"
+    bucket = "BUCKET"
+    key    = "global/REPO/terraform.tfstate"
     dynamodb_table = "terraform_state"
     region = "eu-central-1"
     encrypt = true

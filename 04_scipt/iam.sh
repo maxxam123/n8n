@@ -12,7 +12,7 @@ echo "Hello, World!"
               
               touch ${second_line}/.github/workflows/"$NEW_VAR"
               cp 02_template/aws/vpc/pipeline/pipeline.yaml ${second_line}/.github/workflows/"$NEW_VAR"
-              sed -i "s/REPO/$NEW_VAR_2/g" ${second_line}/.github/workflows/"$NEW_VAR"
+              sed -i "s/REPO2/$NEW_VAR_2/g" ${second_line}/.github/workflows/"$NEW_VAR"
               # sed -i "s/VAR_2/$third_line/g" n8n-in/.github/workflows/"$NEW_VAR"
               # sed -i "s/VAR_1/$second_line/g" n8n-in/.github/workflows/"$NEW_VAR"
 

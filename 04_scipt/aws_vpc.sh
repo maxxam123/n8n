@@ -12,16 +12,16 @@ echo "Hello, World!"
               # sed -i "s/VAR_1/$second_line/g" n8n-in/.github/workflows/"$NEW_VAR"
 
               NEW_VAR_2="${first_line}_aws_vpc"
-              mkdir ${second_line}/01_infra/aws/01_vpc/"$NEW_VAR_2"
-              touch ${second_line}/01_infra/aws/01_vpc/"$NEW_VAR_2"/01_locals.tf
-              cp 02_template/aws/vpc/terraform/01_locals.tf ${second_line}/01_infra/aws/01_vpc/"$NEW_VAR_2"/01_locals.tf
+              mkdir ${second_line}/01-infra/aws/01_vpc/"$NEW_VAR_2"
+              touch ${second_line}/01-infra/aws/01_vpc/"$NEW_VAR_2"/01_locals.tf
+              cp 02_template/aws/vpc/terraform/01_locals.tf ${second_line}/01-infra/aws/01_vpc/"$NEW_VAR_2"/01_locals.tf
 
-              touch ${second_line}/01_infra/aws/01_vpc/"$NEW_VAR_2"/02_variables.tf
-              cp 02_template/aws/vpc/terraform/02_variables.tf ${second_line}/01_infra/aws/01_vpc/"$NEW_VAR_2"/02_variables.tf
+              touch ${second_line}/01-infra/aws/01_vpc/"$NEW_VAR_2"/02_variables.tf
+              cp 02_template/aws/vpc/terraform/02_variables.tf ${second_line}/01-infra/aws/01_vpc/"$NEW_VAR_2"/02_variables.tf
 
-              touch ${second_line}/01_infra/aws/01_vpc/"$NEW_VAR_2"/03_main.tf
-              cp 02_template/aws/vpc/terraform/03_main.tf ${second_line}/01_infra/aws/01_vpc/"$NEW_VAR_2"/03_main.tf
+              touch ${second_line}/01-infra/aws/01_vpc/"$NEW_VAR_2"/03_main.tf
+              cp 02_template/aws/vpc/terraform/03_main.tf ${second_line}/01-infra/aws/01_vpc/"$NEW_VAR_2"/03_main.tf
 
               ls -la
               ls -la ${second_line}
-              ls -la ${second_line}/01_infra/aws/o1_vpc/$NEW_VAR_2
+              ls -la ${second_line}/01-infra/aws/o1_vpc/$NEW_VAR_2

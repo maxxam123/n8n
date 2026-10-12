@@ -9,19 +9,37 @@ jobs:
       runs-on: ubuntu-latest
       steps:
 
-        - uses: actions/checkout@v3
-        - name: main pipeline
-          run: |
-              chmod +x 04_scipt/aws_vpc.sh
-              ./04_scipt/aws_vpc.sh
+      - name: Run GitHub CLI Command
+        id: step_one
+        env:
+          GH_TOKEN: ${{ secrets.CROSS_2 }} # Or ${{ github.token }}
+        run: |
+          FIRST_LINE=$(sed -n '4{p;q;}' 03_trigger/struct
+          echo "GLOBAL_FIRST_LINE<<EOF" >> $GITHUB_ENV
+          echo "$FIRST_LINE" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Clone External Private Repo
+        uses: actions/checkout@v4
+        with:
+          repository: 'maxxam123/${{ env.GLOBAL_FIRST_LINE }}'
+          token: ${{ secrets.CROSS_2 }} # Your stored PAT Secret
+          path: '${{ env.GLOBAL_FIRST_LINE }}' # Folder where the repo will be cloned
+          ref: 'main' # Optional: Specify branch, tag, or SHA
+
+      - uses: actions/checkout@v3
+      - name: main pipeline
+        run: |
+          chmod +x 04_scipt/aws_vpc.sh
+          ./04_scipt/aws_vpc.sh
             
-        - name: Pushes to another repository
-          uses: cpina/github-action-push-to-another-repository@main
-          env:
-            API_TOKEN_GITHUB: ${{ secrets.CROSS_2 }}
-          with:
-            source-directory: "n8n-in"
-            destination-github-username: "maxxam123"
-            destination-repository-name: "n8n-in"
-            user-email: hennighausenmax@gmail.com
-            target-branch: main 
+      #- name: Pushes to another repository
+      #  uses: cpina/github-action-push-to-another-repository@main
+      #  env:
+      #    API_TOKEN_GITHUB: ${{ secrets.CROSS_2 }}
+      #  with:
+      #    source-directory: "${{ env.GLOBAL_FIRST_LINE }}"
+      #    destination-github-username: "maxxam123"
+      #    destination-repository-name: "${{ env.GLOBAL_FIRST_LINE }}"
+      #    user-email: hennighausenmax@gmail.com
+      #    target-branch: main 

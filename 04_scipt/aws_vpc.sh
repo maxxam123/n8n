@@ -2,8 +2,8 @@ echo "Hello, World!"
               # git clone https://github.com/maxxam123/n8n-in.git
               ls -la
               pwd
-              first_line=$(sed -n '1{p;q;}' 03_trigger/aws/01_vpc)
-              second_line=$(sed -n '2{p;q;}' 03_trigger/aws/01_vpc)
+              first_line=$(sed -n '2{p;q;}' 03_trigger/aws/01_vpc)
+              second_line=$(sed -n '1{p;q;}' 03_trigger/aws/01_vpc)
               
               NEW_VAR="aws_vpc_${first_line}.yaml"
               touch ${second_line}/.github/workflows/"$NEW_VAR"

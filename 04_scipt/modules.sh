@@ -32,18 +32,10 @@ IFS=' ' read -r -a gcp_modules <<< "$(sed -n '6p' "$INPUT_FILE")"
 # Note: Line 7 ("test-repo-02") is skipped entirely.
 
 
-# 3. Provision Expanded GitHub Actions CI/CD Pipeline Files
+# 3. Provision Core Root Structure and clean CI/CD directory
+# This ensures ONLY test.yaml is generated inside .github/workflows
 WORKFLOW_DIR="${categories[0]}/workflows"
 mkdir -p "$WORKFLOW_DIR"
-
-# Explicitly create all required YAML workflow files
-touch "$WORKFLOW_DIR/aws-iam.yaml"
-touch "$WORKFLOW_DIR/aws-vpc.yaml"
-touch "$WORKFLOW_DIR/delete.yaml"
-touch "$WORKFLOW_DIR/gh-repo.yaml"
-touch "$WORKFLOW_DIR/modules.yaml"
-touch "$WORKFLOW_DIR/multi.yaml"
-touch "$WORKFLOW_DIR/terra-test.yaml"
 touch "$WORKFLOW_DIR/test.yaml"
 
 
@@ -85,7 +77,7 @@ if command -v tree &> /dev/null; then
     tree "${categories[0]}" "${categories[1]}" "${categories[2]}" "${categories[3]}"
 else
     # Fallback to recursive find visualization if tree is not installed on system
-    find . -maxdepth 3 -not -path '*/.*' | sort
+    find . -maxdepth 4 -not -path '*/.*' | sort
 fi
 
 

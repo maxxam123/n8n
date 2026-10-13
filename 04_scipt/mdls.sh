@@ -6,6 +6,7 @@ echo "Hello, World!"
               second_line=$(sed -n '1{p;q;}' 03_trigger/mdls)
               third_line=$(sed -n '3{p;q;}' 03_trigger/mdls)
               fourth_line=$(sed -n '4{p;q;}' 03_trigger/mdls)
+              fifth_line=$(sed -n '5{p;q;}' 03_trigger/mdls)
 
               ls -la
               ls -la $second_line
@@ -16,8 +17,8 @@ echo "Hello, World!"
               mkdir $second_line/02_modules/$first_line/$third_line/infrasructure-module
               mkdir $second_line/02_modules/$first_line/$third_line/infrasructure-live
 
-              cp -r 02_template/aws_mdl/$second_line/environment/* $second_line/02_modules/$first_line/$third_line/infrasructure-live
-              cp -r 02_template/aws_mdls/$second_line/module/* $second_line/02_modules/$first_line/$third_line/infrasructure-module
+              cp -r 02_template/aws_mdl/$fifth_line/environment/* $second_line/02_modules/$first_line/$third_line/infrasructure-live
+              cp -r 02_template/aws_mdls/$fifth_line/module/* $second_line/02_modules/$first_line/$third_line/infrasructure-module
               ls -la $second_line/02_modules/$first_line/$third_line/infrasructure-live
               ls -la $second_line/02_modules/$first_line/$third_line/infrasructure-module
               

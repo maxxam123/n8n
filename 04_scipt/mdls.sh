@@ -16,8 +16,8 @@ echo "Hello, World!"
               mkdir $second_line/02_modules/$first_line/$third_line/infrasructure-module
               mkdir $second_line/02_modules/$first_line/$third_line/infrasructure-live
 
-              cp -r 02_template/aws/aws_modules/environment/* $second_line/02_modules/$first_line/$third_line/infrasructure-live
-              cp -r 02_template/aws/aws_modules/module/* $second_line/02_modules/$first_line/$third_line/infrasructure-module
+              cp -r 02_template/aws_modules/environment/* $second_line/02_modules/$first_line/$third_line/infrasructure-live
+              cp -r 02_template/aws_modules/module/* $second_line/02_modules/$first_line/$third_line/infrasructure-module
               ls -la $second_line/02_modules/$first_line/$third_line/infrasructure-live
               ls -la $second_line/02_modules/$first_line/$third_line/infrasructure-module
               

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-INPUT_FILE="02_trigger/modules"
+INPUT_FILE="03_trigger/modules"
 
 # 1. Verification Guard: Ensure the dynamic source data exists
 if [[ ! -f "$INPUT_FILE" ]]; then

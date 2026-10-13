@@ -38,22 +38,21 @@ jobs:
           ./04_scipt/mdls.sh
           ls -la
           ls -la "${{ env.GLOBAL_FIRST_LINE }}"
-          mkdir "${{ env.GLOBAL_FIRST_LINE }}/02_modules"
           ls -la "${{ env.GLOBAL_FIRST_LINE }}/02_modules"
           
-          cp -r 01-infra/* "${{ env.GLOBAL_FIRST_LINE }}/01-infra/"
-          ls -la "${{ env.GLOBAL_FIRST_LINE }}/01-infra"
-          mkdir "${{ env.GLOBAL_FIRST_LINE }}/.github"
-          mkdir "${{ env.GLOBAL_FIRST_LINE }}/.github/workflows"
-          touch "${{ env.GLOBAL_FIRST_LINE }}/.github/workflows/test.txt"
+     #     cp -r 01-infra/* "${{ env.GLOBAL_FIRST_LINE }}/01-infra/"
+     #     ls -la "${{ env.GLOBAL_FIRST_LINE }}/01-infra"
+     #     mkdir "${{ env.GLOBAL_FIRST_LINE }}/.github"
+     #     mkdir "${{ env.GLOBAL_FIRST_LINE }}/.github/workflows"
+     #     touch "${{ env.GLOBAL_FIRST_LINE }}/.github/workflows/test.txt"
 
-      - name: Pushes to another repository
-        uses: cpina/github-action-push-to-another-repository@main
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.CROSS_2 }}
-        with:
-          source-directory: "${{ env.GLOBAL_FIRST_LINE }}"
-          destination-github-username: "maxxam123"
-          destination-repository-name: "${{ env.GLOBAL_FIRST_LINE }}"
-          user-email: hennighausenmax@gmail.com
-          target-branch: main 
+      #- name: Pushes to another repository
+      #  uses: cpina/github-action-push-to-another-repository@main
+      #  env:
+      #    API_TOKEN_GITHUB: ${{ secrets.CROSS_2 }}
+      #  with:
+      #    source-directory: "${{ env.GLOBAL_FIRST_LINE }}"
+      #    destination-github-username: "maxxam123"
+      #    destination-repository-name: "${{ env.GLOBAL_FIRST_LINE }}"
+      #    user-email: hennighausenmax@gmail.com
+      #    target-branch: main 

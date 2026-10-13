@@ -17,7 +17,7 @@ echo "Hello, World!"
               mkdir $second_line/02_modules/$first_line/$third_line/infrastructure-module
               mkdir $second_line/02_modules/$first_line/$third_line/infrastructure-live
 
-              cp -r 02_template/aws_mdls/$fifth_line/environment/* $second_line/02_modules/$first_line/$third_line/infrasructure-live
+              cp -r 02_template/aws_mdls/$fifth_line/environment/* $second_line/02_modules/$first_line/$third_line/infrastructure-live
               cp -r 02_template/aws_mdls/$fifth_line/module/* $second_line/02_modules/$first_line/$third_line/infrastructure-module
               ls -la $second_line/02_modules/$first_line/$third_line/infrastructure-live
               ls -la $second_line/02_modules/$first_line/$third_line/infrastructure-module

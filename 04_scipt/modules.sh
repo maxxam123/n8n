@@ -29,12 +29,22 @@ IFS=' ' read -r -a aws_modules <<< "$(sed -n '5p' "$INPUT_FILE")"
 # Line 6: Raw GCP Module names
 IFS=' ' read -r -a gcp_modules <<< "$(sed -n '6p' "$INPUT_FILE")"
 
-# Note: Line 7 ("test-repo-02") is skipped entirely by ignoring it in this script.
+# Note: Line 7 ("test-repo-02") is skipped entirely.
 
 
-# 3. Provision Core Root Structure and CI/CD pipelines
-mkdir -p "${categories[0]}/workflows"
-touch "${categories[0]}/workflows/test.yaml"
+# 3. Provision Expanded GitHub Actions CI/CD Pipeline Files
+WORKFLOW_DIR="${categories[0]}/workflows"
+mkdir -p "$WORKFLOW_DIR"
+
+# Explicitly create all required YAML workflow files
+touch "$WORKFLOW_DIR/aws-iam.yaml"
+touch "$WORKFLOW_DIR/aws-vpc.yaml"
+touch "$WORKFLOW_DIR/delete.yaml"
+touch "$WORKFLOW_DIR/gh-repo.yaml"
+touch "$WORKFLOW_DIR/modules.yaml"
+touch "$WORKFLOW_DIR/multi.yaml"
+touch "$WORKFLOW_DIR/terra-test.yaml"
+touch "$WORKFLOW_DIR/test.yaml"
 
 
 # 4. Provision '01-infra' Layer
@@ -77,6 +87,7 @@ else
     # Fallback to recursive find visualization if tree is not installed on system
     find . -maxdepth 3 -not -path '*/.*' | sort
 fi
+
 
 ls -la
 echo ${categories[0]}

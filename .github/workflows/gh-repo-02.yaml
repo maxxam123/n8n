@@ -54,9 +54,12 @@ jobs:
           mkdir "${{ env.GLOBAL_FIRST_LINE }}/03_apps"
 
           cp -r 01_infra/* "${{ env.GLOBAL_FIRST_LINE }}/01_infra/"
+          ls -la ${{ env.GLOBAL_FIRST_LINE }}/01_infra/
           cp -r .github/workflows/* "${{ env.GLOBAL_FIRST_LINE }}/.github/workflows/"
-          cp -r 02_modules/* "${{ env.GLOBAL_FIRST_LINE }}/02_modules/"
-          cp -r 03_apps/* "${{ env.GLOBAL_FIRST_LINE }}/03_apps/"
+          cp -r 02_modules/* "${{ env.GLOBAL_FIRST_LINE }}/02_modules/*"
+          ls -la ${{ env.GLOBAL_FIRST_LINE }}/02_modules/
+          cp -r 03_apps/* "${{ env.GLOBAL_FIRST_LINE }}/03_apps/*"
+          ls -la ${{ env.GLOBAL_FIRST_LINE }}/03_apps/
 
       - name: Pushes to another repository
         uses: cpina/github-action-push-to-another-repository@main

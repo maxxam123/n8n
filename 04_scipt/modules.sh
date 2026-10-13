@@ -78,15 +78,17 @@ mkdir -p "${categories[3]}/${providers[1]}"
 
 
 # -------------------------------------------------------------
-# DYNAMIC PLACEHOLDER RUNNER
+# TARGETED LEAF-FOLDER PLACEHOLDER RUNNER
 # -------------------------------------------------------------
-# Loops through all newly created infrastructure, module, and app folders
-# and adds the required 'test.txt' file inside each leaf folder.
+# Sucht gezielt nach Ordnern, die keine Unterordner enthalten (Unterste Ebene)
 for dir in "${categories[1]}" "${categories[2]}" "${categories[3]}"; do
     if [[ -d "$dir" ]]; then
+        # Findet alle Verzeichnisse, die selbst keine Unterverzeichnisse besitzen
         find "$dir" -type d | while read -r target_dir; do
-            # Only put files inside actual subdirectories, avoiding root anchors if empty
-            touch "$target_dir/test.txt"
+            # Überprüfung, ob der Ordner leer von weiteren Unterordnern ist
+            if [[ -z "$(find "$target_dir" -mindepth 1 -type d)" ]]; then
+                touch "$target_dir/test.txt"
+            fi
         done
     fi
 done
@@ -98,7 +100,7 @@ if command -v tree &> /dev/null; then
     tree "${categories[0]}" "${categories[1]}" "${categories[2]}" "${categories[3]}"
 else
     # Fallback to recursive find visualization if tree is not installed on system
-    find . -maxdepth 4 -not -path '*/.*' | sort
+    find . -maxdepth 5 -not -path '*/.*' | sort
 fi
 
 ls -la

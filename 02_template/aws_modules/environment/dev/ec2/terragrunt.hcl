@@ -7,7 +7,7 @@ terraform {
 }
 
 dependency "vpc" {
-  config_path = "../../../../environment/dev/vpc"
+  config_path = ../../vpc"
 }
 
 inputs = {

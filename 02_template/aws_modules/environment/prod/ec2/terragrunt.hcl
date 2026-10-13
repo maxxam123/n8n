@@ -7,12 +7,7 @@ terraform {
 }
 
 inputs = {
-  vpc_cidr = "172.30.0.0/16"
-  subnet_cidr = "172.30.0.0/24"
-  vpc_tags = {
-    "Name" = "prod-"
-  }
-  subnet_tags = {
-    "Name" = "prod-subnet"
-  }
+  subnet_id = ""
+  instance_type = "t3.micro"
+  ami = "ami-0d03cbb826412c6b0f"
 }

@@ -8,19 +8,19 @@ terraform {
 
 inputs = {
   vpc_directory = {
-    "production" = {
+    "development-01" = {
       cidr_block = "10.0.0.0/16"
-      team       = "devops"
+      team       = "engineering-01"
       critical   = true
     }
-    "staging" = {
+    "development-02" = {
       cidr_block = "10.1.0.0/16"
-      team       = "qa"
+      team       = "engineering-02"
       critical   = false
     }
-    "development" = {
+    "development-03" = {
       cidr_block = "10.2.0.0/16"
-      team       = "engineering"
+      team       = "engineering-03"
       critical   = false
     }
   }

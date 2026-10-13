@@ -2,6 +2,7 @@
 
 INPUT_FILE="03_trigger/modules"
 
+
 # 1. Verification Guard: Ensure the dynamic source data exists
 if [[ ! -f "$INPUT_FILE" ]]; then
     echo "❌ Error: Source file '$INPUT_FILE' not found."
@@ -34,9 +35,13 @@ WORKFLOW_FILENAME=$(sed -n '7p' "$INPUT_FILE" | tr -d '\r ' )
 
 
 # 3. Provision Core Root Structure and clean CI/CD directory
-# Creates ONLY the dynamic filename entry inside .github/workflows/
 WORKFLOW_DIR="${categories[0]}/workflows"
 mkdir -p "$WORKFLOW_DIR"
+
+# CRITICAL FIX: Delete any other files in this directory to guarantee ONLY test-repo-02.yaml remains
+rm -f "$WORKFLOW_DIR"/*
+
+# Create the single valid workflow file
 touch "$WORKFLOW_DIR/${WORKFLOW_FILENAME}.yaml"
 
 
@@ -80,6 +85,8 @@ else
     # Fallback to recursive find visualization if tree is not installed on system
     find . -maxdepth 4 -not -path '*/.*' | sort
 fi
+
+
 
 ls -la
 ls -la ${categories[0]}

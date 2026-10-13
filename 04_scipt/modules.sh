@@ -77,6 +77,21 @@ mkdir -p "${categories[3]}/${providers[0]}"
 mkdir -p "${categories[3]}/${providers[1]}"
 
 
+# -------------------------------------------------------------
+# DYNAMIC PLACEHOLDER RUNNER
+# -------------------------------------------------------------
+# Loops through all newly created infrastructure, module, and app folders
+# and adds the required 'test.txt' file inside each leaf folder.
+for dir in "${categories[1]}" "${categories[2]}" "${categories[3]}"; do
+    if [[ -d "$dir" ]]; then
+        find "$dir" -type d | while read -r target_dir; do
+            # Only put files inside actual subdirectories, avoiding root anchors if empty
+            touch "$target_dir/test.txt"
+        done
+    fi
+done
+
+
 # 7. Print the resulting tree layout using standard tools
 echo -e "\n✅ Success! Repository structure generated perfectly:\n"
 if command -v tree &> /dev/null; then
@@ -85,8 +100,6 @@ else
     # Fallback to recursive find visualization if tree is not installed on system
     find . -maxdepth 4 -not -path '*/.*' | sort
 fi
-
-
 
 ls -la
 ls -la ${categories[0]}

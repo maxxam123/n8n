@@ -7,12 +7,21 @@ terraform {
 }
 
 inputs = {
-  vpc_cidr = "172.30.0.0/16"
-  subnet_cidr = "172.30.0.0/24"
-  vpc_tags = {
-    "Name" = "prod-vpc"
-  }
-  subnet_tags = {
-    "Name" = "prod-subnet"
+  vpc_directory = {
+    "production-01" = {
+      cidr_block = "10.10.0.0/16"
+      team       = "devops-01"
+      critical   = true
+    }
+    "production-02" = {
+      cidr_block = "10.11.0.0/16"
+      team       = "devops-01"
+      critical   = false
+    }
+    "production-03" = {
+      cidr_block = "10.12.0.0/16"
+      team       = "devops-01"
+      critical   = false
+    }
   }
 }

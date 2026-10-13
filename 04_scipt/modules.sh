@@ -1,6 +1,6 @@
 #!/bin/bash
 
-INPUT_FILE="02_trigger/modules.txt"
+INPUT_FILE="02_trigger/modules"
 
 # 1. Verification Guard: Ensure the dynamic source data exists
 if [[ ! -f "$INPUT_FILE" ]]; then
@@ -77,3 +77,9 @@ else
     # Fallback to recursive find visualization if tree is not installed on system
     find . -maxdepth 3 -not -path '*/.*' | sort
 fi
+
+ls -la
+echo ${categories[0]}
+echo ${categories[1]}
+echo ${categories[2]}
+echo ${categories[3]}

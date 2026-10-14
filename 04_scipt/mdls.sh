@@ -7,7 +7,7 @@ echo "Hello, World!"
               third_line=$(sed -n '3{p;q;}' 03_trigger/mdls)
               fourth_line=$(sed -n '4{p;q;}' 03_trigger/mdls)
               fifth_line=$(sed -n '5{p;q;}' 03_trigger/mdls)
-              customer=$(sed -n '5{p;q;}' 03_trigger/mdls)
+              customer=$(sed -n '6{p;q;}' 03_trigger/mdls)
 
               ls -la
               ls -la $second_line

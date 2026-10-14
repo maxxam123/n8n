@@ -1,6 +1,6 @@
 #!/bin/bash
 
-INPUT_FILE="03_trigger/modules"
+INPUT_FILE="03_trigger/repo-generater"
 
 
 # 1. Verification Guard: Ensure the dynamic source data exists

@@ -1,7 +1,7 @@
 test-repo-04
 aws
 vpc
-01-tenent
+05-tenent
 dev
 network
 10.0.0.0/16

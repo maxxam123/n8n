@@ -7,6 +7,7 @@ echo "Hello, World!"
               third_line=$(sed -n '3{p;q;}' 03_trigger/mdls)
               fourth_line=$(sed -n '4{p;q;}' 03_trigger/mdls)
               fifth_line=$(sed -n '5{p;q;}' 03_trigger/mdls)
+              customer=$(sed -n '5{p;q;}' 03_trigger/mdls)
 
               ls -la
               ls -la $second_line
@@ -16,9 +17,12 @@ echo "Hello, World!"
               
               mkdir $second_line/02_modules/$first_line/$third_line/infrastructure-module
               mkdir $second_line/02_modules/$first_line/$third_line/infrastructure-live
+              mkdir $second_line/02_modules/$first_line/$third_line/infrastructure-live/prod
+              mkdir $second_line/02_modules/$first_line/$third_line/infrastructure-live/dev
 
-              cp -r 02_template/aws_mdls/$fifth_line/environment/* $second_line/02_modules/$first_line/$third_line/infrastructure-live
-              cp -r 02_template/aws_mdls/$fifth_line/module/* $second_line/02_modules/$first_line/$third_line/infrastructure-module
+              cp -r 02_template/aws_mdls/$fifth_line/environment/dev/$first_line/* $second_line/02_modules/$first_line/$third_line/$customer/infrastructure-live/dev
+              cp -r 02_template/aws_mdls/$fifth_line/environment/prod/$first_line/* $second_line/02_modules/$first_line/$third_line/$customer/infrastructure-live/prod
+              cp -r 02_template/aws_mdls/$fifth_line/module/* $second_line/02_modules/$first_line/$third_line/$customer/infrastructure-module
               ls -la $second_line/02_modules/$first_line/$third_line/infrastructure-live
               ls -la $second_line/02_modules/$first_line/$third_line/infrastructure-module
               

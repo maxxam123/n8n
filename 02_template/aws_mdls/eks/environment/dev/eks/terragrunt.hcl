@@ -1,17 +1,41 @@
+terraform {
+  source = "git@github.com/...."
+}
+
 include "root" {
   path = find_in_parent_folders()
 }
 
-terraform {
-  source = "git@github.com:maxxam123/infra-modules.git//eks$ref=eks-v0.0.1"
+include "env" {
+  path = find_in_parent_folders("env.hcl")
+  expose = true
+  merge_stategy = "no_merge"
+}
+
+inputs = {
+  eks_version = "1.26"
+  env = include.env.locals.env
+  eks_name = "demo"
+  subnetids = dependency.vpc.outputs.private_subnet_ids
+
+  node_groups = {
+    general = {
+      capacity_type = "ON_DEMAND"
+      instance_types = ["t3a.xlarge"]
+      scalling_config = {
+        desired_size = 1
+        max_size = 10
+        min_size = 0
+        }
+      }
+    }
+  }
 }
 
 dependency "vpc" {
   config_path = "../../network/vpc"
-}
-
-inputs = {
-  subnet_id = dependency.vpc.outputs.subnet_id
-  instance_type = "t3.micro"
-  ami = "ami-0df0df0adf"    
+ 
+  mock_outputs = {
+    private_subnet_ids = ["subnet-1234", "subnet-5678"]
+  }
 }

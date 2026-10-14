@@ -9,6 +9,7 @@
               mkdir $repo/02_modules/$provider/$environment/$customer/$SVC
 
               cp -r 02_template/aws_mdls/$SVC/environment/$environment/$SVC/* $repo/02_modules/$provider/$environment/$customer/$SVC/
+              cp -r 02_template/aws_mdls/terragrunt.hcl $repo/02_modules/$provider/$environment/
 
               # mkdir $repo/02_modules/$provider/module-$SVC/$customer
               # mkdir -p $repo/02_modules/$provider/module-$SVC/$customer/{infrastructure-module,infrastructure-live}

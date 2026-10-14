@@ -6,6 +6,7 @@
               environment=$(sed -n '5{p;q;}' 03_trigger/tgwa)
               CATEGORY=$(sed -n '6{p;q;}' 03_trigger/tgwa)
               TAG=$(sed -n '7{p;q;}' 03_trigger/tgwa)
+              TENENT=$(sed -n '8{p;q;}' 03_trigger/tgwa)
 
               mkdir -p $repo/02_modules/$provider/$environment/$customer
               mkdir -p $repo/02_modules/$provider/$environment/$customer/$CATEGORY
@@ -15,6 +16,9 @@
               cp -u 02_template/aws_mdls/terragrunt.hcl $repo/02_modules/$provider/$environment/$customer
               cp -u 02_template/aws_mdls/env.hcl $repo/02_modules/$provider/$environment/$customer
               sed -i "s/ENV/$environment/g" $repo/02_modules/$provider/$environment/$customer/env.hcl
+
+              sed -i "s/TAG/$TAG/g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC/terragrunt.hcl
+              sed -i "s/TENENT/$TENENT/g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC/terragrunt.hcl
 
 
               # mkdir $repo/02_modules/$provider/module-$SVC/$customer

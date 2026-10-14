@@ -1,13 +1,13 @@
 include "root" {
-  path = find_in_parent_folders("root.hcl")
+  path = find_in_parent_folders()
 }
 
 terraform {
-  source = "../../../module/ec2"
+  source = "git@github.com:maxxam123/infra-modules.git//ec2$ref=ec2-v0.0.1"
 }
 
 dependency "vpc" {
-  config_path = "../../../../../vpc/environment/dev/vpc"
+  config_path = "../../network/vpc"
 }
 
 inputs = {

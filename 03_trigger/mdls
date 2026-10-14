@@ -1,8 +1,8 @@
 test-repo-03
 aws
-module-vpc
-vpc
-02-aws-vpc
+module-ec2
+ec2
+01-aws-ec2
 
 
 

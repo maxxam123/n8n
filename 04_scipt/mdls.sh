@@ -6,7 +6,8 @@
               environment=$(sed -n '5{p;q;}' 03_trigger/mdls)
               ART=$(sed -n '6{p;q;}' 03_trigger/mdls)
 
-              mkdir $repo/02_modules/$provider/$environment/$custome
+              mkdir $repo/02_modules/$provider/$environment/$customer
+              mkdir $repo/02_modules/$provider/$environment/$customer/$SVC-$ART
 
               cp -r 02_template/aws_mdls/$SVC/environment/$environment/$SVC/* $repo/02_modules/$provider/$environment/$custome/$SVC-$ART/
 

@@ -3,7 +3,7 @@ include "root" {
 }
 
 terraform {
-  source = "git::git@github.com:terraform-aws-modules/terraform-aws-transit-gateway.git//modules/resource-share-association?ref=v2.10.0"
+    source = "git@github.com:maxxam123/infra-modules.git//tgwa$ref=tgwa-vTAG"
 }
 
 dependency "tgw" {

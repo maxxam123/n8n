@@ -1,8 +1,8 @@
 test-repo-04
 aws
 vpc
-02-vpc-mgnt
-dev
+01-vpc-mgnt
+prod
 
 
 

@@ -5,11 +5,6 @@
               customer=$(sed -n '4{p;q;}' 03_trigger/mdls)
               environment=$(sed -n '5{p;q;}' 03_trigger/mdls)
               CATEGORY=$(sed -n '6{p;q;}' 03_trigger/mdls)
-              SUB_PR_01=$(sed -n '7{p;q;}' 03_trigger/mdls)
-              SUB_PR_02=$(sed -n '8{p;q;}' 03_trigger/mdls)
-              SUB_PU_01=$(sed -n '9{p;q;}' 03_trigger/mdls)
-              SUB_PU_02=$(sed -n '10{p;q;}' 03_trigger/mdls)
-              TAG=$(sed -n '11{p;q;}' 03_trigger/mdls)
               INSTANCE=$(sed -n '12{p;q;}' 03_trigger/mdls)
               AMI=$(sed -n '13{p;q;}' 03_trigger/mdls)
 
@@ -25,6 +20,11 @@
               if [ "$SVC" == "vpc" ]
               then
                 echo "HIT HIT"
+                SUB_PR_01=$(sed -n '7{p;q;}' 03_trigger/mdls)
+                SUB_PR_02=$(sed -n '8{p;q;}' 03_trigger/mdls)
+                SUB_PU_01=$(sed -n '9{p;q;}' 03_trigger/mdls)
+                SUB_PU_02=$(sed -n '10{p;q;}' 03_trigger/mdls)
+                TAG=$(sed -n '11{p;q;}' 03_trigger/mdls)
                 sed -i "s|SUB_PRI_01|$SUB_PR_01|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC/terragrunt.hcl
                 sed -i "s|SUB_PRI_02|$SUB_PR_02|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC/terragrunt.hcl
                 sed -i "s|SUB_PUB_01|$SUB_PU_01|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC/terragrunt.hcl
@@ -36,6 +36,9 @@
               if [ "$SVC" == "ec2" ]
               then
                 echo "HIT HIT"
+                TAG=$(sed -n '7{p;q;}' 03_trigger/mdls)
+                INSTANCE=$(sed -n '8{p;q;}' 03_trigger/mdls)
+                AMI=$(sed -n '9{p;q;}' 03_trigger/mdls)
                 sed -i "s|TAG|$TAG|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC/terragrunt.hcl
                 sed -i "s|INSTANCE|$INSTANCE|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC/terragrunt.hcl
                 sed -i "s|AMI|$AMI|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC/terragrunt.hcl

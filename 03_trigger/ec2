@@ -1,9 +1,9 @@
 test-repo-04
 aws
-vpc
-02-tenent
+ec2
+05-tenent
 dev
-network
+compute
 0.0.1
 t3.micro
 ami:5234703947234

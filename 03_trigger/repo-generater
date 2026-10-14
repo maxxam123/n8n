@@ -4,7 +4,7 @@ vpc vm eks ecr ec2
 gvpc gvm gke gcr
 dev staging prod
 dev staging prod
-test-repo-04
+test-repo-05
 
 
 

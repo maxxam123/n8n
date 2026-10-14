@@ -1,5 +1,5 @@
 terraform {
-  source = "git@github.com:maxxam123/infra-modules.git//vpc$ref=vpc-v0.0.1"
+  source = "git@github.com:maxxam123/infra-modules.git//vpc$ref=vpc-vTAG"
 }
 
 include "root" {
@@ -7,10 +7,10 @@ include "root" {
 }
 
 inputs = {
-  env             = "dev"
+  env             = "ENV"
   azs             = ["us-east-1a", "us-east-1b"]
   private_subnets = ["SUB_PRI_01", "SUB_PRI_02"]
-  public_subnets  = ["10.0.64.0/19", "10.0.96.0/19"]
+  public_subnets  = ["SUB_PUB_01", "SUB_PUB_02"]
 
   private_subnet_tags = {
     "kubernetes.io/role/internal-elb" = 1

@@ -24,6 +24,6 @@ echo "Hello, World!"
               cp -r 02_template/aws_mdls/$fifth_line/environment/dev/$fifth_line/* $second_line/02_modules/$first_line/$third_line/$customer/infrastructure-live/dev
               cp -r 02_template/aws_mdls/$fifth_line/environment/prod/$fifth_line/* $second_line/02_modules/$first_line/$third_line/$customer/infrastructure-live/prod
               cp -r 02_template/aws_mdls/$fifth_line/module/* $second_line/02_modules/$first_line/$third_line/$customer/infrastructure-module
-              ls -la $second_line/02_modules/$first_line/$third_line/infrastructure-live
-              ls -la $second_line/02_modules/$first_line/$third_line/infrastructure-module
+              ls -la $second_line/02_modules/$first_line/$third_line/$customer//infrastructure-live
+              ls -la $second_line/02_modules/$first_line/$third_line/$customer//infrastructure-module
               

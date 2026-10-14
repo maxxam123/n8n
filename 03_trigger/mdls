@@ -1,7 +1,7 @@
 test-repo-04
 aws
-ec2
-02-tenent
+vpc
+03-tenent
 dev
 compute
 10.0.0.0/16
@@ -9,7 +9,6 @@ compute
 10.2.0.0/16
 10.3.0.0/16
 0.0.1
-t3.micro
-ami:51375314034134
+
 
 

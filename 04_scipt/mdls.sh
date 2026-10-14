@@ -4,9 +4,8 @@ echo "Hello, World!"
               pwd
               repo=$(sed -n '1{p;q;}' 03_trigger/mdls)
               provider=$(sed -n '2{p;q;}' 03_trigger/mdls)
-              module=$(sed -n '3{p;q;}' 03_trigger/mdls)
-              SVC=$(sed -n '4{p;q;}' 03_trigger/mdls)
-              customer=$(sed -n '5{p;q;}' 03_trigger/mdls)
+              SVC=$(sed -n '3{p;q;}' 03_trigger/mdls)
+              customer=$(sed -n '4{p;q;}' 03_trigger/mdls)
 
               ls -la
               ls -la $repo
@@ -15,10 +14,12 @@ echo "Hello, World!"
               ls -la $repo/02_modules/$provider/module-$SVC
 
               mkdir $repo/02_modules/$provider/module-$SVC/$customer
-              mkdir $repo/02_modules/$providermodule-$SVC/$customer/infrastructure-module
-              mkdir $repo/02_modules/$provider/module-$SVC/$customer/infrastructure-live
-              mkdir $repo/02_modules/$provider/module-$SVC/$customer/infrastructure-live/prod
-              mkdir $repo/02_modules/$provider/module-$SVC/$customer/infrastructure-live/dev
+              mkdir -p $repo/02_modules/$provider/module-$SVC/$customer/{infrastructure-module,infrastructure-live}
+              # mkdir $repo/02_modules/$providermodule-$SVC/$customer/infrastructure-module
+              # mkdir $repo/02_modules/$provider/module-$SVC/$customer/infrastructure-live
+              mkdir $repo/02_modules/$provider/module-$SVC/$customer/infrastructure-live/{prod,dev}
+              # mkdir $repo/02_modules/$provider/module-$SVC/$customer/infrastructure-live/prod
+              # mkdir $repo/02_modules/$provider/module-$SVC/$customer/infrastructure-live/dev
 
               cp -r 02_template/aws_mdls/$SVC/environment/dev/$SVC/* $repo/02_modules/$provider/module-$SVC/$customer/infrastructure-live/dev
               cp -r 02_template/aws_mdls/$SVC/environment/prod/$SVC/* $repo/02_modules/$provider/module-$SVC/$customer/infrastructure-live/prod

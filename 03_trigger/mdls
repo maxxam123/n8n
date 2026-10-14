@@ -1,6 +1,6 @@
 test-repo-04
 aws
-vpc
+ec2
 01-vpc-mgnt
 prod
 

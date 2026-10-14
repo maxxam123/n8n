@@ -6,10 +6,11 @@
               environment=$(sed -n '5{p;q;}' 03_trigger/mdls)
               CATEGORY=$(sed -n '6{p;q;}' 03_trigger/mdls)
 
-              mkdir $repo/02_modules/$provider/$environment/$customer
+              mkdir -p $repo/02_modules/$provider/$environment/$customer
               mkdir -p $repo/02_modules/$provider/$environment/$customer/$CATEGORY
+              mkdir -p $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC
 
-              cp -r 02_template/aws_mdls/$SVC/environment/$environment/$SVC/* $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC
+              cp -r 02_template/aws_mdls/$SVC/environment/$environment/$SVC/* $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC/
               cp -u 02_template/aws_mdls/terragrunt.hcl $repo/02_modules/$provider/$environment/$customer
 
               # mkdir $repo/02_modules/$provider/module-$SVC/$customer

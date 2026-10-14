@@ -10,6 +10,8 @@
               SUB_PU_01=$(sed -n '9{p;q;}' 03_trigger/mdls)
               SUB_PU_02=$(sed -n '10{p;q;}' 03_trigger/mdls)
               TAG=$(sed -n '11{p;q;}' 03_trigger/mdls)
+              INSTANCE=$(sed -n '12{p;q;}' 03_trigger/mdls)
+              AMI=$(sed -n '13{p;q;}' 03_trigger/mdls)
 
               mkdir -p $repo/02_modules/$provider/$environment/$customer
               mkdir -p $repo/02_modules/$provider/$environment/$customer/$CATEGORY
@@ -30,6 +32,13 @@
                 sed -i "s|TAG|$TAG|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC/terragrunt.hcl
                 sed -i "s|ENV|$environment|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC/terragrunt.hcl
               fi
+
+              if [ "$SVC" == "ec2" ]
+              then
+                echo "HIT HIT"
+                sed -i "s|TAG|$TAG|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC/terragrunt.hcl
+                sed -i "s|INSTANCE|$INSTANCE|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC/terragrunt.hcl
+                sed -i "s|AMI|$AMI|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC/terragrunt.hcl
 
               # mkdir $repo/02_modules/$provider/module-$SVC/$customer
               # mkdir -p $repo/02_modules/$provider/module-$SVC/$customer/{infrastructure-module,infrastructure-live}

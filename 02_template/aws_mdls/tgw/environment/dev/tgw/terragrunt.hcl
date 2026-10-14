@@ -26,7 +26,7 @@ inputs = {
   
   ram_allow_external_principals = true
   ram_principals = [
-    "arn:aws:organizations::111122223333:organization/o-exampleorgid"
+    "ARN"
   ]
 
   tags = {

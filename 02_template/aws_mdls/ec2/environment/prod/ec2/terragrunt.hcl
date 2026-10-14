@@ -3,7 +3,7 @@ include "root" {
 }
 
 terraform {
-  source = "git@github.com:maxxam123/infra-modules.git//ec2$ref=ec2-v0.0.1"
+  source = "git@github.com:maxxam123/infra-modules.git//ec2$ref=ec2-vTAG"
 }
 
 dependency "vpc" {
@@ -12,6 +12,6 @@ dependency "vpc" {
 
 inputs = {
   subnet_id = dependency.vpc.outputs.subnet_id
-  instance_type = "t3.micro"
-  ami = "ami-0df0df0adf"    
+  instance_type = "INSTANCE"
+  ami = "AMI"    
 }

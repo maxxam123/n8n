@@ -1,5 +1,5 @@
 terraform {
-  source = "git@github.com/...."
+    source = "git@github.com:maxxam123/infra-modules.git//eks$ref=eks-vTAG"
 }
 
 include "root" {
@@ -13,19 +13,19 @@ include "env" {
 }
 
 inputs = {
-  eks_version = "1.26"
+  eks_version = "VER"
   env = include.env.locals.env
-  eks_name = "demo"
+  eks_name = "NAME"
   subnetids = dependency.vpc.outputs.private_subnet_ids
 
   node_groups = {
     general = {
       capacity_type = "ON_DEMAND"
-      instance_types = ["t3a.xlarge"]
+      instance_types = ["MACHINE"]
       scalling_config = {
-        desired_size = 1
-        max_size = 10
-        min_size = 0
+        desired_size = DES_SIZE
+        max_size = MAX_SIZE
+        min_size = MIN_SIZE
         }
       }
     }

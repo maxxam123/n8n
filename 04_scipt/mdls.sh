@@ -20,8 +20,8 @@
               if [ "$SVC" == "vpc" ]
               then
                 echo "HIT HIT"
-                sed -i "s/SUB_PRI_01/$SUB_PR_01/g" $repo/02_modules/$provider/$environment/$customer/terragrunt.hcl
-                sed -i "s/SUB_PRI_01/$SUB_PR_01/g" $repo/02_modules/$provider/$environment/$customer/terragrunt.hcl
+                sed -i "s|SUB_PRI_01|$SUB_PR_01|g" $repo/02_modules/$provider/$environment/$customer/terragrunt.hcl
+                sed -i "s|SUB_PRI_01|$SUB_PR_01|g" $repo/02_modules/$provider/$environment/$customer/terragrunt.hcl
               fi
 
               # mkdir $repo/02_modules/$provider/module-$SVC/$customer

@@ -1,7 +1,6 @@
 test-repo-03
 aws
 module-vpc
-entry
 vpc
 02-aws-vpc
 

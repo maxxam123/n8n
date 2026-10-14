@@ -1,9 +1,11 @@
 test-repo-04
 aws
-ec2
-01-tenent
+vpc
+02-tenent
 dev
-compute
+network
+10.0.0.0/16
+10.1.0.0/16
 
 
 

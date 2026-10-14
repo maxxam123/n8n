@@ -1,8 +1,0 @@
-.github 01_infra 02_modules 03_apps
-aws gcp
-vpc vm eks ecr ec2
-gvpc gvm gke gcr
-dev staging prod
-dev staging prod
-test-repo-04
-

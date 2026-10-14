@@ -9,7 +9,7 @@
               mkdir $repo/02_modules/$provider/$environment/$customer
               mkdir $repo/02_modules/$provider/$environment/$customer/$SVC-$ART
 
-              cp -r 02_template/aws_mdls/$SVC/environment/$environment/$SVC/* $repo/02_modules/$provider/$environment/$custome/$SVC-$ART/
+              cp -r 02_template/aws_mdls/$SVC/environment/$environment/$SVC/* $repo/02_modules/$provider/$environment/$customer/$SVC-$ART/
 
               # mkdir $repo/02_modules/$provider/module-$SVC/$customer
               # mkdir -p $repo/02_modules/$provider/module-$SVC/$customer/{infrastructure-module,infrastructure-live}

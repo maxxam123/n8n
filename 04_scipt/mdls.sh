@@ -39,7 +39,7 @@
                 sed -i "s|TAG|$TAG|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC/terragrunt.hcl
                 sed -i "s|INSTANCE|$INSTANCE|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC/terragrunt.hcl
                 sed -i "s|AMI|$AMI|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC/terragrunt.hcl
-
+              fi
               # mkdir $repo/02_modules/$provider/module-$SVC/$customer
               # mkdir -p $repo/02_modules/$provider/module-$SVC/$customer/{infrastructure-module,infrastructure-live}
               # mkdir -p $repo/02_modules/$provider/module-$SVC/$customer/infrastructure-live/{prod,dev}

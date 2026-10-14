@@ -3,7 +3,7 @@ include "root" {
 }
 
 terraform {
-  source = git@github.com//maxxam123/tgw-aws-modules.git?ref=v2.10.0"
+    source = "git@github.com:maxxam123/infra-modules.git//tgw$ref=tgw-vTAG"
 }
 
 

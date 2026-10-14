@@ -12,17 +12,17 @@ echo "Hello, World!"
               ls -la $repo
               ls -la $repo/02_modules
               ls -la $repo/02_modules/$provider
-              ls -la $repo/02_modules/$provider/$module
+              ls -la $repo/02_modules/$provider/module-$SVC
 
-              mkdir $repo/02_modules/$provider/$module/$customer
-              mkdir $repo/02_modules/$provider/$module/$customer/infrastructure-module
-              mkdir $repo/02_modules/$provider/$module/$customer/infrastructure-live
-              mkdir $repo/02_modules/$provider/$module/$customer/infrastructure-live/prod
-              mkdir $repo/02_modules/$provider/$module/$customer/infrastructure-live/dev
+              mkdir $repo/02_modules/$provider/module-$SVC/$customer
+              mkdir $repo/02_modules/$providermodule-$SVC/$customer/infrastructure-module
+              mkdir $repo/02_modules/$provider/module-$SVC/$customer/infrastructure-live
+              mkdir $repo/02_modules/$provider/module-$SVC/$customer/infrastructure-live/prod
+              mkdir $repo/02_modules/$provider/module-$SVC/$customer/infrastructure-live/dev
 
-              cp -r 02_template/aws_mdls/$SVC/environment/dev/$SVC/* $repo/02_modules/$provider/$module/$customer/infrastructure-live/dev
-              cp -r 02_template/aws_mdls/$SVC/environment/prod/$SVC/* $repo/02_modules/$provider/$module/$customer/infrastructure-live/prod
-              cp -r 02_template/aws_mdls/$SVC/module/* $repo/02_modules/$provider/$module/$customer/infrastructure-module
-              ls -la $repo/02_modules/$provider/$module/$customer//infrastructure-live
-              ls -la $repo/02_modules/$provider/$module/$customer//infrastructure-module
+              cp -r 02_template/aws_mdls/$SVC/environment/dev/$SVC/* $repo/02_modules/$provider/module-$SVC/$customer/infrastructure-live/dev
+              cp -r 02_template/aws_mdls/$SVC/environment/prod/$SVC/* $repo/02_modules/$provider/module-$SVC/$customer/infrastructure-live/prod
+              cp -r 02_template/aws_mdls/$SVC/module/* $repo/02_modules/$provider/module-$SVC/$customer/infrastructure-module
+              ls -la $repo/02_modules/$provider/module-$SVC/$customer//infrastructure-live
+              ls -la $repo/02_modules/$provider/module-$SVC/$customer//infrastructure-module
               

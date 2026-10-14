@@ -7,6 +7,9 @@
               CATEGORY=$(sed -n '6{p;q;}' 03_trigger/mdls)
               SUB_PR_01=$(sed -n '7{p;q;}' 03_trigger/mdls)
               SUB_PR_02=$(sed -n '8{p;q;}' 03_trigger/mdls)
+              SUB_PU_01=$(sed -n '9{p;q;}' 03_trigger/mdls)
+              SUB_PU_02=$(sed -n '10{p;q;}' 03_trigger/mdls)
+              TAG=$(sed -n '11{p;q;}' 03_trigger/mdls)
 
               mkdir -p $repo/02_modules/$provider/$environment/$customer
               mkdir -p $repo/02_modules/$provider/$environment/$customer/$CATEGORY
@@ -22,6 +25,9 @@
                 echo "HIT HIT"
                 sed -i "s|SUB_PRI_01|$SUB_PR_01|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC/terragrunt.hcl
                 sed -i "s|SUB_PRI_02|$SUB_PR_02|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC/terragrunt.hcl
+                sed -i "s|SUB_PUB_01|$SUB_PU_01|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC/terragrunt.hcl
+                sed -i "s|SUB_PUB_02|$SUB_PU_02|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC/terragrunt.hcl
+                sed -i "s|TAG|$TAG|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC/terragrunt.hcl
               fi
 
               # mkdir $repo/02_modules/$provider/module-$SVC/$customer

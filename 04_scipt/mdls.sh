@@ -5,9 +5,8 @@ echo "Hello, World!"
               repo=$(sed -n '1{p;q;}' 03_trigger/mdls)
               provider=$(sed -n '2{p;q;}' 03_trigger/mdls)
               module=$(sed -n '3{p;q;}' 03_trigger/mdls)
-              fourth_line=$(sed -n '4{p;q;}' 03_trigger/mdls)
-              fifth_line=$(sed -n '5{p;q;}' 03_trigger/mdls)
-              customer=$(sed -n '6{p;q;}' 03_trigger/mdls)
+              SVC=$(sed -n '4{p;q;}' 03_trigger/mdls)
+              customer=$(sed -n '5{p;q;}' 03_trigger/mdls)
 
               ls -la
               ls -la $repo
@@ -21,9 +20,9 @@ echo "Hello, World!"
               mkdir $repo/02_modules/$provider/$module/$customer/infrastructure-live/prod
               mkdir $repo/02_modules/$provider/$module/$customer/infrastructure-live/dev
 
-              cp -r 02_template/aws_mdls/$fifth_line/environment/dev/$fifth_line/* $repo/02_modules/$provider/$module/$customer/infrastructure-live/dev
-              cp -r 02_template/aws_mdls/$fifth_line/environment/prod/$fifth_line/* $repo/02_modules/$provider/$module/$customer/infrastructure-live/prod
-              cp -r 02_template/aws_mdls/$fifth_line/module/* $repo/02_modules/$provider/$module/$customer/infrastructure-module
+              cp -r 02_template/aws_mdls/$SVC/environment/dev/$SVC/* $repo/02_modules/$provider/$module/$customer/infrastructure-live/dev
+              cp -r 02_template/aws_mdls/$SVC/environment/prod/$SVC/* $repo/02_modules/$provider/$module/$customer/infrastructure-live/prod
+              cp -r 02_template/aws_mdls/$SVC/module/* $repo/02_modules/$provider/$module/$customer/infrastructure-module
               ls -la $repo/02_modules/$provider/$module/$customer//infrastructure-live
               ls -la $repo/02_modules/$provider/$module/$customer//infrastructure-module
               

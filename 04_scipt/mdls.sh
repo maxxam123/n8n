@@ -3,12 +3,18 @@
               provider=$(sed -n '2{p;q;}' 03_trigger/mdls)
               SVC=$(sed -n '3{p;q;}' 03_trigger/mdls)
               customer=$(sed -n '4{p;q;}' 03_trigger/mdls)
+              environment=$(sed -n '5{p;q;}' 03_trigger/mdls)
+              ART=$(sed -n '6{p;q;}' 03_trigger/mdls)
 
-              mkdir $repo/02_modules/$provider/module-$SVC/$customer
-              mkdir -p $repo/02_modules/$provider/module-$SVC/$customer/{infrastructure-module,infrastructure-live}
-              mkdir -p $repo/02_modules/$provider/module-$SVC/$customer/infrastructure-live/{prod,dev}
+              mkdir $repo/02_modules/$provider/$environment/$custome
 
-              cp -r 02_template/aws_mdls/$SVC/environment/dev/$SVC/* $repo/02_modules/$provider/module-$SVC/$customer/infrastructure-live/dev
-              cp -r 02_template/aws_mdls/$SVC/environment/prod/$SVC/* $repo/02_modules/$provider/module-$SVC/$customer/infrastructure-live/prod
-              cp -r 02_template/aws_mdls/$SVC/module/* $repo/02_modules/$provider/module-$SVC/$customer/infrastructure-module
+              cp -r 02_template/aws_mdls/$SVC/environment/$environment/$SVC/* $repo/02_modules/$provider/$environment/$custome/$SVC-$ART/
+
+              # mkdir $repo/02_modules/$provider/module-$SVC/$customer
+              # mkdir -p $repo/02_modules/$provider/module-$SVC/$customer/{infrastructure-module,infrastructure-live}
+              # mkdir -p $repo/02_modules/$provider/module-$SVC/$customer/infrastructure-live/{prod,dev}
+
+              # cp -r 02_template/aws_mdls/$SVC/environment/dev/$SVC/* $repo/02_modules/$provider/module-$SVC/$customer/infrastructure-live/dev
+              # cp -r 02_template/aws_mdls/$SVC/environment/prod/$SVC/* $repo/02_modules/$provider/module-$SVC/$customer/infrastructure-live/prod
+              # cp -r 02_template/aws_mdls/$SVC/module/* $repo/02_modules/$provider/module-$SVC/$customer/infrastructure-module
               

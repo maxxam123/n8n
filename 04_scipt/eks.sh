@@ -23,19 +23,20 @@
               SOUR_01=02_template/aws_mdls/$SVC/environment/$environment/$SVC
               SOUR_02=02_template/aws_mdls
 
-              cp -r 02_template/aws_mdls/$SVC/environment/$environment/$SVC/* $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/
+              # cp -r 02_template/aws_mdls/$SVC/environment/$environment/$SVC/* $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/
+              cp -r 02_template/aws_mdls/$SVC/environment/$environment/$SVC/* $DEST_01/
               cp -u 02_template/aws_mdls/terragrunt.hcl $repo/02_modules/$provider/$environment/$customer
               cp -u 02_template/aws_mdls/env.hcl $repo/02_modules/$provider/$environment/$customer
               sed -i "s/ENV/$environment/g" $repo/02_modules/$provider/$environment/$customer/env.hcl
 
                 echo "HIT HIT"
-                sed -i "s|TAG|$TAG|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/terragrunt.hcl
-                sed -i "s|VER|$VER|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/terragrunt.hcl
-                sed -i "s|NAME|$NAME|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/terragrunt.hcl
-                sed -i "s|MACHINE|$MACHINE|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/terragrunt.hcl
-                sed -i "s|DES_SIZE|$DES_SIZE|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/terragrunt.hcl
-                sed -i "s|MAX_SIZE|$MAX_SIZE|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/terragrunt.hcl
-                sed -i "s|MIN_SIZE|$MIN_SIZE|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/terragrunt.hcl
+                sed -i "s|TAG|$TAG|g" $DEST_01/terragrunt.hcl
+                sed -i "s|VER|$VER|g" $DEST_01/terragrunt.hcl
+                sed -i "s|NAME|$NAME|g" $DEST_01/terragrunt.hcl
+                sed -i "s|MACHINE|$MACHINE|g" $DEST_01/terragrunt.hcl
+                sed -i "s|DES_SIZE|$DES_SIZE|g" $DEST_01/terragrunt.hcl
+                sed -i "s|MAX_SIZE|$MAX_SIZE|g" $DEST_01/terragrunt.hcl
+                sed -i "s|MIN_SIZE|$MIN_SIZE|g" $DEST_01/terragrunt.hcl
 
               # mkdir $repo/02_modules/$provider/module-$SVC/$customer
               # mkdir -p $repo/02_modules/$provider/module-$SVC/$customer/{infrastructure-module,infrastructure-live}

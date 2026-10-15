@@ -15,10 +15,11 @@
               NUMBER=$(sed -n '14{p;q;}' 03_trigger/eks)
 
               mkdir -p $repo/02_modules/$provider/$environment/$customer
-              mkdir -p $repo/02_modules/$provider/$environment/$customer/$CATEGORY
-              mkdir -p $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER
+              mkdir -p $repo/02_modules/$provider/$environment/$customer/$environment
+              mkdir -p $repo/02_modules/$provider/$environment/$customer/$environment/$CATEGORY
+              mkdir -p $repo/02_modules/$provider/$environment/$customer/$environment/$CATEGORY/$SVC-$NUMBER
 
-              DEST_01=$repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER
+              DEST_01=$repo/02_modules/$provider/$environment/$customer/$environment/$CATEGORY/$SVC-$NUMBER
               DEST_02=$repo/02_modules/$provider/$environment/$customer
               SOUR_01=02_template/aws_mdls/$SVC/environment/$environment/$SVC
               SOUR_02=02_template/aws_mdls

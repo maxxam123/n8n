@@ -22,7 +22,7 @@
               SOUR_02=02_template/aws_mdls
 
               # cp -r 02_template/aws_mdls/$SVC/environment/$environment/$SVC/* $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/
-              cp -r 02_template/aws_mdls/$SVC/environment/$environment/$SVC/* $DEST_01/
+              cp -r $SOUR_01/* $DEST_01/
               # cp -u 02_template/aws_mdls/terragrunt.hcl $repo/02_modules/$provider/$environment/$customer
               cp -u 02_template/aws_mdls/terragrunt.hcl $DEST_02
               # cp -u 02_template/aws_mdls/env.hcl $repo/02_modules/$provider/$environment/$customer

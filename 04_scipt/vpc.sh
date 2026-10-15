@@ -24,7 +24,7 @@
               # cp -r 02_template/aws_mdls/$SVC/environment/$environment/$SVC/* $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/
               cp -r $SOUR_01/* $DEST_01/
               # cp -u 02_template/aws_mdls/terragrunt.hcl $repo/02_modules/$provider/$environment/$customer
-              cp -u 02_template/aws_mdls/terragrunt.hcl $DEST_02
+              cp -u $SOUR_02/terragrunt.hcl $DEST_02
               # cp -u 02_template/aws_mdls/env.hcl $repo/02_modules/$provider/$environment/$customer
               cp -u 02_template/aws_mdls/env.hcl $DEST_02
               # sed -i "s/ENV/$environment/g" $repo/02_modules/$provider/$environment/$customer/env.hcl
@@ -32,10 +32,10 @@
 
 
                 echo "HIT HIT"
-                sed -i "s|SUB_PRI_01|$SUB_PR_01|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/terragrunt.hcl
-                sed -i "s|SUB_PRI_02|$SUB_PR_02|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/terragrunt.hcl
-                sed -i "s|SUB_PUB_01|$SUB_PU_01|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/terragrunt.hcl
-                sed -i "s|SUB_PUB_02|$SUB_PU_02|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/terragrunt.hcl
-                sed -i "s|TAG|$TAG|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/terragrunt.hcl
-                sed -i "s|ENV|$environment|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/terragrunt.hcl
+                sed -i "s|SUB_PRI_01|$SUB_PR_01|g" $DEST_01/terragrunt.hcl
+                sed -i "s|SUB_PRI_02|$SUB_PR_02|g" $DEST_01/terragrunt.hcl
+                sed -i "s|SUB_PUB_01|$SUB_PU_01|g" $DEST_01/terragrunt.hcl
+                sed -i "s|SUB_PUB_02|$SUB_PU_02|g" $DEST_01/terragrunt.hcl
+                sed -i "s|TAG|$TAG|g" $DEST_01/terragrunt.hcl
+                sed -i "s|ENV|$environment|g" $DEST_01/terragrunt.hcl
 

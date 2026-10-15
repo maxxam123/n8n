@@ -43,12 +43,3 @@
               cp -u 02_template/aws_mdls/env.hcl $DEST_02
               # sed -i "s/ENV/$environment/g" $repo/02_modules/$provider/$environment/$customer/env.hcl
               sed -i "s/ENV/$environment/g" $DEST_02/env.hcl
-
-
-                echo "HIT HIT"
-                sed -i "s|SUB_PRI_01|$SUB_PR_01|g" $DEST_01/terragrunt.hcl
-                sed -i "s|SUB_PRI_02|$SUB_PR_02|g" $DEST_01/terragrunt.hcl
-                sed -i "s|SUB_PUB_01|$SUB_PU_01|g" $DEST_01/terragrunt.hcl
-                sed -i "s|SUB_PUB_02|$SUB_PU_02|g" $DEST_01/terragrunt.hcl
-                sed -i "s|TAG|$TAG|g" $DEST_01/terragrunt.hcl
-                sed -i "s|ENV|$environment|g" $DEST_01/terragrunt.hcl

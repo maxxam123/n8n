@@ -23,7 +23,6 @@
               mkdir -p $repo/02_modules/$provider/$environment/$customer/_envcommon
               mkdir -p $repo/02_modules/$provider/$environment/$customer/_envcommon/data
               cp -u $SOUR_02/s3.hcl $repo/02_modules/$provider/$environment/$customer/_envcommon/data/
-              cp -u 02_template/aws_mdls/data.hcl $repo/02_modules/$provider/$environment/$customer/_envcommon/
               echo "INPUT"
               ls -la $repo/02_modules/$provider/$environment/$customer/
               ls -la $repo/02_modules/$provider/$environment/$customer/_envcommon

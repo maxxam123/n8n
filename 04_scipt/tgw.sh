@@ -11,6 +11,12 @@
               mkdir -p $repo/02_modules/$provider/$environment/$customer/$CATEGORY
               mkdir -p $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER
 
+              mkdir -p $repo/02_modules/$provider/$environment/$customer/_envcommon
+              cp -u 02_template/aws_mdls/network.hcl $repo/02_modules/$provider/$environment/$customer/_envcommon/
+              echo "INPUT"
+              ls -la $repo/02_modules/$provider/$environment/$customer/
+              ls -la $repo/02_modules/$provider/$environment/$customer/_envcommon
+
               cp -r 02_template/aws_mdls/$SVC/environment/$environment/$SVC/* $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/
               cp -u 02_template/aws_mdls/terragrunt.hcl $repo/02_modules/$provider/$environment/$customer
               cp -u 02_template/aws_mdls/env.hcl $repo/02_modules/$provider/$environment/$customer

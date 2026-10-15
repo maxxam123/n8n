@@ -8,23 +8,27 @@
               TAG=$(sed -n '7{p;q;}' 03_trigger/ec2)
               INSTANCE=$(sed -n '8{p;q;}' 03_trigger/ec2)
               AMI=$(sed -n '9{p;q;}' 03_trigger/ec2)
+              NUMBER=$(sed -n '10{p;q;}' 03_trigger/ec2)
 
 
               mkdir -p $repo/02_modules/$provider/$environment/$customer
               mkdir -p $repo/02_modules/$provider/$environment/$customer/$CATEGORY
-              mkdir -p $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC
+              mkdir -p $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER
 
-              cp -r 02_template/aws_mdls/$SVC/environment/$environment/$SVC/* $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC/
+              DEST_01=$repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER
+              DEST_02=$repo/02_modules/$provider/$environment/$customer
+              SOUR_01=02_template/aws_mdls/$SVC/environment/$environment/$SVC
+              SOUR_02=02_template/aws_mdls
+
+              cp -r 02_template/aws_mdls/$SVC/environment/$environment/$SVC/* $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/
               cp -u 02_template/aws_mdls/terragrunt.hcl $repo/02_modules/$provider/$environment/$customer
               cp -u 02_template/aws_mdls/env.hcl $repo/02_modules/$provider/$environment/$customer
               sed -i "s/ENV/$environment/g" $repo/02_modules/$provider/$environment/$customer/env.hcl
 
- 
-
-                echo "HIT HIT"
-                sed -i "s|TAG|$TAG|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC/terragrunt.hcl
-                sed -i "s|INSTANCE|$INSTANCE|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC/terragrunt.hcl
-                sed -i "s|AMI|$AMI|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC/terragrunt.hcl
+              echo "HIT HIT"
+              sed -i "s|TAG|$TAG|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/terragrunt.hcl
+              sed -i "s|INSTANCE|$INSTANCE|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/terragrunt.hcl
+              sed -i "s|AMI|$AMI|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/terragrunt.hcl
 
               # mkdir $repo/02_modules/$provider/module-$SVC/$customer
               # mkdir -p $repo/02_modules/$provider/module-$SVC/$customer/{infrastructure-module,infrastructure-live}

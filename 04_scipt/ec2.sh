@@ -21,7 +21,8 @@
               SOUR_02=02_template/aws_mdls
 
               mkdir -p $repo/02_modules/$provider/$environment/$customer/_envcommon
-              cp -u 02_template/aws_mdls/compute.hcl $repo/02_modules/$provider/$environment/$customer/_envcommon/
+              mkdir -p $repo/02_modules/$provider/$environment/$customer/_envcommon/network
+              cp -u $SOUR_02/ec2.hcl $repo/02_modules/$provider/$environment/$customer/_envcommon/network/
               echo "INPUT"
               ls -la $repo/02_modules/$provider/$environment/$customer/
               ls -la $repo/02_modules/$provider/$environment/$customer/_envcommon

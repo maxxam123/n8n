@@ -23,7 +23,7 @@
 
               mkdir -p $repo/02_modules/$provider/$environment/$customer/_envcommon
               mkdir -p $repo/02_modules/$provider/$environment/$customer/_envcommon/security
-              cp -u 02_template/aws_mdls/$SVC/environment/$environment/$SVC/* $repo/02_modules/$provider/$environment/$customer/_envcommon/security/
+              cp -u $SOUR_02/cloudtrail.hcl $repo/02_modules/$provider/$environment/$customer/_envcommon/security/
               echo "INPUT"
               ls -la $repo/02_modules/$provider/$environment/$customer/
               ls -la $repo/02_modules/$provider/$environment/$customer/_envcommon
@@ -31,7 +31,7 @@
               mkdir -p $repo/02_modules/$provider/$environment/$customer/_global
               mkdir -p $repo/02_modules/$provider/$environment/$customer/_global/security/
               mkdir -p $repo/02_modules/$provider/$environment/$customer/_global/security/cloudtrail-$NUMBER
-              cp -u $SOUR_02/cloudtrail.hcl $repo/02_modules/$provider/$environment/$customer/_global/security/cloudtrail-$NUMBER/
+              cp -u 02_template/aws_mdls/$SVC/environment/$environment/$SVC/* $repo/02_modules/$provider/$environment/$customer/_global/security/cloudtrail-$NUMBER/
               echo "INPUT"
               ls -la $repo/02_modules/$provider/$environment/$customer/
               ls -la $repo/02_modules/$provider/$environment/$customer/_global

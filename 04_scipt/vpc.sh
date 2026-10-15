@@ -10,11 +10,16 @@
               SUB_PU_01=$(sed -n '9{p;q;}' 03_trigger/vpc)
               SUB_PU_02=$(sed -n '10{p;q;}' 03_trigger/vpc)
               TAG=$(sed -n '11{p;q;}' 03_trigger/vpc)
-              NUMBER=$(sed -n '11{p;q;}' 03_trigger/vpc)
+              NUMBER=$(sed -n '12{p;q;}' 03_trigger/vpc)
 
               mkdir -p $repo/02_modules/$provider/$environment/$customer
               mkdir -p $repo/02_modules/$provider/$environment/$customer/$CATEGORY
               mkdir -p $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER
+
+              DEST_01=$repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER
+              DEST_02=$repo/02_modules/$provider/$environment/$customer
+              SOUR_01=02_template/aws_mdls/$SVC/environment/$environment/$SVC
+              SOUR_02=02_template/aws_mdls
 
               cp -r 02_template/aws_mdls/$SVC/environment/$environment/$SVC/* $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/
               cp -u 02_template/aws_mdls/terragrunt.hcl $repo/02_modules/$provider/$environment/$customer

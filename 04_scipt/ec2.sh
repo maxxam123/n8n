@@ -22,9 +22,10 @@
 
               # cp -r 02_template/aws_mdls/$SVC/environment/$environment/$SVC/* $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/
               cp -r 02_template/aws_mdls/$SVC/environment/$environment/$SVC/* $DEST_01/
-              cp -u 02_template/aws_mdls/terragrunt.hcl $repo/02_modules/$provider/$environment/$customer
-              cp -u 02_template/aws_mdls/env.hcl $repo/02_modules/$provider/$environment/$customer
-              sed -i "s/ENV/$environment/g" $repo/02_modules/$provider/$environment/$customer/env.hcl
+              # cp -u 02_template/aws_mdls/terragrunt.hcl $repo/02_modules/$provider/$environment/$customer
+              cp -u 02_template/aws_mdls/terragrunt.hcl $DEST_02
+              cp -u 02_template/aws_mdls/env.hcl $DEST_02
+              sed -i "s/ENV/$environment/g" $DEST_02/env.hcl
 
               # sed -i "s|TAG|$TAG|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/terragrunt.hcl
               # sed -i "s|INSTANCE|$INSTANCE|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/terragrunt.hcl

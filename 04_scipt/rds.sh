@@ -20,6 +20,12 @@
               SOUR_01=02_template/aws_mdls/$SVC/environment/$environment/$SVC
               SOUR_02=02_template/aws_mdls
 
+              mkdir -p $repo/02_modules/$provider/$environment/$customer/_envcommon
+              cp -u 02_template/aws_mdls/data.hcl $repo/02_modules/$provider/$environment/$customer/_envcommon/
+              echo "INPUT"
+              ls -la $repo/02_modules/$provider/$environment/$customer/
+              ls -la $repo/02_modules/$provider/$environment/$customer/_envcommon
+
               # cp -r 02_template/aws_mdls/$SVC/environment/$environment/$SVC/* $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/
               cp -r 02_template/aws_mdls/$SVC/environment/$environment/$SVC/* $DEST_01/
               # cp -u 02_template/aws_mdls/terragrunt.hcl $repo/02_modules/$provider/$environment/$customer

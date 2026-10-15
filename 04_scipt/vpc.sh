@@ -16,6 +16,9 @@
               mkdir -p $repo/02_modules/$provider/$environment/$customer/$CATEGORY
               mkdir -p $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER
 
+              mkdir -p $repo/02_modules/$provider/$environment/$customer/_envcommon
+              cp -u $SOUR_02/network.hcl $repo/02_modules/$provider/$environment/$customer/_envcommon/
+
               DEST_01=$repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER
               DEST_02=$repo/02_modules/$provider/$environment/$customer
               SOUR_01=02_template/aws_mdls/$SVC/environment/$environment/$SVC

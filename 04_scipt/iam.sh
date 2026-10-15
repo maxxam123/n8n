@@ -1,16 +1,16 @@
 
-              repo=$(sed -n '1{p;q;}' 03_trigger/vpc)
-              provider=$(sed -n '2{p;q;}' 03_trigger/vpc)
-              SVC=$(sed -n '3{p;q;}' 03_trigger/vpc)
-              customer=$(sed -n '4{p;q;}' 03_trigger/vpc)
-              environment=$(sed -n '5{p;q;}' 03_trigger/vpc)
-              CATEGORY=$(sed -n '6{p;q;}' 03_trigger/vpc)
-              SUB_PR_01=$(sed -n '7{p;q;}' 03_trigger/vpc)
-              SUB_PR_02=$(sed -n '8{p;q;}' 03_trigger/vpc)
-              SUB_PU_01=$(sed -n '9{p;q;}' 03_trigger/vpc)
-              SUB_PU_02=$(sed -n '10{p;q;}' 03_trigger/vpc)
-              TAG=$(sed -n '11{p;q;}' 03_trigger/vpc)
-              NUMBER=$(sed -n '12{p;q;}' 03_trigger/vpc)
+              repo=$(sed -n '1{p;q;}' 03_trigger/iam)
+              provider=$(sed -n '2{p;q;}' 03_trigger/iam)
+              SVC=$(sed -n '3{p;q;}' 03_trigger/iam)
+              customer=$(sed -n '4{p;q;}' 03_trigger/iam)
+              environment=$(sed -n '5{p;q;}' 03_trigger/iam)
+              CATEGORY=$(sed -n '6{p;q;}' 03_trigger/iam)
+              SUB_PR_01=$(sed -n '7{p;q;}' 03_trigger/iam)
+              SUB_PR_02=$(sed -n '8{p;q;}' 03_trigger/iam)
+              SUB_PU_01=$(sed -n '9{p;q;}' 03_trigger/iam)
+              SUB_PU_02=$(sed -n '10{p;q;}' 03_trigger/iam)
+              TAG=$(sed -n '11{p;q;}' 03_trigger/iam)
+              NUMBER=$(sed -n '12{p;q;}' 03_trigger/iam)
 
               mkdir -p $repo/02_modules/$provider/$environment/$customer
               mkdir -p $repo/02_modules/$provider/$environment/$customer/$CATEGORY

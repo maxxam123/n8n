@@ -1,9 +1,10 @@
 test-repo-04
 aws
 ec2
-05-tenent
+03-tenent
 dev
 compute
 0.0.1
 t3.micro
 ami:5234703947234
+01

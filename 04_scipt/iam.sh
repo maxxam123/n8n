@@ -23,15 +23,15 @@
 
               mkdir -p $repo/02_modules/$provider/$environment/$customer/_envcommon
               mkdir -p $repo/02_modules/$provider/$environment/$customer/_envcommon/account
-              cp -u $SOUR_02/iam.hcl $repo/02_modules/$provider/$environment/$customer/_envcommon/
+              cp -u $SOUR_02/iam.hcl $repo/02_modules/$provider/$environment/$customer/_envcommon/account/
               echo "INPUT"
               ls -la $repo/02_modules/$provider/$environment/$customer/
               ls -la $repo/02_modules/$provider/$environment/$customer/_envcommon
 
               mkdir -p $repo/02_modules/$provider/$environment/$customer/_global
               mkdir -p $repo/02_modules/$provider/$environment/$customer/_global/account/
-              mkdir -p $repo/02_modules/$provider/$environment/$customer/_global/account/iam-roles
-              cp -u 02_template/aws_mdls/$SVC/environment/$environment/$SVC/* $repo/02_modules/$provider/$environment/$customer/_global/account/iam-roles/
+              mkdir -p $repo/02_modules/$provider/$environment/$customer/_global/account/iam-roles-$NUMBER
+              cp -u 02_template/aws_mdls/$SVC/environment/$environment/$SVC/* $repo/02_modules/$provider/$environment/$customer/_global/account/iam-roles-$NUMBER/
               echo "INPUT"
               ls -la $repo/02_modules/$provider/$environment/$customer/
               ls -la $repo/02_modules/$provider/$environment/$customer/_global

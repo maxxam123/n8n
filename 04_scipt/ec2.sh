@@ -20,15 +20,20 @@
               SOUR_01=02_template/aws_mdls/$SVC/environment/$environment/$SVC
               SOUR_02=02_template/aws_mdls
 
-              cp -r 02_template/aws_mdls/$SVC/environment/$environment/$SVC/* $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/
+              # cp -r 02_template/aws_mdls/$SVC/environment/$environment/$SVC/* $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/
+              cp -r 02_template/aws_mdls/$SVC/environment/$environment/$SVC/* $DEST_01/
               cp -u 02_template/aws_mdls/terragrunt.hcl $repo/02_modules/$provider/$environment/$customer
               cp -u 02_template/aws_mdls/env.hcl $repo/02_modules/$provider/$environment/$customer
               sed -i "s/ENV/$environment/g" $repo/02_modules/$provider/$environment/$customer/env.hcl
 
+              # sed -i "s|TAG|$TAG|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/terragrunt.hcl
+              # sed -i "s|INSTANCE|$INSTANCE|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/terragrunt.hcl
+              # sed -i "s|AMI|$AMI|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/terragrunt.hcl
+
               echo "HIT HIT"
-              sed -i "s|TAG|$TAG|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/terragrunt.hcl
-              sed -i "s|INSTANCE|$INSTANCE|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/terragrunt.hcl
-              sed -i "s|AMI|$AMI|g" $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/terragrunt.hcl
+              sed -i "s|TAG|$TAG|g" $DEST_01/terragrunt.hcl
+              sed -i "s|INSTANCE|$INSTANCE|g" $DEST_01/terragrunt.hcl
+              sed -i "s|AMI|$AMI|g" $DEST_01/terragrunt.hcl
 
               # mkdir $repo/02_modules/$provider/module-$SVC/$customer
               # mkdir -p $repo/02_modules/$provider/module-$SVC/$customer/{infrastructure-module,infrastructure-live}

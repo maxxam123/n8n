@@ -14,7 +14,8 @@
               mkdir -p $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER
 
               mkdir -p $repo/02_modules/$provider/$environment/$customer/_envcommon
-              cp -u 02_template/aws_mdls/network.hcl $repo/02_modules/$provider/$environment/$customer/_envcommon/
+              mkdir -p $repo/02_modules/$provider/$environment/$customer/_envcommon/network
+              cp -u 02_template/aws_mdls/tgw.hcl $repo/02_modules/$provider/$environment/$customer/_envcommon/network/
               echo "INPUT"
               ls -la $repo/02_modules/$provider/$environment/$customer/
               ls -la $repo/02_modules/$provider/$environment/$customer/_envcommon

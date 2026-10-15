@@ -9,8 +9,8 @@
 
               mkdir -p $repo/02_modules/$provider/$environment/$customer
               mkdir -p $repo/02_modules/$provider/$environment/$customer/$environment
-              mkdir -p $repo/02_modules/$provider/$environment/$customer//$environment$CATEGORY
-              mkdir -p $repo/02_modules/$provider/$environment/$customer//$environment$CATEGORY/$SVC-$NUMBER
+              mkdir -p $repo/02_modules/$provider/$environment/$customer/$environment/$CATEGORY
+              mkdir -p $repo/02_modules/$provider/$environment/$customer/$environment/$CATEGORY/$SVC-$NUMBER
 
               mkdir -p $repo/02_modules/$provider/$environment/$customer/_envcommon
               mkdir -p $repo/02_modules/$provider/$environment/$customer/_envcommon/network

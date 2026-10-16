@@ -52,26 +52,27 @@ cp -u "02_template/aws_mdls/terragrunt.hcl" "$DEST_02/"
 sed -i "s/ENV/$ENVIRONMENT/g" "$DEST_02/env.hcl"
 
 if [[ "$SVC" == "vpc" ]]; then
-    sed -i "s/VPC_NAME/$ONE/g" "$DEST_01/terragrunt.hcl"
-    sed -i "s/VPC_CIDR/$TWO/g" "$DEST_01/terragrunt.hcl"
+    sed -i "s|VPC_NAME|$ONE|g" "$DEST_01/terragrunt.hcl"
+    sed -i "s|VPC_CIDR|$TWO|g" "$DEST_01/terragrunt.hcl"
 fi
 if [[ "$SVC" == "tgw" ]]; then
-    sed -i "s/TAG/$TAG/g" "$DEST_01/terragrunt.hcl"
+    sed -i "s|TAG|$TAG|g" "$DEST_01/terragrunt.hcl"
 fi
 if [[ "$SVC" == "tgwa" ]]; then
-    sed -i "s/TAG/$TAG/g" "$DEST_01/terragrunt.hcl"
+    sed -i "s|TAG|$TAG|g" "$DEST_01/terragrunt.hcl"
 fi
 if [[ "$SVC" == "ec2" ]]; then
-    sed -i "s/TAG/$TAG/g" "$DEST_01/terragrunt.hcl"
+    sed -i "s|TAG|$TAG|g" "$DEST_01/terragrunt.hcl"
+    sed -i "s|PATH|$ONE|g" "$DEST_01/terragrunt.hcl"
 fi
 if [[ "$SVC" == "eks" ]]; then
-    sed -i "s/TAG/$TAG/g" "$DEST_01/terragrunt.hcl"
+    sed -i "s|TAG|$TAG|g" "$DEST_01/terragrunt.hcl"
 fi
 if [[ "$SVC" == "s3" ]]; then
-    sed -i "s/TAG/$TAG/g" "$DEST_01/terragrunt.hcl"
+    sed -i "s|TAG|$TAG|g" "$DEST_01/terragrunt.hcl"
 fi
 if [[ "$SVC" == "rds" ]]; then
-    sed -i "s/TAG/$TAG/g" "$DEST_01/terragrunt.hcl"
+    sed -i "s|TAG|$TAG|g" "$DEST_01/terragrunt.hcl"
 fi
 
 

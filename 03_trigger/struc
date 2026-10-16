@@ -1,6 +1,0 @@
-aws gpc
-vpc vm eks ecr iam
-gvpc gvm gke gcr
-test-repo-02
-
-

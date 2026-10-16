@@ -26,7 +26,7 @@ ENV_COMMON="$DEST_02/_envcommon/account"
 GLOBAL_DIR="$DEST_02/_global/account/iam-roles-$NUMBER"
 
 SOUR_01="02_template/aws_mdls/$SVC/environment/$environment/$SVC"
-SOUR_02="02_template/aws_mdls"
+SOUR_02="02_template/aws_mdls/$SVC"
 
 # 3. Create target directory structures
 mkdir -p "$DEST_01" "$ENV_COMMON" "$GLOBAL_DIR"

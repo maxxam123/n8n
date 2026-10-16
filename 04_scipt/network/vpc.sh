@@ -60,15 +60,15 @@ fi
 if [[ "$SVC" == "tgw" ]]; then
     sed -i "s|SPOKE_01|$TWO|g" "$DEST_01/terragrunt.hcl"
     sed -i "s|SPOKE_02|$THREE|g" "$DEST_01/terragrunt.hcl"
-    sed -i "s|TAG|$TAG|g" "$DEST_01/$SVC.hcl"
-    sed -i "s|TGW_NAME|$ONE|g" "$DEST_01/$SVC.hcl"
+    sed -i "s|TAG|$TAG|g" "$ENV_COMMON/$SVC.hcl"
+    sed -i "s|TGW_NAME|$ONE|g" "$ENV_COMMON/$SVC.hcl"
 fi
 if [[ "$SVC" == "tgwa" ]]; then
     sed -i "s|TAG|$TAG|g" "$DEST_01/terragrunt.hcl"
 fi
 if [[ "$SVC" == "ec2" ]]; then
     sed -i "s|ENV|$ONE|g" "$DEST_01/terragrunt.hcl"
-    sed -i "s|TAG|$TAG|g" "$DEST_01/$SVC.hcl"
+    sed -i "s|TAG|$TAG|g" "$ENV_COMMON/$SVC.hcl"
 fi
 if [[ "$SVC" == "eks" ]]; then
     sed -i "s|TAG|$TAG|g" "$DEST_01/terragrunt.hcl"

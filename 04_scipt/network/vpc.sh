@@ -23,6 +23,11 @@ CUSTOMER="${lines[3]}"
 ENVIRONMENT="${lines[4]}"
 CATEGORY="${lines[5]}"
 NUMBER="${lines[6]}"
+TAG="${lines[7]}"
+
+ONE="${lines[8]}"
+TWO="${lines[9]}"
+THREE="${lines[10]}"
 
 # 2. Define clean destination and source variables
 DEST_02="$REPO/02_modules/$PROVIDER/$CUSTOMER"
@@ -40,9 +45,32 @@ echo "INPUT"
 ls -la "$DEST_02/" "$ENV_COMMON/"
 
 cp -r "$SOUR_02/terragrunt.hcl" "$DEST_01/"
-cp -u "$SOUR_02/terragrunt.hcl" "$DEST_02/"
 cp -u "02_template/aws_mdls/env.hcl" "$DEST_02/"
+cp -u "02_template/aws_mdls/terragrunt.hcl" "$DEST_02/"
 
 # 4. Perform dynamic template string updates efficiently
 sed -i "s/ENV/$ENVIRONMENT/g" "$DEST_02/env.hcl"
+
+if [[ "$SVC" == "vpc" ]]; then
+    sed -i "s/TAG/$TAG/g" "$DEST_01/terragrunt.hcl"
+fi
+if [[ "$SVC" == "tgw" ]]; then
+    sed -i "s/TAG/$TAG/g" "$DEST_01/terragrunt.hcl"
+fi
+if [[ "$SVC" == "tgwa" ]]; then
+    sed -i "s/TAG/$TAG/g" "$DEST_01/terragrunt.hcl"
+fi
+if [[ "$SVC" == "ec2" ]]; then
+    sed -i "s/TAG/$TAG/g" "$DEST_01/terragrunt.hcl"
+fi
+if [[ "$SVC" == "eks" ]]; then
+    sed -i "s/TAG/$TAG/g" "$DEST_01/terragrunt.hcl"
+fi
+if [[ "$SVC" == "s3" ]]; then
+    sed -i "s/TAG/$TAG/g" "$DEST_01/terragrunt.hcl"
+fi
+if [[ "$SVC" == "rds" ]]; then
+    sed -i "s/TAG/$TAG/g" "$DEST_01/terragrunt.hcl"
+fi
+
 

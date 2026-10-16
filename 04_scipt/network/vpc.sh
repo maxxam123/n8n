@@ -59,6 +59,7 @@ if [[ "$SVC" == "vpc" ]]; then
 fi
 if [[ "$SVC" == "tgw" ]]; then
     sed -i "s|TAG|$TAG|g" "$DEST_01/terragrunt.hcl"
+    sed -i "s|TAG|$TAG|g" "$DEST_01/$SVC.hcl"
 fi
 if [[ "$SVC" == "tgwa" ]]; then
     sed -i "s|TAG|$TAG|g" "$DEST_01/terragrunt.hcl"

@@ -32,14 +32,14 @@ NUMBER="${lines[11]}"
 # 2. Define clean destination and source variables
 DEST_02="$REPO/02_modules/$PROVIDER/$CUSTOMER"
 DEST_01="$DEST_02/$ENVIRONMENT/$CATEGORY/$SVC-$NUMBER"
-ENV_COMMON="$DEST_02/_envcommon/network"
+ENV_COMMON="$DEST_02/_envcommon/$CATEGORY"
 
-SOUR_02="02_template/aws_mdls/network/$SVC"
+SOUR_02="02_template/aws_mdls/$CATEGORY/$SVC"
 
 # 3. Create structure and copy baseline config files
 mkdir -p "$DEST_01" "$ENV_COMMON"
 
-cp -u "$SOUR_02/vpc.hcl" "$ENV_COMMON/"
+cp -u "$SOUR_02/$SVC.hcl" "$ENV_COMMON/"
 
 echo "INPUT"
 ls -la "$DEST_02/" "$ENV_COMMON/"

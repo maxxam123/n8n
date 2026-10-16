@@ -4,12 +4,12 @@ include "root" {
 
 # 2. Inherit corporate safety parameters and module source from _envcommon
 include "envcommon" {
-  path = "${get_terragrunt_dir()}/../../../_envcommon/data-tier/rds.hcl"
+  path = "${get_terragrunt_dir()}/../../../../_envcommon/data/rds.hcl"
 }
 
 # 3. Pull network dependencies dynamically from the active VPC layer
 dependency "vpc" {
-  config_path = "../../network/vpc"
+  config_path = "../../../network/VPC_NAME"
 }
 
 # ---------------------------------------------------------------------------------------------------------------------

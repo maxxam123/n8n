@@ -5,7 +5,7 @@ ls -la "$GLOBAL_FIRST_LINE"
 ls -la "$GLOBAL_SRV_01"
 ls -la "$GLOBAL_CATE"
 
-TRIGGER_FILE="03_trigger/$GLOBAL_CATE/$GLOBAL_SRV_01" #  /network/vpc
+TRIGGER_FILE="03_trigger/network/vpc" #  /network/vpc
 
 if [[ ! -f "$TRIGGER_FILE" ]]; then
     echo "Error: Trigger file '$TRIGGER_FILE' not found." >&2

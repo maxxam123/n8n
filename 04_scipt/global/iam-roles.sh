@@ -56,7 +56,7 @@ ls -la "$DEST_02/_envcommon"
 cp -u "$SOUR_01"/terragrunt.hcl "$GLOBAL_DIR/"
 
 if [[ "$CATE" == "iam-roles" ]]; then
-    sed -i "s|VPC_NAME|$ONE|g" "$DEST_01/$SVC.hcl"
+    sed -i "s|ROLE_NAME|$ONE|g" "$DEST_01/$SVC.hcl"
     sed -i "s|TAG|$TAG|g" "$GLOBAL_DIR/terragrunt.hcl"
 fi
 

@@ -27,8 +27,6 @@ CATE="${lines[7]}"
 TAG="${lines[8]}"
 
 ONE="${lines[9]}"
-TWO="${lines[10]}"
-THREE="${lines[11]}"
 
 # 2. Define consolidated base and destination paths
 DEST_02="$repo/02_modules/$provider/$customer"

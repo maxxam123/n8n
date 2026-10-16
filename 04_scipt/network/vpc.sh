@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+ls -la ${{ env.GLOBAL_FIRST_LINE }}
+
 TRIGGER_FILE="03_trigger/network/vpc"
 
 if [[ ! -f "$TRIGGER_FILE" ]]; then

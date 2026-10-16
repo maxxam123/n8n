@@ -3,7 +3,7 @@ on:
     branches:
       - main
     paths:
-      - '03_trigger/tgwa'
+      - '03_trigger/network/tgwa'
 
 jobs:
   cli-example:
@@ -17,7 +17,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.CROSS_2 }}
         run: |
-          FIRST_LINE=$(sed -n '1{p;q;}' 03_trigger/tgwa)
+          FIRST_LINE=$(sed -n '1{p;q;}' 03_trigger/network/tgwa)
           echo "my_variable=$FIRST_LINE" >> $GITHUB_OUTPUT
 
           echo "GLOBAL_FIRST_LINE<<EOF" >> $GITHUB_ENV
@@ -34,8 +34,8 @@ jobs:
 
       - name: Structure
         run: |
-          chmod +x 04_scipt/tgwa.sh
-          ./04_scipt/tgwa.sh
+          chmod +x 04_scipt/network/tgwa.sh
+          ./04_scipt/network/tgwa.sh
           ls -la
           ls -la "${{ env.GLOBAL_FIRST_LINE }}"
           ls -la "${{ env.GLOBAL_FIRST_LINE }}/02_modules"

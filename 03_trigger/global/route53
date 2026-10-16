@@ -6,4 +6,6 @@ dev
 global
 01
 dns
+0.0.1
+dev/network/vpc-01
 

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ls -la "$GLOBAL_FIRST_LINE"
-ls -la "$GLOBAL_SRV_01"
-ls -la "$GLOBAL_CATE"
+echo "$GLOBAL_FIRST_LINE"
+echo "$GLOBAL_SRV_01"
+echo "$GLOBAL_CATE"
 
 TRIGGER_FILE="03_trigger/network/vpc" #  /network/vpc
 

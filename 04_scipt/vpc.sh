@@ -19,7 +19,7 @@
 
               DEST_01=$repo/02_modules/$provider/$customer/$environment/$CATEGORY/$SVC-$NUMBER
               DEST_02=$repo/02_modules/$provider/$customer
-              SOUR_02=02_template/aws_mdls
+              SOUR_02=02_template/aws_mdls/$SVC
 
               mkdir -p $repo/02_modules/$provider/$customer/_envcommon
               mkdir -p $repo/02_modules/$provider/$customer/_envcommon/network
@@ -29,7 +29,7 @@
               ls -la $repo/02_modules/$provider/$customer/_envcommon
 
               # cp -r 02_template/aws_mdls/$SVC/environment/$environment/$SVC/* $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/
-              cp -r $SOUR_02/* $DEST_01/
+              cp -r $SOUR_02/terragrunt.hcl $DEST_01/
               # cp -u 02_template/aws_mdls/terragrunt.hcl $repo/02_modules/$provider/$environment/$customer
               cp -u $SOUR_02/terragrunt.hcl $DEST_02
               # cp -u 02_template/aws_mdls/env.hcl $repo/02_modules/$provider/$environment/$customer

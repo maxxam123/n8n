@@ -12,7 +12,7 @@ include "envcommon" {
 
 # 3. Pull network definitions dynamically if setting up Private Hosted Zones
 dependency "production_vpc" {
-  config_path = "../../../../RATH_VPC" # dev/network/vpc-01
+  config_path = "../../../../PATH_VPC" # dev/network/vpc-01
 }
 
 dependency "staging_vpc" {

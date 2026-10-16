@@ -42,7 +42,7 @@ SOUR_02="02_template/aws_mdls/$CATEGORY/$SVC"
 mkdir -p "$DEST_01" "$ENV_COMMON" "$GLOBAL_DIR"
 
 # 4. Copy baseline environment-common configuration
-cp -u "$SOUR_02/iam-roles.hcl" "$ENV_COMMON/"
+cp -u "$SOUR_02/$SVC.hcl" "$ENV_COMMON/"
 
 echo "INPUT"
 ls -la "$DEST_02/"

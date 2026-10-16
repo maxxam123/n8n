@@ -18,10 +18,20 @@ jobs:
           GH_TOKEN: ${{ secrets.CROSS_2 }}
         run: |
           FIRST_LINE=$(sed -n '1{p;q;}' 03_trigger/global/iam-roles)
+          SRV_01=$(sed -n '3{p;q;}' 03_trigger/global/iam-roles)
+          CATE=$(sed -n '6{p;q;}' 03_trigger/global/iam-roles)
           echo "my_variable=$FIRST_LINE" >> $GITHUB_OUTPUT
 
           echo "GLOBAL_FIRST_LINE<<EOF" >> $GITHUB_ENV
           echo "$FIRST_LINE" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+      
+          echo "GLOBAL_SRV_01<<EOF" >> $GITHUB_ENV
+          echo "$SRV_01" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+          echo "GLOBAL_CATE<<EOF" >> $GITHUB_ENV
+          echo "$CATE" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
       - name: Clone External Private Repo

@@ -22,12 +22,7 @@ SVC="${lines[2]}"
 CUSTOMER="${lines[3]}"
 ENVIRONMENT="${lines[4]}"
 CATEGORY="${lines[5]}"
-SUB_PR_01="${lines[6]}"
-SUB_PR_02="${lines[7]}"
-SUB_PU_01="${lines[8]}"
-SUB_PU_02="${lines[9]}"
-TAG="${lines[10]}"
-NUMBER="${lines[11]}"
+NUMBER="${lines[6]}"
 
 # 2. Define clean destination and source variables
 DEST_02="$REPO/02_modules/$PROVIDER/$CUSTOMER"

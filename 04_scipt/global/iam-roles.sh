@@ -62,7 +62,9 @@ if [[ "$SVC" == "iam-roles" ]]; then
     sed -i "s|ROLE_NAME|$ONE|g" "$GLOBAL_DIR/terragrunt.hcl"
 fi
 
-if [[ "$CATE" == "cloudtrail" ]]; then
+if [[ "$SVC" == "cloudtrail" ]]; then
     echo "cloudtrail"
+    sed -i "s|TAG|$TAG|g" "$ENV_COMMON/$SVC.hcl"
+    sed -i "s|BUCKET_NAME|$ONE|g" "$GLOBAL_DIR/terragrunt.hcl"
 fi
 

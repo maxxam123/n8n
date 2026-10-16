@@ -17,9 +17,9 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.CROSS_2 }}
         run: |
-          FIRST_LINE=$(sed -n '1{p;q;}' 03_trigger/network/ec2)
-          SRV_01=$(sed -n '3{p;q;}' 03_trigger/network/ec2)
-          CATE=$(sed -n '6{p;q;}' 03_trigger/network/ec2)
+          FIRST_LINE=$(sed -n '1{p;q;}' 03_trigger/compute/ec2)
+          SRV_01=$(sed -n '3{p;q;}' 03_trigger/compute/ec2)
+          CATE=$(sed -n '6{p;q;}' 03_trigger/compute/ec2)
           echo "my_variable=$FIRST_LINE" >> $GITHUB_OUTPUT
 
           echo "GLOBAL_FIRST_LINE<<EOF" >> $GITHUB_ENV

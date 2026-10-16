@@ -19,6 +19,7 @@ jobs:
         run: |
           FIRST_LINE=$(sed -n '1{p;q;}' 03_trigger/network/vpc)
           SRV_01=$(sed -n '3{p;q;}' 03_trigger/network/vpc)
+          CATE=$(sed -n '6{p;q;}' 03_trigger/network/vpc)
           echo "my_variable=$FIRST_LINE" >> $GITHUB_OUTPUT
 
           echo "GLOBAL_FIRST_LINE<<EOF" >> $GITHUB_ENV
@@ -27,6 +28,10 @@ jobs:
       
           echo "GLOBAL_SRV_01<<EOF" >> $GITHUB_ENV
           echo "$SRV_01" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+          echo "GLOBAL_CATE<<EOF" >> $GITHUB_ENV
+          echo "$CATE" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
       - name: Clone External Private Repo

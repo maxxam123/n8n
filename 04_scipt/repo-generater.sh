@@ -1,35 +1,33 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-CONFIG_FILE="config.txt"
+CONFIG_FILE="03_trigger/repo-generater"
 
-# 1. Verify configuration file exists
+# 1. Verify input file exists
 if [[ ! -f "$CONFIG_FILE" ]]; then
     echo "Error: Configuration file '$CONFIG_FILE' not found." >&2
     exit 1
 fi
 
-# 2. Extract values dynamically using sed and clean up line endings
-REPO_NAME=$(sed -n 's/^# REPO_NAME:[[:space:]]*//p' "$CONFIG_FILE" | tr -d '\r')
-STRUCT_STR=$(sed -n 's/^# REPO_STRUCTURE:[[:space:]]*//p' "$CONFIG_FILE" | tr -d '\r')
-CONTENT_STR=$(sed -n 's/^# REPO_CONTENT:[[:space:]]*//p' "$CONFIG_FILE" | tr -d '\r')
+# 2. Read lines efficiently into an array and strip carriage returns (\r)
+mapfile -t lines < <(tr -d '\r' < "$CONFIG_FILE")
 
-# 3. Convert space-separated string values into native Bash arrays
-read -r -a REPO_STRUCTURE <<< "$STRUCT_STR"
-read -r -a REPO_CONTENT <<< "$CONTENT_STR"
+# 3. Map line arrays to clean structural elements
+REPO_NAME="${lines[0]}"
+read -r -a REPO_STRUCTURE <<< "${lines[1]}"
+read -r -a REPO_CONTENT <<< "${lines[2]}"
 
-# 4. Initialize target repository
+# 4. Generate directory architectures
 mkdir -p "$REPO_NAME"
 cd "$REPO_NAME"
 
-# 5. Process directories and assemble paths
 for dir in "${REPO_STRUCTURE[@]}"; do
     if [[ "$dir" == ".github" ]]; then
-        # Handle targeted structural case for workflows
+        # Create GitHub specific layout
         mkdir -p ".github/workflows"
         touch ".github/workflows/.test.yaml"
     else
-        # Standard cloud distribution directories
+        # Build cloud environment combinations
         for provider in "${REPO_CONTENT[@]}"; do
             mkdir -p "$dir/$provider"
             touch "$dir/$provider/.test.txt"
@@ -37,5 +35,5 @@ for dir in "${REPO_STRUCTURE[@]}"; do
     fi
 done
 
-echo "Successfully read config from '$CONFIG_FILE' and generated '$REPO_NAME'!"
+echo "Successfully parsed 3-line format and generated '$REPO_NAME' structure."
 ls -la $REPO_NAME

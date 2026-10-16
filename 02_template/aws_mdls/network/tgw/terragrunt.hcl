@@ -7,11 +7,11 @@ include "envcommon" {
 }
 
 dependency "vpc_spoke_a" {
-  config_path = "../vpc-spoke-a"
+  config_path = "../../VPC_01"
 }
 
 dependency "vpc_spoke_b" {
-  config_path = "../vpc-spoke-b"
+  config_path = "../VPC_02"
 }
 -
 inputs = {

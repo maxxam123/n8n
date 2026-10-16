@@ -59,7 +59,7 @@ cp -u "$SOUR_01"/terragrunt.hcl "$GLOBAL_DIR/"
 if [[ "$SVC" == "iam-roles" ]]; then
     echo "tit hit hit"
     sed -i "s|TAG|$TAG|g" "$GLOBAL_DIR/terragrunt.hcl"
-    sed -i "s|ROLE_NAME|$ONE|g" "$DEST_01/$SVC.hcl"
+    sed -i "s|ROLE_NAME|$ONE|g" "$ENV_COMMON/$CATE/$SVC.hcl"
 fi
 
 if [[ "$CATE" == "cloudtrail" ]]; then

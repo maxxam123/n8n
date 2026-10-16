@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-TRIGGER_FILE="03_trigger/global/global/cloudfront"
+TRIGGER_FILE="03_trigger/global/cloudfront"
 
 if [[ ! -f "$TRIGGER_FILE" ]]; then
     echo "Error: Trigger file '$TRIGGER_FILE' not found." >&2

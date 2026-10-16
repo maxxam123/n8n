@@ -18,10 +18,20 @@ jobs:
           GH_TOKEN: ${{ secrets.CROSS_2 }}
         run: |
           FIRST_LINE=$(sed -n '1{p;q;}' 03_trigger/global/guardduty)
+          SRV_01=$(sed -n '3{p;q;}' 03_trigger/global/guardduty)
+          CATE=$(sed -n '6{p;q;}' 03_trigger/global/guardduty)
           echo "my_variable=$FIRST_LINE" >> $GITHUB_OUTPUT
 
           echo "GLOBAL_FIRST_LINE<<EOF" >> $GITHUB_ENV
           echo "$FIRST_LINE" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+      
+          echo "GLOBAL_SRV_01<<EOF" >> $GITHUB_ENV
+          echo "$SRV_01" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+          echo "GLOBAL_CATE<<EOF" >> $GITHUB_ENV
+          echo "$CATE" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
       - name: Clone External Private Repo
@@ -34,8 +44,8 @@ jobs:
 
       - name: Structure
         run: |
-          chmod +x 04_scipt/global/guardduty.sh
-          ./04_scipt/global/guardduty.sh
+          chmod +x 04_scipt/global/iam-roles.sh
+          ./04_scipt/global/iam-roles.sh
           ls -la
           ls -la "${{ env.GLOBAL_FIRST_LINE }}"
           ls -la "${{ env.GLOBAL_FIRST_LINE }}/02_modules"

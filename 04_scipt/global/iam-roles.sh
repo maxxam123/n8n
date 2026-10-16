@@ -25,6 +25,10 @@ CATEGORY="${lines[5]}"
 NUMBER="${lines[6]}"
 CATE="${lines[7]}"
 
+ONE="${lines[8]}"
+TWO="${lines[9]}"
+THREE="${lines[1ß]}"
+
 # 2. Define consolidated base and destination paths
 DEST_02="$repo/02_modules/$provider/$customer"
 DEST_01="$DEST_02/$CATEGORY/$SVC-$NUMBER"
@@ -50,4 +54,13 @@ ls -la "$DEST_02/_envcommon"
 
 # 5. Populate global account IAM templates
 cp -u "$SOUR_01"/terragrunt.hcl "$GLOBAL_DIR/"
+
+if [[ "$CATE" == "iam-roles" ]]; then
+    sed -i "s|VPC_NAME|$ONE|g" "$DEST_01/$SVC.hcl"
+    sed -i "s|TAG|$TAG|g" "$GLOBAL_DIR/terragrunt.hcl"
+fi
+
+if [[ "$CATE" == "cloudtrail" ]]; then
+    echo "cloudtrail"
+fi
 

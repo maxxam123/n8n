@@ -44,7 +44,7 @@ jobs:
 
       - name: Structure
         run: |
-          chmod +x 04_scipt/netork/vpc.sh
+          chmod +x 04_scipt/network/vpc.sh
           ./04_scipt/network/vpc.sh
           ls -la
           ls -la "${{ env.GLOBAL_FIRST_LINE }}"

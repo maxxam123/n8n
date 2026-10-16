@@ -24,10 +24,11 @@ environment="${lines[4]}"
 CATEGORY="${lines[5]}"
 NUMBER="${lines[6]}"
 CATE="${lines[7]}"
+TAG="${lines[8]}"
 
-ONE="${lines[8]}"
-TWO="${lines[9]}"
-THREE="${lines[1ß]}"
+ONE="${lines[9]}"
+TWO="${lines[10]}"
+THREE="${lines[11]}"
 
 # 2. Define consolidated base and destination paths
 DEST_02="$repo/02_modules/$provider/$customer"
@@ -56,8 +57,8 @@ ls -la "$DEST_02/_envcommon"
 cp -u "$SOUR_01"/terragrunt.hcl "$GLOBAL_DIR/"
 
 if [[ "$CATE" == "iam-roles" ]]; then
-    sed -i "s|ROLE_NAME|$ONE|g" "$DEST_01/$SVC.hcl"
     sed -i "s|TAG|$TAG|g" "$GLOBAL_DIR/terragrunt.hcl"
+    sed -i "s|ROLE_NAME|$ONE|g" "$DEST_01/$SVC.hcl"
 fi
 
 if [[ "$CATE" == "cloudtrail" ]]; then

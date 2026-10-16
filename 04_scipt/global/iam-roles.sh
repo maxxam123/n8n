@@ -23,6 +23,7 @@ customer="${lines[3]}"
 environment="${lines[4]}"
 CATEGORY="${lines[5]}"
 NUMBER="${lines[6]}"
+CATE="${lines[7]}"
 
 # 2. Define consolidated base and destination paths
 DEST_02="$repo/02_modules/$provider/$customer"

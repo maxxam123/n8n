@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ls -la "$GLOBAL_FIRST_LINE"
-ls -la "$GLOBAL_SVC_02"
+ls -la "$GLOBAL_SVC_01"
 
 TRIGGER_FILE="03_trigger/network/vpc"
 

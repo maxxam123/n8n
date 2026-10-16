@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-TRIGGER_FILE="03_trigger/global/iam-roles"
+echo "$GLOBAL_FIRST_LINE"
+echo "$GLOBAL_SRV_01"
+echo "$GLOBAL_CATE"
+
+TRIGGER_FILE="03_trigger/$GLOBAL_CATE/$GLOBAL_SRV_01"
+# TRIGGER_FILE="03_trigger/global/iam-roles"
 
 if [[ ! -f "$TRIGGER_FILE" ]]; then
     echo "Error: Trigger file '$TRIGGER_FILE' not found." >&2
@@ -22,11 +27,15 @@ NUMBER="${lines[6]}"
 # 2. Define consolidated base and destination paths
 DEST_02="$repo/02_modules/$provider/$customer"
 DEST_01="$DEST_02/$CATEGORY/$SVC-$NUMBER"
-ENV_COMMON="$DEST_02/_envcommon/account"
-GLOBAL_DIR="$DEST_02/_global/account/iam-roles-$NUMBER"
+ENV_COMMON="$DEST_02/_envcommon/$CATEGORY"
+# ENV_COMMON="$DEST_02/_envcommon/account"
+GLOBAL_DIR="$DEST_02/_global/$CATEGORY/$SVC-$NUMBER"
+# GLOBAL_DIR="$DEST_02/_global/account/iam-roles-$NUMBER"
 
-SOUR_01="02_template/aws_mdls/global/$SVC"
-SOUR_02="02_template/aws_mdls/global/$SVC"
+SOUR_01="02_template/aws_mdls/$CATEGORY/$SVC"
+SOUR_02="02_template/aws_mdls/$CATEGORY/$SVC"
+# SOUR_01="02_template/aws_mdls/global/$SVC"
+# SOUR_02="02_template/aws_mdls/global/$SVC"
 
 # 3. Create target directory structures
 mkdir -p "$DEST_01" "$ENV_COMMON" "$GLOBAL_DIR"

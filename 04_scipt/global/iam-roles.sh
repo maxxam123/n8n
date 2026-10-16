@@ -55,7 +55,7 @@ ls -la "$DEST_02/_envcommon"
 cp -u "$SOUR_01"/terragrunt.hcl "$GLOBAL_DIR/"
 
 if [[ "$SVC" == "iam-roles" ]]; then
-    echo "tit hit hit"
+    echo "iam-roles"
     sed -i "s|TAG|$TAG|g" "$ENV_COMMON/$SVC.hcl"
     sed -i "s|ROLE_NAME|$ONE|g" "$GLOBAL_DIR/terragrunt.hcl"
 fi
@@ -67,7 +67,13 @@ if [[ "$SVC" == "cloudtrail" ]]; then
 fi
 
 if [[ "$SVC" == "guardduty" ]]; then
-    echo "cloudtrail"
+    echo "guardduty"
+    sed -i "s|TAG|$TAG|g" "$ENV_COMMON/$SVC.hcl"
+    sed -i "s|BUCKET_NAME|$ONE|g" "$GLOBAL_DIR/terragrunt.hcl"
+fi
+
+if [[ "$SVC" == "cloudfront" ]]; then
+    echo "cloudfront"
     sed -i "s|TAG|$TAG|g" "$ENV_COMMON/$SVC.hcl"
     sed -i "s|BUCKET_NAME|$ONE|g" "$GLOBAL_DIR/terragrunt.hcl"
 fi

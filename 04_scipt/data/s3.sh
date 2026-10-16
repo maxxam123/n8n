@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-TRIGGER_FILE="03_trigger/data/e3"
+TRIGGER_FILE="03_trigger/data/s3"
 
 if [[ ! -f "$TRIGGER_FILE" ]]; then
     echo "Error: Trigger file '$TRIGGER_FILE' not found." >&2

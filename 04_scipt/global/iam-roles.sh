@@ -84,3 +84,9 @@ if [[ "$SVC" == "route53" ]]; then
     sed -i "s|PATH_VPC|$ONE|g" "$GLOBAL_DIR/terragrunt.hcl"
 fi
 
+if [[ "$SVC" == "budgets" ]]; then
+    echo "budgets"
+    sed -i "s|TAG|$TAG|g" "$ENV_COMMON/$SVC.hcl"
+    sed -i "s|BUDGETS_ACCOUNT|$ONE|g" "$GLOBAL_DIR/terragrunt.hcl"
+fi
+

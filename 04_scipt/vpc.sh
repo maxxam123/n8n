@@ -12,22 +12,22 @@
               TAG=$(sed -n '11{p;q;}' 03_trigger/vpc)
               NUMBER=$(sed -n '12{p;q;}' 03_trigger/vpc)
 
-              mkdir -p $repo/02_modules/$provider/$environment/$customer
-              mkdir -p $repo/02_modules/$provider/$environment/$customer/$environment
-              mkdir -p $repo/02_modules/$provider/$environment/$customer/$environment/$CATEGORY
-              mkdir -p $repo/02_modules/$provider/$environment/$customer/$environment/$CATEGORY/$SVC-$NUMBER
+              mkdir -p $repo/02_modules/$provider/$customer
+              mkdir -p $repo/02_modules/$provider/$customer/$environment
+              mkdir -p $repo/02_modules/$provider/$customer/$environment/$CATEGORY
+              mkdir -p $repo/02_modules/$provider/$customer/$environment/$CATEGORY/$SVC-$NUMBER
 
-              DEST_01=$repo/02_modules/$provider/$environment/$customer/$environment/$CATEGORY/$SVC-$NUMBER
-              DEST_02=$repo/02_modules/$provider/$environment/$customer
+              DEST_01=$repo/02_modules/$provider/$customer/$environment/$CATEGORY/$SVC-$NUMBER
+              DEST_02=$repo/02_modules/$provider/$customer
               SOUR_01=02_template/aws_mdls/$SVC/environment/$environment/$SVC
               SOUR_02=02_template/aws_mdls
 
-              mkdir -p $repo/02_modules/$provider/$environment/$customer/_envcommon
-              mkdir -p $repo/02_modules/$provider/$environment/$customer/_envcommon/network
-              cp -u $SOUR_02/vpc.hcl $repo/02_modules/$provider/$environment/$customer/_envcommon/network/
+              mkdir -p $repo/02_modules/$provider/$customer/_envcommon
+              mkdir -p $repo/02_modules/$provider/$customer/_envcommon/network
+              cp -u $SOUR_02/vpc.hcl $repo/02_modules/$provider/$customer/_envcommon/network/
               echo "INPUT"
-              ls -la $repo/02_modules/$provider/$environment/$customer/
-              ls -la $repo/02_modules/$provider/$environment/$customer/_envcommon
+              ls -la $repo/02_modules/$provider/$customer/
+              ls -la $repo/02_modules/$provider/$customer/_envcommon
 
               # cp -r 02_template/aws_mdls/$SVC/environment/$environment/$SVC/* $repo/02_modules/$provider/$environment/$customer/$CATEGORY/$SVC-$NUMBER/
               cp -r $SOUR_01/* $DEST_01/

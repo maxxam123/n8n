@@ -24,7 +24,7 @@ DEST_02="$REPO/02_modules/$PROVIDER/$CUSTOMER"
 DEST_01="$DEST_02/$ENVIRONMENT/$CATEGORY/$SVC-$NUMBER"
 ENV_COMMON="$DEST_02/_envcommon/data"
 
-SOUR_02="02_template/aws_mdls/$SVC"
+SOUR_02="02_template/aws_mdls/data/$SVC"
 
 # 3. Create structure and copy baseline config files
 mkdir -p "$DEST_01" "$ENV_COMMON"

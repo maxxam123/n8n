@@ -11,17 +11,17 @@ fi
 # 1. Read all 12 positional lines into memory at once
 mapfile -t lines < <(tr -d '\r' < "$TRIGGER_FILE")
 
-repo="${lines[0]}"
-provider="${lines[1]}"
+REPO="${lines[0]}"
+PROVIDER="${lines[1]}"
 SVC="${lines[2]}"
-customer="${lines[3]}"
-environment="${lines[4]}"
+CUSTOMER="${lines[3]}"
+ENVIRONMENT="${lines[4]}"
 CATEGORY="${lines[5]}"
 NUMBER="${lines[6]}"
 
 # 2. Define clean destination and source variables
-DEST_02="$repo/02_modules/$provider/$customer"
-DEST_01="$DEST_02/$environment/$CATEGORY/$SVC-$NUMBER"
+DEST_02="$REPO/02_modules/$PROVIDER/$CUSTOMER"
+DEST_01="$DEST_02/$ENVIRONMENT/$CATEGORY/$SVC-$NUMBER"
 ENV_COMMON="$DEST_02/_envcommon/network"
 
 SOUR_02="02_template/aws_mdls/$SVC"
@@ -29,7 +29,7 @@ SOUR_02="02_template/aws_mdls/$SVC"
 # 3. Create structure and copy baseline config files
 mkdir -p "$DEST_01" "$ENV_COMMON"
 
-cp -u "$SOUR_02/vpc.hcl" "$ENV_COMMON/"
+cp -u "$SOUR_02/$SVC.hcl" "$ENV_COMMON/"
 
 echo "INPUT"
 ls -la "$DEST_02/" "$ENV_COMMON/"
@@ -39,4 +39,4 @@ cp -u "$SOUR_02/terragrunt.hcl" "$DEST_02/"
 cp -u "02_template/aws_mdls/env.hcl" "$DEST_02/"
 
 # 4. Perform dynamic template string updates efficiently
-sed -i "s/ENV/$environment/g" "$DEST_02/env.hcl"
+sed -i "s/ENV/$ENVIRONMENT/g" "$DEST_02/env.hcl"

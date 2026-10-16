@@ -3,8 +3,9 @@ set -euo pipefail
 
 ls -la "$GLOBAL_FIRST_LINE"
 ls -la "$GLOBAL_SVC_01"
+ls -la "$GLOBAL_CATE"
 
-TRIGGER_FILE="03_trigger/network/vpc"
+TRIGGER_FILE="03_trigger/$GLOBAL_CATE/$GLOBAL_SVC_01" #  /network/vpc
 
 if [[ ! -f "$TRIGGER_FILE" ]]; then
     echo "Error: Trigger file '$TRIGGER_FILE' not found." >&2

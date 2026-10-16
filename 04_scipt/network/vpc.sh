@@ -58,15 +58,13 @@ if [[ "$SVC" == "vpc" ]]; then
     sed -i "s|TAG|$TAG|g" "$ENV_COMMON/$SVC.hcl"
 fi
 if [[ "$SVC" == "tgw" ]]; then
-    sed -i "s|ENV|$ONE|g" "$DEST_01/terragrunt.hcl"
-    sed -i "s|TAG|$TAG|g" "$DEST_01/$SVC.hcl"
 fi
 if [[ "$SVC" == "tgwa" ]]; then
     sed -i "s|TAG|$TAG|g" "$DEST_01/terragrunt.hcl"
 fi
 if [[ "$SVC" == "ec2" ]]; then
-    sed -i "s|TAG|$TAG|g" "$DEST_01/terragrunt.hcl"
-    sed -i "s|PATH|$ONE|g" "$DEST_01/terragrunt.hcl"
+    sed -i "s|ENV|$ONE|g" "$DEST_01/terragrunt.hcl"
+    sed -i "s|TAG|$TAG|g" "$DEST_01/$SVC.hcl"
 fi
 if [[ "$SVC" == "eks" ]]; then
     sed -i "s|TAG|$TAG|g" "$DEST_01/terragrunt.hcl"

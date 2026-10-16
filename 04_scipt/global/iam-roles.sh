@@ -28,15 +28,15 @@ CATE="${lines[7]}"
 # 2. Define consolidated base and destination paths
 DEST_02="$repo/02_modules/$provider/$customer"
 DEST_01="$DEST_02/$CATEGORY/$SVC-$NUMBER"
-# ENV_COMMON="$DEST_02/_envcommon/$CATEGORY"
-ENV_COMMON="$DEST_02/_envcommon/account"
-# GLOBAL_DIR="$DEST_02/_global/$CATEGORY/$SVC-$NUMBER"
-GLOBAL_DIR="$DEST_02/_global/account/iam-roles-$NUMBER"
+ENV_COMMON="$DEST_02/_envcommon/$CATE"
+# ENV_COMMON="$DEST_02/_envcommon/account"
+GLOBAL_DIR="$DEST_02/_global/$CATE/$SVC-$NUMBER"
+# GLOBAL_DIR="$DEST_02/_global/account/iam-roles-$NUMBER"
 
-# SOUR_01="02_template/aws_mdls/$CATEGORY/$SVC"
-# SOUR_02="02_template/aws_mdls/$CATEGORY/$SVC"
-SOUR_01="02_template/aws_mdls/global/$SVC"
-SOUR_02="02_template/aws_mdls/global/$SVC"
+SOUR_01="02_template/aws_mdls/$CATEGORY/$SVC"
+SOUR_02="02_template/aws_mdls/$CATEGORY/$SVC"
+# SOUR_01="02_template/aws_mdls/global/$SVC"
+# SOUR_02="02_template/aws_mdls/global/$SVC"
 
 # 3. Create target directory structures
 mkdir -p "$DEST_01" "$ENV_COMMON" "$GLOBAL_DIR"

@@ -41,12 +41,3 @@ cp -u "02_template/aws_mdls/env.hcl" "$DEST_02/"
 # 4. Perform dynamic template string updates efficiently
 sed -i "s/ENV/$ENVIRONMENT/g" "$DEST_02/env.hcl"
 
-echo "HIT HIT"
-sed -i \
-  -e "s|SUB_PRI_01|$SUB_PR_01|g" \
-  -e "s|SUB_PRI_02|$SUB_PR_02|g" \
-  -e "s|SUB_PUB_01|$SUB_PU_01|g" \
-  -e "s|SUB_PUB_02|$SUB_PU_02|g" \
-  -e "s|TAG|$TAG|g" \
-  -e "s|ENV|$ENVIRONMENT|g" \
-  "$DEST_01/terragrunt.hcl"

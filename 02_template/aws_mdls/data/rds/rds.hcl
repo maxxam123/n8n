@@ -1,13 +1,8 @@
-# _envcommon/data-tier/rds.hcl
-
-# 1. Source the verified community AWS RDS module
 terraform {
-  source = "tfr:///terraform-aws-modules/rds/aws?version=6.10.0"
+  source = "git@github.com//vTAG"
 }
 
-# 2. Corporate security policies and baseline configurations for all database instances
 inputs = {
-  # Engine configuration baseline
   engine               = "postgres"
   engine_version       = "16.3"
   family               = "postgres16" # DB parameter group

@@ -60,13 +60,13 @@ jobs:
         #  cp -r .github/workflows/* "${{ env.GLOBAL_FIRST_LINE }}/.github/workflows/"
         #  ls -la ${{ env.GLOBAL_FIRST_LINE }}/
 
-    #  - name: Pushes to another repository
-    #    uses: cpina/github-action-push-to-another-repository@main
-    #    env:
-    #      API_TOKEN_GITHUB: ${{ secrets.CROSS_2 }}
-    #    with:
-    #      source-directory: "${{ env.GLOBAL_FIRST_LINE }}"
-    #      destination-github-username: "maxxam123"
-    #      destination-repository-name: "${{ env.GLOBAL_FIRST_LINE }}"
-    #      user-email: hennighausenmax@gmail.com
-    #      target-branch: main 
+      - name: Pushes to another repository
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.CROSS_2 }}
+        with:
+          source-directory: "${{ env.GLOBAL_FIRST_LINE }}"
+          destination-github-username: "maxxam123"
+          destination-repository-name: "${{ env.GLOBAL_FIRST_LINE }}"
+          user-email: hennighausenmax@gmail.com
+          target-branch: main 

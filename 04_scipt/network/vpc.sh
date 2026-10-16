@@ -76,7 +76,7 @@ if [[ "$SVC" == "eks" ]]; then
     sed -i "s|TAG|$TAG|g" "$DEST_01/terragrunt.hcl"
 fi
 if [[ "$SVC" == "s3" ]]; then
-    sed -i "s||$ONE|g" "$DEST_01/terragrunt.hcl"
+    sed -i "s|BUCKET_NAME|$ONE|g" "$DEST_01/terragrunt.hcl"
     sed -i "s|TAG|$TAG|g" "$ENV_COMMON/$SVC.hcl"
 fi
 if [[ "$SVC" == "rds" ]]; then

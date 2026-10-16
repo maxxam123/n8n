@@ -78,4 +78,9 @@ if [[ "$SVC" == "cloudfront" ]]; then
     sed -i "s|PATH_ALB|$ONE|g" "$GLOBAL_DIR/terragrunt.hcl"
 fi
 
+if [[ "$SVC" == "route53" ]]; then
+    echo "route53"
+    sed -i "s|TAG|$TAG|g" "$ENV_COMMON/$SVC.hcl"
+    sed -i "s|PATH_VPC|$ONE|g" "$GLOBAL_DIR/terragrunt.hcl"
+fi
 

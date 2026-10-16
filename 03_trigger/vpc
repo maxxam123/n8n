@@ -1,4 +1,4 @@
-test-repo-04
+test-repo-05
 aws
 vpc
 03-tenent
@@ -9,5 +9,5 @@ network
 10.2.0.0/16
 10.3.0.0/16
 0.0.1
-02
+01
 

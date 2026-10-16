@@ -25,8 +25,8 @@ DEST_01="$DEST_02/$CATEGORY/$SVC-$NUMBER"
 ENV_COMMON="$DEST_02/_envcommon/security"
 GLOBAL_DIR="$DEST_02/_global/security/cloudtrail-$NUMBER"
 
-SOUR_01="02_template/aws_mdls/$SVC"
-SOUR_02="02_template/aws_mdls/$SVC"
+SOUR_01="02_template/aws_mdls/global/$SVC"
+SOUR_02="02_template/aws_mdls/global/$SVC"
 
 # 3. Create target directory structures
 mkdir -p "$DEST_01" "$ENV_COMMON" "$GLOBAL_DIR"

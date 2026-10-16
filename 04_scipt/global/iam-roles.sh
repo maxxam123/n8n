@@ -39,5 +39,5 @@ ls -la "$DEST_02/"
 ls -la "$DEST_02/_envcommon"
 
 # 5. Populate global account IAM templates
-cp -u "$SOUR_01"/* "$GLOBAL_DIR/"
+cp -u "$SOUR_01"/terragrunt.hcl "$GLOBAL_DIR/"
 

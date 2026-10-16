@@ -36,4 +36,4 @@ for dir in "${REPO_STRUCTURE[@]}"; do
 done
 
 echo "Successfully parsed 3-line format and generated '$REPO_NAME' structure."
-ls -la $REPO_NAME
+ls -la 

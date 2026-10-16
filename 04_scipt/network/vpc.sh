@@ -87,7 +87,7 @@ if [[ "$SVC" == "s3" ]]; then
 fi
 
 if [[ "$SVC" == "rds" ]]; then
-    sed -i "s|VCP_NAME|$ONE|g" "$DEST_01/terragrunt.hcl"
+    sed -i "s|VPC_NAME|$ONE|g" "$DEST_01/terragrunt.hcl"
     sed -i "s|TAG|$TAG|g" "$ENV_COMMON/$SVC.hcl"
     echo "test"
 fi

@@ -17,7 +17,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.CROSS_2 }} # Or ${{ github.token }}
         run: |
-          FIRST_LINE=$(sed -n '7{p;q;}' 03_trigger/repo-generater)
+          FIRST_LINE=$(sed -n '1{p;q;}' 03_trigger/repo-generater)
           echo "my_variable=$FIRST_LINE" >> $GITHUB_OUTPUT
           gh repo create $FIRST_LINE --add-readme --private
           mkdir $FIRST_LINE

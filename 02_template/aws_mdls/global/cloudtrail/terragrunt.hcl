@@ -12,7 +12,7 @@ include "envcommon" {
 
 # 3. Reference your centralized security storage bucket stack
 dependency "audit_bucket" {
-  config_path = "../../securityBUCKET_NAME"
+  config_path = "../../security/BUCKET_NAME"
 }
 
 # ---------------------------------------------------------------------------------------------------------------------

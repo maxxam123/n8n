@@ -5,6 +5,8 @@ vpc
 dev
 network
 01
+vpc-01
+10.0.0.0/16
 
 
 

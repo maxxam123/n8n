@@ -52,7 +52,8 @@ cp -u "02_template/aws_mdls/terragrunt.hcl" "$DEST_02/"
 sed -i "s/ENV/$ENVIRONMENT/g" "$DEST_02/env.hcl"
 
 if [[ "$SVC" == "vpc" ]]; then
-    sed -i "s/TAG/$TAG/g" "$DEST_01/terragrunt.hcl"
+    sed -i "s/VPC_NAME/$ONE/g" "$DEST_01/terragrunt.hcl"
+    sed -i "s/VPC_CIDR/$TWO/g" "$DEST_01/terragrunt.hcl"
 fi
 if [[ "$SVC" == "tgw" ]]; then
     sed -i "s/TAG/$TAG/g" "$DEST_01/terragrunt.hcl"

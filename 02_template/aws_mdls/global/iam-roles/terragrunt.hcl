@@ -1,35 +1,31 @@
-# _global/account/iam-roles-01/terragrunt.hcl
-
-# 1. Inherit global backend states and unified provider profiles from the root file
 include "root" {
   path = find_in_parent_folders()
 }
 
-# 2. Inherit corporate safety parameters and module source from our _envcommon template
 include "envcommon" {
-  path = "${get_terragrunt_dir()}/../../../../_envcommon/account/iam-roles.hcl"
+  path = "${dirname(find_in_parent_folders())}/_envcommon/iam-role.hcl"
 }
 
-# ---------------------------------------------------------------------------------------------------------------------
-# ROLE LOGIC & POLICY ATTACHMENTS
-# ---------------------------------------------------------------------------------------------------------------------
+locals {
+  env_vars = read_terragrunt_config(find_in_parent_folders("env.hcl"))
+  env      = local.env_vars.locals.environment
+}
+
 inputs = {
-  role_name = "ROLE_NAME"
-
-  # Define who or what is allowed to assume this IAM role 
-  # (e.g., AWS SSO / IAM Identity Center instances or a master management account)
-  trusted_role_arns = [
-    "arn:aws:iam::111122223333:root" # Swap with your central Identity/Management Account ID
-  ]
-
-  # Attach AWS Managed Policies to this execution role profile
-  custom_role_policy_arns = [
-    "arn:aws:iam::aws:policy/ReadOnlyAccess",
-    "arn:aws:iam::aws:policy/AWSSupportAccess"
-  ]
-
-  tags = {
-    SecurityTier = "tier-3-developer"
-    Auditable    = "true"
+  # Define your 3 different execution scopes as a matrix map
+  roles_matrix = {
+    bastion_admin = {
+      role_name   = "bastion-admin-role-${local.env}"
+      policy_arns = ["arn:aws:iam::aws:policy/AmazonSSMFullAccess"]
+    }
+    ecr_developer = {
+      role_name   = "ecr-developer-role-${local.env}"
+      policy_arns = ["arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPowerUser"]
+    }
+    read_only = {
+      role_name   = "read-only-role-${local.env}"
+      policy_arns = ["arn:aws:iam::aws:policy/ReadOnlyAccess"]
+    }
   }
 }
+

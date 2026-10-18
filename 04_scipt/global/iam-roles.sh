@@ -37,8 +37,8 @@ ENV_COMMON="$DEST_02/_envcommon/$CATE"
 GLOBAL_DIR="$DEST_02/_global/$CATE/$SVC-$NUMBER"
 # GLOBAL_DIR="$DEST_02/_global/account/iam-roles-$NUMBER"
 
-SOUR_01="02_template/aws_mdls/$CATEGORY/$SVC/$UNDER_CAT"
-SOUR_02="02_template/aws_mdls/$CATEGORY/$SVC/$UNDER_CAT"
+SOUR_01="02_template/aws_mdls/$CATEGORY/$UNDER_CAT/$SVC"
+SOUR_02="02_template/aws_mdls/$CATEGORY/$UNDER_CAT/$SVC"
 
 
 # 3. Create target directory structures

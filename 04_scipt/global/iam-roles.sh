@@ -25,7 +25,6 @@ CATEGORY="${lines[5]}"
 NUMBER="${lines[6]}"
 CATE="${lines[7]}"
 TAG="${lines[8]}"
-UNDER_CAT="${lines[9]}"
 
 ONE="${lines[9]}"
 

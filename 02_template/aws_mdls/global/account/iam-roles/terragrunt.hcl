@@ -26,5 +26,9 @@ inputs = {
       role_name   = "read-only-role-${local.env}"
       policy_arns = ["arn:aws:iam::aws:policy/ReadOnlyAccess"]
     }
+    read_only = {
+      role_name   = "read-only-role-${local.env}"
+      policy_arns = ["arn:aws:iam::aws:policy/ReadOnlyAccess"]
+    }
   }
 }

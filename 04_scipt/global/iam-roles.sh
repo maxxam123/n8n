@@ -44,7 +44,7 @@ SOUR_02="02_template/aws_mdls/$CATEGORY/$CATE/$SVC"
 mkdir -p "$DEST_01" "$ENV_COMMON" "$GLOBAL_DIR"
 
 # 4. Copy baseline environment-common configuration
-cp "$SOUR_02/$SVC.hcl" "$ENV_COMMON/"
+cp -u "$SOUR_02/$SVC.hcl" "$ENV_COMMON/"
 
 cp -n 02_template/aws_mdls/account.hcl "$DEST_02/_global"
 cp -n 02_template/aws_mdls/region.hcl "$DEST_02/_global"
@@ -54,7 +54,7 @@ ls -la "$DEST_02/"
 ls -la "$DEST_02/_envcommon"
 
 # 5. Populate global account IAM templates
-cp -u "$SOUR_01"/terragrunt.hcl "$GLOBAL_DIR/"
+cp "$SOUR_01"/terragrunt.hcl "$GLOBAL_DIR/"
 
 if [[ "$SVC" == "iam-roles" ]]; then
     echo "iam-roles"

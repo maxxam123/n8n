@@ -97,3 +97,7 @@ if [[ "$SVC" == "rds" ]]; then
     echo "test"
 fi
 
+if [[ "$SVC" == "waf-region" ]]; then
+    echo "waf-region"
+fi
+

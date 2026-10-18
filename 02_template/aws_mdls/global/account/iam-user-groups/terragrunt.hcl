@@ -12,26 +12,18 @@ locals {
 }
 
 dependency "roles" {
-  config_path = "../iam-roles"
+  config_path = "../../IAM_ROLE"
 }
 
+# bastion_admins = SERVICE
+# PERSONS = "alice", "bob"
 inputs = {
   # Group permissions mapped precisely to different user buckets
   groups_matrix = {
-    bastion_admins = {
-      group_name        = "bastion-admins-${local.env}-group"
-      users             = ["alice", "bob"] # Only Alice & Bob manage bastions
-      allowed_role_arns = [dependency.roles.outputs.role_arns["bastion_admin"]]
-    }
-    ecr_developers = {
-      group_name        = "ecr-developers-${local.env}-group"
-      users             = ["bob", "charlie"] # Bob & Charlie manage ECR containers
-      allowed_role_arns = [dependency.roles.outputs.role_arns["ecr_developer"]]
-    }
-    auditors = {
-      group_name        = "auditors-${local.env}-group"
-      users             = ["david", "emily"] # David & Emily have pure read-only visibility
-      allowed_role_arns = [dependency.roles.outputs.role_arns["read_only"]]
+    SERVICE = {
+      group_name        = "SERVICE-${local.env}-group"
+      users             = [PERSONS] # Only Alice & Bob manage bastions
+      allowed_role_arns = [dependency.roles.outputs.role_arns["SERVICE"]]
     }
   }
 }

@@ -38,9 +38,11 @@ SOUR_02="02_template/aws_mdls/$CATEGORY/$SVC"
 
 # 3. Create structure and copy baseline config files
 mkdir -p "$DEST_01" "$ENV_COMMON"
-mkdir -p "$REPO/02_modules/$PROVIDER/$CUSTOMER/common.hcl"
-mkdir -p "$REPO/02_modules/$PROVIDER/$CUSTOMER/$ENVIRONMENT/region.hcl"
-mkdir -p "$REPO/02_modules/$PROVIDER/$CUSTOMER/$ENVIRONMENT/account.hcl"
+
+cp -n "02_template/aws_mdls/account.hcl" "$REPO/02_modules/$PROVIDER/$CUSTOMER/$ENVIRONMENT/account.hcl"
+cp -n "02_template/aws_mdls/region.hcl" "$REPO/02_modules/$PROVIDER/$CUSTOMER/$ENVIRONMENT/region.hcl"
+
+cp -n "02_template/aws_mdls/common.hcl" "$REPO/02_modules/$PROVIDER/$CUSTOMER/$ENVIRONMENT/common.hcl"
 
 cp -u "$SOUR_02/$SVC.hcl" "$ENV_COMMON/"
 

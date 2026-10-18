@@ -46,6 +46,9 @@ mkdir -p "$DEST_01" "$ENV_COMMON" "$GLOBAL_DIR"
 # 4. Copy baseline environment-common configuration
 cp -u "$SOUR_02/$SVC.hcl" "$ENV_COMMON/"
 
+cp -n "$SOUR_01"/account.hcl "$DEST_02/_global"
+cp -n "$SOUR_01"/region.hcl "$DEST_02/_global"
+
 echo "INPUT"
 ls -la "$DEST_02/"
 ls -la "$DEST_02/_envcommon"

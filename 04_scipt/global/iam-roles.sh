@@ -25,6 +25,7 @@ CATEGORY="${lines[5]}"
 NUMBER="${lines[6]}"
 CATE="${lines[7]}"
 TAG="${lines[8]}"
+UNDER_CAT="${lines[9]}"
 
 ONE="${lines[9]}"
 
@@ -36,10 +37,9 @@ ENV_COMMON="$DEST_02/_envcommon/$CATE"
 GLOBAL_DIR="$DEST_02/_global/$CATE/$SVC-$NUMBER"
 # GLOBAL_DIR="$DEST_02/_global/account/iam-roles-$NUMBER"
 
-SOUR_01="02_template/aws_mdls/$CATEGORY/$SVC"
-SOUR_02="02_template/aws_mdls/$CATEGORY/$SVC"
-# SOUR_01="02_template/aws_mdls/global/$SVC"
-# SOUR_02="02_template/aws_mdls/global/$SVC"
+SOUR_01="02_template/aws_mdls/$CATEGORY/$SVC/$UNDER_CAT"
+SOUR_02="02_template/aws_mdls/$CATEGORY/$SVC/$UNDER_CAT"
+
 
 # 3. Create target directory structures
 mkdir -p "$DEST_01" "$ENV_COMMON" "$GLOBAL_DIR"

@@ -18,17 +18,5 @@ inputs = {
       role_name   = "bastion-admin-role-${local.env}"
       policy_arns = ["arn:aws:iam::aws:policy/AmazonSSMFullAccess"]
     }
-    ecr_developer = {
-      role_name   = "ecr-developer-role-${local.env}"
-      policy_arns = ["arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPowerUser"]
-    }
-    read_only = {
-      role_name   = "read-only-role-${local.env}"
-      policy_arns = ["arn:aws:iam::aws:policy/ReadOnlyAccess"]
-    }
-    read_only = {
-      role_name   = "read-only-role-${local.env}"
-      policy_arns = ["arn:aws:iam::aws:policy/ReadOnlyAccess"]
-    }
   }
 }

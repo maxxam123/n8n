@@ -23,6 +23,7 @@ generate "provider" {
 
   contents = <<EOF
 provider "aws" {
+# region = "${contains(split("/", get_terragrunt_dir()), "waf-global") ? "us-east-1" : "eu-west-1"}"
   region = "us-east-1"
   profile = "max"
 

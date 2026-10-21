@@ -5,7 +5,7 @@ test-repo-01/managment/_global/security
 security
 security
 test-repo-01/managment/_envcommon/security
-../02_template/go-mdls/organization/github-oidc-provider.hcl
+../02_template/go-mdls/security/github-oidc-provider.hcl
 
 
 

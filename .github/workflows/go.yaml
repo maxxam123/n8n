@@ -48,19 +48,10 @@ jobs:
           go run main.go
 
       - name: List contents of test-repo-01
-        run: ls -la test-repo-01
+        run: ls -la go/test-repo-01
 
       - name: Verify Generated Output
-        run: cat test-repo-01/temp-02.yaml
+        run: cat go/test-repo-01/temp-02.yaml
 
-        
-      - name: Pushes to another repository
-        uses: cpina/github-action-push-to-another-repository@main
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.CROSS_2 }}
-        with:
-          source-directory: "${{ env.GLOBAL_FIRST_LINE }}"
-          destination-github-username: "maxxam123"
-          destination-repository-name: "${{ env.GLOBAL_FIRST_LINE }}"
-          user-email: hennighausenmax@gmail.com
-          target-branch: main 
+      - name: repo original
+        run: la -la test-repo-01

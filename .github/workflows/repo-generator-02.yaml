@@ -43,13 +43,13 @@ jobs:
 
       - name: Structure
         run: |
-          chmod +x 04_scipt/repo-generater-02.sh
-          ./04_scipt/repo-generater.02.sh
           mkdir -p {{ env.GLOBAL_FIRST_LINE }}/managment
           mkdir -p {{ env.GLOBAL_FIRST_LINE }}/managment/_global
           touch {{ env.GLOBAL_FIRST_LINE }}/managment/.git
           ls -la
           ls -la "${{ env.GLOBAL_FIRST_LINE }}"
+        #  chmod +x 04_scipt/repo-generater-02.sh
+        # ./04_scipt/repo-generater.02.sh
         # mkdir "${{ env.GLOBAL_FIRST_LINE }}/01_infra"
         #  mkdir "${{ env.GLOBAL_FIRST_LINE }}/.github"
         #  mkdir "${{ env.GLOBAL_FIRST_LINE }}/.github/workflows"

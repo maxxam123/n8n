@@ -10,3 +10,10 @@ organizational_units = {
   {{ .ID }} = { name = "{{ .Name }}" },
   {{- end }}
 }
+
+organizational_units = {
+{{- range $index, $element := .OrganizationalUnits }}
+  {{- if $index }},{{ end }}
+  {{ $element.ID }}_ou = { name = "{{ $element.Name }}" }
+{{- end }}
+}

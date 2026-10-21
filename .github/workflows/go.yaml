@@ -28,7 +28,7 @@ jobs:
           go run main.go
 
       - name: List contents of test-repo-01
-        run: ls -la test-repo-02
+        run: ls -la test-repo-01
 
       - name: Verify Generated Output
-        run: cat test-repo-02/temp.yaml
+        run: cat test-repo-01/temp.yaml

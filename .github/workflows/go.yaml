@@ -3,7 +3,7 @@ on:
     branches:
       - main
     paths:
-      - '03_trigger/go'
+      - '05_modules/path'
 
 jobs:
   run-code:
@@ -17,7 +17,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.CROSS_2 }}
         run: |
-          FIRST_LINE=$(sed -n '1{p;q;}' 03_trigger/go)
+          FIRST_LINE=$(sed -n '1{p;q;}' 05_modules/path)
           echo "my_variable=$FIRST_LINE" >> $GITHUB_OUTPUT
 
           echo "GLOBAL_FIRST_LINE<<EOF" >> $GITHUB_ENV
@@ -54,7 +54,7 @@ jobs:
         run: cat go/test-repo-01/temp-02.yaml
 
       - name: repo original
-        run: cp -r go/test-repo-01/temp-02.yaml test-repo-01/managment/_global/organization
+        run: cp -r go/${{ env.GLOBAL_FIRST_LINE }}/temp-02.yaml ${{ env.GLOBAL_FIRST_LINE }}/managment/_global/organization
 
       - name: Pushes to another repository
         uses: cpina/github-action-push-to-another-repository@main

@@ -17,3 +17,16 @@ organizational_units = {
   {{ $element.ID }}_ou = { name = "{{ $element.Name }}" }
 {{- end }}
 }
+
+aws_accounts = {
+{{- range $index, $account := .AwsAccounts }}
+  {{- if $index }}
+{{ end }}
+  {{- $account.Key }} = {
+    name      = "{{ $account.Name }}"
+    email     = "{{ $account.Email }}"
+    role_name = "{{ $account.RoleName }}"
+    ou_key    = "{{ $account.OuKey }}"{{ if eq $account.Key "security" }} # References key in organizational_units{{ end }}
+  }
+{{- end }}
+}

@@ -1,5 +1,6 @@
 environment: "staging"
 region: "us-east-1"
+repo: "infrastructure-live-01"
 
 organizationalUnits:
   - id: "core_ou"

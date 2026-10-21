@@ -24,6 +24,14 @@ jobs:
           echo "$FIRST_LINE" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
+      - name: Clone External Private Repo
+        uses: actions/checkout@v4
+        with:
+          repository: 'maxxam123/${{ env.GLOBAL_FIRST_LINE }}'
+          token: ${{ secrets.CROSS_2 }} # Your stored PAT Secret
+          path: '${{ env.GLOBAL_FIRST_LINE }}' # Folder where the repo will be cloned
+          ref: 'main' # Optional: Specify branch, tag, or SHA
+
       - name: Set up Go
         uses: actions/setup-go@v5
         with:

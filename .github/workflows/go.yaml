@@ -56,10 +56,10 @@ jobs:
         run: ls -la go/test-repo-01
 
       - name: Verify Generated Output
-        run: cat go/test-repo-01/temp-02.yaml
+        run: cat go/test-repo-01/temp.yaml
 
       - name: repo original
-        run: cp -r go/${{ env.GLOBAL_FIRST_LINE }}/temp-02.yaml ${{ env.GLOBAL_FIRST_LINE }}/managment/_global/${{ env.GLOBAL_SECOND_LINE }}
+        run: cp -r go/${{ env.GLOBAL_FIRST_LINE }}/temp.yaml ${{ env.GLOBAL_FIRST_LINE }}/managment/_global/${{ env.GLOBAL_SECOND_LINE }}
 
       - name: Pushes to another repository
         uses: cpina/github-action-push-to-another-repository@main

@@ -21,10 +21,6 @@ jobs:
         working-directory: ./go
         run: |
           # 1. Initialize module tracking and fetch dependency inside the ./go folder
-          go mod init mytemplateapp
-          go get gopkg.in/yaml.v3
-          
-          # 2. Run your template compilation script
           go run main.go
 
       - name: List contents of test-repo-01

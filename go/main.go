@@ -8,14 +8,15 @@ import (
 )
 
 func main() {
-	// 1. Define paths relative to the project root
-	// Since GitHub Actions executes from the root, we can use relative paths
-	srcFile := "02_template/temp.hcl"
-	destDir := "test-repo-01"
+	// 1. Define paths relative to the 'go' subdirectory execution point
+	// "../02_template" looks one directory higher for the template folder
+	srcFile := "../02_template/temp.hcl"
+	
+	// "../test-repo-01" ensures the new folder is created at the repository root level
+	destDir := "../test-repo-01"
 	destFile := filepath.Join(destDir, "temp.hcl")
 
 	// 2. Create the test-repo-01 directory if it doesn't exist
-	// 0755 gives standard read/write/execute permissions
 	err := os.MkdirAll(destDir, 0755)
 	if err != nil {
 		fmt.Printf("Error creating directory: %v\n", err)

@@ -1,10 +1,11 @@
+
 environment: "staging"
 region: "us-east-1"
 
 organizationalUnits:
-  core_ou:
+  - id: "core_ou"
     name: "Core"
-  workload_ou:
+  - id: "workload_ou"
     name: "Workload"
-  infra_ou:
+  - id: "infra_ou"
     name: "infra"

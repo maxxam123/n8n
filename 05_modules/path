@@ -1,5 +1,5 @@
 test-repo-01
-../02_template/values-02.yaml
-../02_template/temp-02.yaml
-organization
+../02_template/go-mdls/security/values-02.yaml
+../02_template/go-mdls/security/temp-02.yaml
+security
 

@@ -1,0 +1,12 @@
+cluster_name = "my-cluster-{{ .Environment }}"
+aws_region   = "{{ .Region }}"
+cluster_name = "my-cluster-{{ .Environment }}"
+aws_region   = "{{ .Region }}"
+cluster_name = "my-cluster-{{ .Environment }}"
+aws_region   = "{{ .Region }}"
+
+organizational_units = {
+  {{- range .OrganizationalUnits }}
+  {{ .ID }} = { name = "{{ .Name }}" },
+  {{- end }}
+}

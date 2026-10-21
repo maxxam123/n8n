@@ -2,8 +2,8 @@
 cluster_name = "my-cluster-{{.environment}}"
 aws_region   = "{{.region}}"
 
-# organizational_units = {
-#  {{- range $key, $value := .organizationalUnits }}
-#  {{ $key }} = { name = "{{ $value.name }}" }
-#  {{- end }}
-# }
+organizational_units = {
+  {{- range $key, $value := .organizationalUnits }}
+  {{ $key }} = { name = "{{ $value.name }}" }
+  {{- end }}
+}

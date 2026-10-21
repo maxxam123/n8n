@@ -1,7 +1,7 @@
 test-repo-01
 test-repo-01/managment/_global/security
 ../02_template/go-mdls/security/values.yaml
-../02_template/go-mdls/security/temp.yaml
+../02_template/go-mdls/security/terragrunt.hcl
 security
 security
 test-repo-01/managment/_envcommon/security

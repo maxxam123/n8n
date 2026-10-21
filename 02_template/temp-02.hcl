@@ -1,2 +1,10 @@
 environment = "staging"
 region      = "us-east-1"
+
+organizationalUnits:
+  core_ou:
+    name: "Core"
+  workload_ou:
+    name: "Workload"
+  infra_ou:
+    name: "infra"

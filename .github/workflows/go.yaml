@@ -70,13 +70,13 @@ jobs:
     #    run: cp -r 02_template/go-mdls/${{ env.GLOBAL_SECOND_LINE }}/${{ env.GLOBAL_THIRD_LINE }}.hcl ${{ env.GLOBAL_FIRST_LINE }}/managment/_envcommon/${{ env.GLOBAL_SECOND_LINE }}
 
 
-      #- name: Pushes to another repository
-     #   uses: cpina/github-action-push-to-another-repository@main
-     #   env:
-     #     API_TOKEN_GITHUB: ${{ secrets.CROSS_2 }}
-     #   with:
-     #     source-directory: "${{ env.GLOBAL_FIRST_LINE }}"
-     #     destination-github-username: "maxxam123"
-     #     destination-repository-name: "${{ env.GLOBAL_FIRST_LINE }}"
-     #     user-email: hennighausenmax@gmail.com
-     #     target-branch: main 
+      - name: Pushes to another repository
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.CROSS_2 }}
+        with:
+          source-directory: "${{ env.GLOBAL_FIRST_LINE }}"
+          destination-github-username: "maxxam123"
+          destination-repository-name: "${{ env.GLOBAL_FIRST_LINE }}"
+          user-email: hennighausenmax@gmail.com
+          target-branch: main 

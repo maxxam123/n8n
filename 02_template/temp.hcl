@@ -1,10 +1,8 @@
-# This file will be populated dynamically
-cluster_name = "my-cluster-{{ .Values.environment }}"
-aws_region   = "{{ .Values.region }}"
+cluster_name = "my-cluster-{{ .Environment }}"
+aws_region   = "{{ .Region }}"
 
-# templates/temp-02.hcl
 organizational_units = {
-  {{- range $key, $value := .Values.organizationalUnits }}
-  {{ $key }} = { name = "{{ $value.name }}" },
+  {{- range .OrganizationalUnits }}
+  {{ .ID }} = { name = "{{ .Name }}" },
   {{- end }}
 }

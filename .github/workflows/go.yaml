@@ -31,4 +31,4 @@ jobs:
         run: ls -la test-repo-01
 
       - name: Verify Generated Output
-        run: cat test-repo-01/temp.yaml
+        run: cat test-repo-01/temp-02.yaml

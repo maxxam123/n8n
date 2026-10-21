@@ -62,9 +62,9 @@ func main() {
 	}
 
 	// Route the dynamic configurations from the read rows
-	dynamicDestDir  := lines[0] // Line 1: e.g. "test-repo-02"
-	dynamicValues   := lines[1] // Line 2: e.g. "../02_template/values.yaml"
-	dynamicTemplate := lines[2] // Line 3: e.g. "../02_template/temp.yaml"
+	dynamicDestDir  := lines[0] 
+	dynamicValues   := lines[1] 
+	dynamicTemplate := lines[2] 
 
 	// ==========================================
 	// 2. FIXED PATH CALCULATIONS

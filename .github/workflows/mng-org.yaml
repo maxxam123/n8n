@@ -18,7 +18,7 @@ jobs:
           GH_TOKEN: ${{ secrets.CROSS_2 }}
         run: |
           FIRST_LINE=$(sed -n '1{p;q;}' 03_trigger/org/org)
-          SRV_01=$(sed -n '3{p;q;}' 03_trigger/org/org)
+          SRV_01=$(sed -n '2{p;q;}' 03_trigger/org/org)
           CATE=$(sed -n '6{p;q;}' 03_trigger/org/org)
           echo "my_variable=$FIRST_LINE" >> $GITHUB_OUTPUT
 

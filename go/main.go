@@ -27,6 +27,7 @@ type AWSAccount struct {
 type ConfigValues struct {
 	Environment         string    `yaml:"environment"`
 	Region              string    `yaml:"region"`
+	Repo                string       `yaml:"repo"`
 	OrganizationalUnits []OrgUnit `yaml:"organizationalUnits"`
     AwsAccounts         []AWSAccount `yaml:"awsAccounts"`
 }

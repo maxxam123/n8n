@@ -1,0 +1,20 @@
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '03_trigger/go'
+
+jobs:
+  run-code:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+      - run:
+          ls -la
+          cd go
+          ls -la
+          go run main.go

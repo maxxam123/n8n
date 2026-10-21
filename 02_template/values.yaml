@@ -1,5 +1,5 @@
-environment = "staging"
-region      = "us-east-1"
+environment: "staging"
+region: "us-east-1"
 
 organizationalUnits:
   core_ou:

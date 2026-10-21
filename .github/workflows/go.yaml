@@ -19,6 +19,7 @@ jobs:
         run: |
           FIRST_LINE=$(sed -n '1{p;q;}' 05_modules/path)
           SECOND_LINE=$(sed -n '4{p;q;}' 05_modules/path)
+          THIRD_LINE=$(sed -n '5{p;q;}' 05_modules/path)
           echo "my_variable=$FIRST_LINE" >> $GITHUB_OUTPUT
 
           echo "GLOBAL_FIRST_LINE<<EOF" >> $GITHUB_ENV
@@ -27,6 +28,10 @@ jobs:
 
           echo "GLOBAL_SECOND_LINE<<EOF" >> $GITHUB_ENV
           echo "$SECOND_LINE" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+          echo "GLOBAL_THIRD_LINE<<EOF" >> $GITHUB_ENV
+          echo "$THIRD_LINE" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
       - name: Clone External Private Repo
@@ -62,7 +67,7 @@ jobs:
         run: cp -r go/${{ env.GLOBAL_FIRST_LINE }}/temp.yaml ${{ env.GLOBAL_FIRST_LINE }}/managment/_global/${{ env.GLOBAL_SECOND_LINE }}
 
       - name: terragrunt
-        run: cp -r 02_template/go-mdls/${{ env.GLOBAL_SECOND_LINE }}/terragrunt.hcl ${{ env.GLOBAL_FIRST_LINE }}/managment/_envcommon/${{ env.GLOBAL_SECOND_LINE }}
+        run: cp -r 02_template/go-mdls/${{ env.GLOBAL_SECOND_LINE }}/${{ env.GLOBAL_THIRD_LINE }}.hcl ${{ env.GLOBAL_FIRST_LINE }}/managment/_envcommon/${{ env.GLOBAL_SECOND_LINE }}
 
 
       - name: Pushes to another repository

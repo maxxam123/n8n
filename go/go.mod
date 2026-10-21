@@ -1,3 +1,3 @@
-module my-minimal-app
+module github-actions-file-manager
 
 go 1.22

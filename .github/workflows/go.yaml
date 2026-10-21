@@ -12,6 +12,18 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Run GitHub CLI Command
+        id: step_one
+        env:
+          GH_TOKEN: ${{ secrets.CROSS_2 }}
+        run: |
+          FIRST_LINE=$(sed -n '1{p;q;}' 03_trigger/go)
+          echo "my_variable=$FIRST_LINE" >> $GITHUB_OUTPUT
+
+          echo "GLOBAL_FIRST_LINE<<EOF" >> $GITHUB_ENV
+          echo "$FIRST_LINE" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
       - name: Set up Go
         uses: actions/setup-go@v5
         with:

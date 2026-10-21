@@ -25,11 +25,11 @@ type AWSAccount struct {
 }
 
 type ConfigValues struct {
-	Environment         string    `yaml:"environment"`
-	Region              string    `yaml:"region"`
+	Environment         string       `yaml:"environment"`
+	Region              string       `yaml:"region"`
 	Repo                string       `yaml:"repo"`
-	OrganizationalUnits []OrgUnit `yaml:"organizationalUnits"`
-    AwsAccounts         []AWSAccount `yaml:"awsAccounts"`
+	OrganizationalUnits []OrgUnit    `yaml:"organizationalUnits"`
+	AwsAccounts         []AWSAccount `yaml:"awsAccounts"`
 }
 
 func main() {
@@ -47,7 +47,6 @@ func main() {
 	var lines []string
 	scanner := bufio.NewScanner(file02)
 	for scanner.Scan() {
-		// Trim hidden padding whitespace and string quote characters instantly
 		cleanedLine := strings.TrimSpace(scanner.Text())
 		cleanedLine = strings.Trim(cleanedLine, "\"")
 		cleanedLine = strings.Trim(cleanedLine, "'")
@@ -57,23 +56,22 @@ func main() {
 	}
 	file02.Close()
 
-	// Ensure the file contains exactly what the project requires
 	if len(lines) < 3 {
 		fmt.Printf("Error: %s must contain at least 3 valid text line parameters (got %d)\n", customerFile, len(lines))
 		os.Exit(1)
 	}
 
-	// Route the dynamic configurations from the read rows
+	// Route configurations from file rows
 	dynamicDestDir  := lines[0] // Line 1: e.g. "test-repo-02"
 	dynamicValues   := lines[1] // Line 2: e.g. "../02_template/values.yaml"
 	dynamicTemplate := lines[2] // Line 3: e.g. "../02_template/temp.yaml"
 
-	// 2. Compute full safe directory paths relative to the execution engine point
+	// Compute base paths without directory traversals
 	destDir  := dynamicPathOrName(dynamicDestDir)
 	destFile := filepath.Join(destDir, filepath.Base(dynamicTemplate))
 
 	// ==========================================
-	// 3. Process Content Mappings & Executions
+	// 2. Read Common Configuration Values Once
 	// ==========================================
 	yamlFile, err := os.ReadFile(dynamicValues)
 	if err != nil {
@@ -88,11 +86,15 @@ func main() {
 		os.Exit(1)
 	}
 
+	// Create local destination directory tree
 	if err := os.MkdirAll(destDir, 0755); err != nil {
 		fmt.Printf("Error creating dynamic directory %s: %v\n", destDir, err)
 		os.Exit(1)
 	}
 
+	// ==========================================
+	// 3. EXECUTION 1: Template First File
+	// ==========================================
 	baseName := filepath.Base(dynamicTemplate)
 	tmpl, err := template.New(baseName).ParseFiles(dynamicTemplate)
 	if err != nil {
@@ -105,20 +107,56 @@ func main() {
 		fmt.Printf("Error creating dynamic destination file: %v\n", err)
 		os.Exit(1)
 	}
-	defer outputFile.Close()
 
 	err = tmpl.ExecuteTemplate(outputFile, baseName, values)
+	outputFile.Close() // Close immediately to avoid descriptor leaks
 	if err != nil {
-		fmt.Printf("Error executing template mapping stack: %v\n", err)
+		fmt.Printf("Error executing template 1 mapping stack: %v\n", err)
+		os.Exit(1)
+	}
+	fmt.Printf("Successfully templated %s inside directory %s\n", destFile, destDir)
+
+	// ==========================================
+	// 4. EXECUTION 2: Template Second File
+	// ==========================================
+	// Explicit assignments using your rules:
+	dynamicDestDir01  := lines[0]
+	dynamicTemplate02 := lines[2]
+
+	destDir01  := dynamicPathOrName(dynamicDestDir01)
+	
+	// Create another distinct file name based on your second file pattern setup
+	// Here we add an "_02" extension suffix to separate it from file 1
+	ext := filepath.Ext(dynamicTemplate02)
+	baseWithoutExt := strings.TrimSuffix(filepath.Base(dynamicTemplate02), ext)
+	destFile02 := filepath.Join(destDir01, baseWithoutExt+"_02"+ext)
+
+	baseName02 := filepath.Base(dynamicTemplate02)
+	tmpl02, err := template.New(baseName02).ParseFiles(dynamicTemplate02)
+	if err != nil {
+		fmt.Printf("Error parsing second dynamic template file (%s): %v\n", dynamicTemplate02, err)
 		os.Exit(1)
 	}
 
-	fmt.Printf("Successfully templated %s inside dynamic directory %s\n", destFile, destDir)
+	outputFile02, err := os.Create(destFile02)
+	if err != nil {
+		fmt.Printf("Error creating second dynamic destination file: %v\n", err)
+		os.Exit(1)
+	}
+
+	err = tmpl02.ExecuteTemplate(outputFile02, baseName02, values)
+	outputFile02.Close()
+	if err != nil {
+		fmt.Printf("Error executing second template mapping stack: %v\n", err)
+		os.Exit(1)
+	}
+	fmt.Printf("Successfully templated second file %s inside directory %s\n", destFile02, destDir01)
 }
 
-// Helper to keep formatting clean if a path prefix rule was already written in line 1
 func dynamicPathOrName(s string) string {
 	s = strings.TrimPrefix(s, "../")
-	return strings.TrimPrefix(s, "./")
+	s = strings.TrimPrefix(s, "./")
+	return s
 }
+
 

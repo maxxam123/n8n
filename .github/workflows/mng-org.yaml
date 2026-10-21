@@ -48,7 +48,6 @@ jobs:
           ./04_scipt/org.sh
           ls -la
           ls -la "${{ env.GLOBAL_FIRST_LINE }}"
-          ls -la "${{ env.GLOBAL_FIRST_LINE }}/02_modules"
           
      #     cp -r 01-infra/* "${{ env.GLOBAL_FIRST_LINE }}/01-infra/"
      #     ls -la "${{ env.GLOBAL_FIRST_LINE }}/01-infra"

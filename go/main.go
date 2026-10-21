@@ -36,7 +36,7 @@ func main() {
 	customerFile := "../05_modules/path"
 
 	// ==========================================
-	// 1. DYNAMIC STEP: Read 3 lines from customerFile
+	// 1. DYNAMIC STEP: Read user tokens from file
 	// ==========================================
 	file02, err := os.Open(customerFile)
 	if err != nil {
@@ -56,21 +56,29 @@ func main() {
 	}
 	file02.Close()
 
-	if len(lines) < 3 {
-		fmt.Printf("Error: %s must contain at least 3 valid text line parameters (got %d)\n", customerFile, len(lines))
+	if len(lines) < 2 {
+		fmt.Printf("Error: %s must contain at least 2 lines (got %d)\n", customerFile, len(lines))
 		os.Exit(1)
 	}
 
-	// Route the dynamic configurations from the read rows
-	dynamicDestDir  := lines[0] 
-	dynamicValues   := lines[1] 
-	dynamicTemplate := lines[2] 
+	// Extract the only two dynamic fields
+	repoName   := lines[0] // e.g., "test-repo-01"
+	moduleType := lines[1] // e.g., "security"
 
 	// ==========================================
-	// 2. FIXED PATH CALCULATIONS
+	// 2. DEFAULT SCHEMAS (Hardcoded inside Go)
 	// ==========================================
-	// We explicitly prepend ".." so it always writes one directory above the current "go" execution folder
-	destDir  := filepath.Join("..", dynamicPathOrName(dynamicDestDir))
+	// Generates: "../test-repo-01/managment/_global/security"
+	dynamicDestDir := fmt.Sprintf("../%s/managment/_global/%s", repoName, moduleType)
+	
+	// Generates: "../02_template/go-mdls/security/values.yaml"
+	dynamicValues := fmt.Sprintf("../02_template/go-mdls/%s/values.yaml", moduleType)
+	
+	// Generates: "../02_template/go-mdls/security/terragrunt.hcl"
+	dynamicTemplate := fmt.Sprintf("../02_template/go-mdls/%s/terragrunt.hcl", moduleType)
+
+	// Clean destination directory path structure
+	destDir  := filepath.Clean(dynamicDestDir)
 	destFile := filepath.Join(destDir, filepath.Base(dynamicTemplate))
 
 	// ==========================================
@@ -115,11 +123,4 @@ func main() {
 	}
 
 	fmt.Printf("Successfully templated %s inside dynamic directory %s\n", destFile, destDir)
-}
-
-// Helper to keep formatting clean by sanitizing leading directory shortcuts safely
-func dynamicPathOrName(s string) string {
-	s = strings.TrimPrefix(s, "../")
-	s = strings.TrimPrefix(s, "./")
-	return s
 }

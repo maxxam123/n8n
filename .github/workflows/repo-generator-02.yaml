@@ -43,9 +43,9 @@ jobs:
 
       - name: Structure
         run: |
-          mkdir -p {{ env.GLOBAL_FIRST_LINE }}/managment
-          mkdir -p {{ env.GLOBAL_FIRST_LINE }}/managment/_global
-          touch {{ env.GLOBAL_FIRST_LINE }}/managment/.git
+          mkdir -p "{{ env.GLOBAL_FIRST_LINE }}"/managment
+          mkdir -p "{{ env.GLOBAL_FIRST_LINE }}"/managment/_global
+          touch "{{ env.GLOBAL_FIRST_LINE }}"/managment/_global/test.txt
           ls -la
           ls -la "${{ env.GLOBAL_FIRST_LINE }}"
         #  chmod +x 04_scipt/repo-generater-02.sh

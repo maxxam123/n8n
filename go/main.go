@@ -118,8 +118,8 @@ func main() {
 	// ==========================================
 	// 4. EXECUTION 2: Template Second File
 	// ==========================================
-	dynamicDestDir01  := lines[3] // Line 4: Explicit alternate directory target
-	dynamicTemplate02 := lines[4] // Line 5: Explicit alternate blueprint configuration file
+	dynamicDestDir01  := lines[5] // Line 4: Explicit alternate directory target
+	dynamicTemplate02 := lines[6] // Line 5: Explicit alternate blueprint configuration file
 
 	destDir01  := dynamicPathOrName(dynamicDestDir01)
 	destFile02 := filepath.Join(destDir01, filepath.Base(dynamicTemplate02))

@@ -1,9 +1,10 @@
-test-repo-01
-../02_template/go-mdls/organization/values.yaml
-../02_template/go-mdls/organization/temp.yaml
-organization
-organization
-
+est-repo-01/managment/_global/security
+../02_template/go-mdls/security/values.yaml
+../02_template/go-mdls/security/temp.yaml
+security
+security
+test-repo-01/managment/_envcommon/security
+../02_template/go-mdls/organization/github-oidc-provider.hcl
 
 
 

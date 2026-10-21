@@ -56,33 +56,33 @@ func main() {
 	}
 	file02.Close()
 
-	if len(lines) < 2 {
-		fmt.Printf("Error: %s must contain at least 2 lines (got %d)\n", customerFile, len(lines))
+	if len(lines) < 3 {
+		fmt.Printf("Error: %s must contain at least 3 lines (got %d)\n", customerFile, len(lines))
 		os.Exit(1)
 	}
 
-	// Extract the only two dynamic fields
-	repoName   := lines[0] // e.g., "test-repo-01"
-	moduleType := lines[1] // e.g., "security"
+	repoName        := lines[0] // e.g., "test-repo-01"
+	moduleType      := lines[1] // e.g., "security"
+	secondFileName  := lines[2] // e.g., "github-oidc-provider.hcl"
 
 	// ==========================================
-	// 2. DEFAULT SCHEMAS (Hardcoded inside Go)
+	// 2. DEFAULT BASE SCHEMAS & TARGETS
 	// ==========================================
-	// Generates: "../test-repo-01/managment/_global/security"
-	dynamicDestDir := fmt.Sprintf("../%s/managment/_global/%s", repoName, moduleType)
-	
-	// Generates: "../02_template/go-mdls/security/values.yaml"
+	// Common Shared Values Source File
 	dynamicValues := fmt.Sprintf("../02_template/go-mdls/%s/values.yaml", moduleType)
-	
-	// Generates: "../02_template/go-mdls/security/terragrunt.hcl"
-	dynamicTemplate := fmt.Sprintf("../02_template/go-mdls/%s/terragrunt.hcl", moduleType)
 
-	// Clean destination directory path structure
-	destDir  := filepath.Clean(dynamicDestDir)
-	destFile := filepath.Join(destDir, filepath.Base(dynamicTemplate))
+	// File 1 Targets (Deployed under _global)
+	dynamicTemplate1 := fmt.Sprintf("../02_template/go-mdls/%s/terragrunt.hcl", moduleType)
+	destDir1         := filepath.Clean(fmt.Sprintf("../%s/managment/_global/%s", repoName, moduleType))
+	destFile1        := filepath.Join(destDir1, filepath.Base(dynamicTemplate1))
+
+	// File 2 Targets (Deployed under _envcommon)
+	dynamicTemplate2 := fmt.Sprintf("../02_template/go-mdls/%s/%s", moduleType, secondFileName)
+	destDir2         := filepath.Clean(fmt.Sprintf("../%s/managment/_envcommon/%s", repoName, moduleType))
+	destFile2        := filepath.Join(destDir2, secondFileName)
 
 	// ==========================================
-	// 3. Process Content Mappings & Executions
+	// 3. Process Content Mappings Once
 	// ==========================================
 	yamlFile, err := os.ReadFile(dynamicValues)
 	if err != nil {
@@ -97,30 +97,61 @@ func main() {
 		os.Exit(1)
 	}
 
-	if err := os.MkdirAll(destDir, 0755); err != nil {
-		fmt.Printf("Error creating dynamic directory %s: %v\n", destDir, err)
+	// ==========================================
+	// 4. EXECUTION 1: Template First File
+	// ==========================================
+	if err := os.MkdirAll(destDir1, 0755); err != nil {
+		fmt.Printf("Error creating directory 1 %s: %v\n", destDir1, err)
 		os.Exit(1)
 	}
 
-	baseName := filepath.Base(dynamicTemplate)
-	tmpl, err := template.New(baseName).ParseFiles(dynamicTemplate)
+	baseName1 := filepath.Base(dynamicTemplate1)
+	tmpl1, err := template.New(baseName1).ParseFiles(dynamicTemplate1)
 	if err != nil {
-		fmt.Printf("Error parsing dynamic template file (%s): %v\n", dynamicTemplate, err)
+		fmt.Printf("Error parsing template file 1 (%s): %v\n", dynamicTemplate1, err)
 		os.Exit(1)
 	}
 
-	outputFile, err := os.Create(destFile)
+	outputFile1, err := os.Create(destFile1)
 	if err != nil {
-		fmt.Printf("Error creating dynamic destination file: %v\n", err)
+		fmt.Printf("Error creating destination file 1: %v\n", err)
 		os.Exit(1)
 	}
-	defer outputFile.Close()
 
-	err = tmpl.ExecuteTemplate(outputFile, baseName, values)
+	err = tmpl1.ExecuteTemplate(outputFile1, baseName1, values)
+	outputFile1.Close() // Close immediately to lock bytes to storage
 	if err != nil {
-		fmt.Printf("Error executing template mapping stack: %v\n", err)
+		fmt.Printf("Error executing template 1: %v\n", err)
+		os.Exit(1)
+	}
+	fmt.Printf("Successfully templated file 1: %s\n", destFile1)
+
+	// ==========================================
+	// 5. EXECUTION 2: Template Second File
+	// ==========================================
+	if err := os.MkdirAll(destDir2, 0755); err != nil {
+		fmt.Printf("Error creating directory 2 %s: %v\n", destDir2, err)
 		os.Exit(1)
 	}
 
-	fmt.Printf("Successfully templated %s inside dynamic directory %s\n", destFile, destDir)
+	baseName2 := filepath.Base(dynamicTemplate2)
+	tmpl2, err := template.New(baseName2).ParseFiles(dynamicTemplate2)
+	if err != nil {
+		fmt.Printf("Error parsing template file 2 (%s): %v\n", dynamicTemplate2, err)
+		os.Exit(1)
+	}
+
+	outputFile2, err := os.Create(destFile2)
+	if err != nil {
+		fmt.Printf("Error creating destination file 2: %v\n", err)
+		os.Exit(1)
+	}
+
+	err = tmpl2.ExecuteTemplate(outputFile2, baseName2, values)
+	outputFile2.Close()
+	if err != nil {
+		fmt.Printf("Error executing template 2: %v\n", err)
+		os.Exit(1)
+	}
+	fmt.Printf("Successfully templated file 2: %s\n", destFile2)
 }

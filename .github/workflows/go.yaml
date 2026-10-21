@@ -20,7 +20,11 @@ jobs:
       - name: Run Templating Script
         working-directory: ./go
         run: |
-          # 1. Initialize module tracking and fetch dependency inside the ./go folder
+          
+          # 2. Fetch the required YAML package dependency
+          go get gopkg.in/yaml.v3
+          
+          # 3. Run your template compilation script
           go run main.go
 
       - name: List contents of test-repo-01

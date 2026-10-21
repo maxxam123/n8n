@@ -11,7 +11,7 @@ import (
 
 func main() {
 	// 1. Define paths relative to the 'go' subdirectory execution point
-	valuesFile  := "../02_template/temp-02.hcl"
+	valuesFile  := "../02_template/values.yaml"
 	srcTemplate := "../02_template/temp.hcl"
 	destDir     := "../test-repo-01"
 	destFile    := filepath.Join(destDir, "temp.hcl")

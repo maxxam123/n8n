@@ -77,8 +77,11 @@ func main() {
 	destFile1        := filepath.Join(destDir1, filepath.Base(dynamicTemplate1))
 
 	// File 2 Targets (Deployed under _envcommon)
+	if !strings.HasSuffix(secondFileName, ".hcl") {
+		secondFileName = secondFileName + ".hcl"
+	}
 
-    dynamicTemplate2 := filepath.Join("../02_template/go-mdls", moduleType, secondFileName + ".hcl")
+    dynamicTemplate2 := filepath.Join("../02_template/go-mdls", moduleType, secondFileName)
 
 	
 	// dynamicTemplate2 := fmt.Sprintf("../02_template/go-mdls/%s/%s.hcl", moduleType, secondFileName) // /.hcl

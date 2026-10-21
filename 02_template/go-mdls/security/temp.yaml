@@ -36,3 +36,14 @@ aws_accounts = {
   }
 {{- end }}
 }
+
+aws_accounts = {
+{{- range .AwsAccounts }}
+  {{ .Key }} = {
+    name      = "{{ .Name }}"
+    email     = "{{ .Email }}"
+    role_name = "{{ .RoleName }}"
+    ou_key    = "{{ .OuKey }}"
+  }
+{{- end }}
+}

@@ -1,4 +1,5 @@
-est-repo-01/managment/_global/security
+test-repo-01
+test-repo-01/managment/_global/security
 ../02_template/go-mdls/security/values.yaml
 ../02_template/go-mdls/security/temp.yaml
 security

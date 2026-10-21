@@ -22,3 +22,6 @@ jobs:
 
       - name: List contents of test-repo-01
         run: ls -la test-repo-01
+
+      - name: Verify Generated Output
+        run: cat test-repo-01/temp.hcl

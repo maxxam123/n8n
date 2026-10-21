@@ -16,10 +16,19 @@ type OrgUnit struct {
 	Name string `yaml:"name"`
 }
 
+type AWSAccount struct {
+	Key      string `yaml:"key"`
+	Name     string `yaml:"name"`
+	Email    string `yaml:"email"`
+	RoleName string `yaml:"roleName"`
+	OuKey    string `yaml:"ouKey"`
+}
+
 type ConfigValues struct {
 	Environment         string    `yaml:"environment"`
 	Region              string    `yaml:"region"`
 	OrganizationalUnits []OrgUnit `yaml:"organizationalUnits"`
+    AwsAccounts         []AWSAccount `yaml:"awsAccounts"`
 }
 
 func main() {

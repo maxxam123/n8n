@@ -54,4 +54,4 @@ jobs:
         run: cat go/test-repo-01/temp-02.yaml
 
       - name: repo original
-        run: la -la test-repo-01
+        run: ls -la test-repo-01

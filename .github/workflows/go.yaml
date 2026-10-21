@@ -19,3 +19,6 @@ jobs:
       - name: Run Go Code
         working-directory: ./go
         run: go run main.go
+
+      - name: List contents of test-repo-01
+        run: ls -la test-repo-01

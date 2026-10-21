@@ -18,7 +18,7 @@ jobs:
           GH_TOKEN: ${{ secrets.CROSS_2 }}
         run: |
           FIRST_LINE=$(sed -n '1{p;q;}' 05_modules/path)
-          SECOND_LINE=$(sed -n '2{p;q;}' 05_modules/path)
+          SECOND_LINE=$(sed -n '4{p;q;}' 05_modules/path)
           echo "my_variable=$FIRST_LINE" >> $GITHUB_OUTPUT
 
           echo "GLOBAL_FIRST_LINE<<EOF" >> $GITHUB_ENV

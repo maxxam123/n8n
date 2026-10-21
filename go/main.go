@@ -73,11 +73,11 @@ func main() {
 
 	// File 1 Targets (Deployed under _global)
 	dynamicTemplate1 := fmt.Sprintf("../02_template/go-mdls/%s/terragrunt.hcl", moduleType)
-	destDir1         := filepath.Clean(fmt.Sprintf("../%s/managment/_global/%s", repoName, moduleType))
+	destDir1         := filepath.Clean(fmt.Sprintf("../%s/managment/_global/%s/%s", repoName, moduleType, secondFileName)) // /%s    , secondFileName
 	destFile1        := filepath.Join(destDir1, filepath.Base(dynamicTemplate1))
 
 	// File 2 Targets (Deployed under _envcommon)
-	dynamicTemplate2 := fmt.Sprintf("../02_template/go-mdls/%s/%s", moduleType, secondFileName)
+	dynamicTemplate2 := fmt.Sprintf("../02_template/go-mdls/%s/%s/.hcl", moduleType, secondFileName) // /.hcl
 	destDir2         := filepath.Clean(fmt.Sprintf("../%s/managment/_envcommon/%s", repoName, moduleType))
 	destFile2        := filepath.Join(destDir2, secondFileName)
 

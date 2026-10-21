@@ -1,6 +1,6 @@
 test-repo-01
-../02_template/go-mdls/security/values-02.yaml
-../02_template/go-mdls/security/temp-02.yaml
+../02_template/go-mdls/security/values.yaml
+../02_template/go-mdls/security/temp.yaml
 security
 
 

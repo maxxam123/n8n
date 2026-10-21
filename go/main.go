@@ -65,7 +65,7 @@ func main() {
 	// ==========================================
 	// 2. Read Common Configuration Values Once
 	// ==========================================
-	dynamicValues := lines[1] // Line 2: e.g. "../02_template/values.yaml"
+	dynamicValues := lines[2] // Line 2: e.g. "../02_template/values.yaml"
 
 	yamlFile, err := os.ReadFile(dynamicValues)
 	if err != nil {
@@ -83,8 +83,8 @@ func main() {
 	// ==========================================
 	// 3. EXECUTION 1: Template First File
 	// ==========================================
-	dynamicDestDir  := lines[0] // Line 1: e.g. "test-repo-02"
-	dynamicTemplate := lines[2] // Line 3: e.g. "../02_template/temp.yaml"
+	dynamicDestDir  := lines[1] // Line 1: e.g. "test-repo-02"
+	dynamicTemplate := lines[3] // Line 3: e.g. "../02_template/temp.yaml"
 
 	destDir  := dynamicPathOrName(dynamicDestDir)
 	destFile := filepath.Join(destDir, filepath.Base(dynamicTemplate))
@@ -118,8 +118,8 @@ func main() {
 	// ==========================================
 	// 4. EXECUTION 2: Template Second File
 	// ==========================================
-	dynamicDestDir01  := lines[5] // Line 4: Explicit alternate directory target
-	dynamicTemplate02 := lines[6] // Line 5: Explicit alternate blueprint configuration file
+	dynamicDestDir01  := lines[6] // Line 4: Explicit alternate directory target
+	dynamicTemplate02 := lines[7] // Line 5: Explicit alternate blueprint configuration file
 
 	destDir01  := dynamicPathOrName(dynamicDestDir01)
 	destFile02 := filepath.Join(destDir01, filepath.Base(dynamicTemplate02))

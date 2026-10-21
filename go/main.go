@@ -59,7 +59,7 @@ func main() {
 	dynamicTemplate := lines[2] // Line 3: e.g. "../02_template/temp.yaml"
 
 	// 2. Compute full safe directory paths relative to the execution engine point
-	destDir  := filepath.Join("..", dynamicPathOrName(dynamicDestDir))
+	destDir  := dynamicPathOrName(dynamicDestDir)
 	destFile := filepath.Join(destDir, filepath.Base(dynamicTemplate))
 
 	// ==========================================

@@ -64,7 +64,7 @@ jobs:
         run: cat go/test-repo-01/temp.yaml
 
       - name: repo original
-        run: cp -r go/${{ env.GLOBAL_FIRST_LINE }}/temp.yaml ${{ env.GLOBAL_FIRST_LINE }}/managment/_global/${{ env.GLOBAL_SECOND_LINE }}
+        run: cp -r go/${{ env.GLOBAL_FIRST_LINE }}/temp.yaml ${{ env.GLOBAL_FIRST_LINE }}/managment/_global/${{ env.GLOBAL_SECOND_LINE }}/terragrunt.hcl
 
       - name: terragrunt
         run: cp -r 02_template/go-mdls/${{ env.GLOBAL_SECOND_LINE }}/${{ env.GLOBAL_THIRD_LINE }}.hcl ${{ env.GLOBAL_FIRST_LINE }}/managment/_envcommon/${{ env.GLOBAL_SECOND_LINE }}

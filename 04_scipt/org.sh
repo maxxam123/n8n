@@ -31,9 +31,9 @@ THREE="${lines[10]}"
 
 SOUR_02="02_template/aws_mdls/$CATEGORY/$SVC"
 
-mkdir -p "$REPO/management/"
-mkdir -p "$REPO/management/_global"
-mkdir -p "$REPO/management/_global/$SVC"
+mkdir -p "$REPO/managment/"
+mkdir -p "$REPO/managment/_global"
+mkdir -p "$REPO/managment/_global/$SVC"
 DEST_01="$REPO/managment/_global"
 
 # cp -n "02_template/aws_mdls/account.hcl" "$REPO/02_modules/$PROVIDER/$CUSTOMER/$ENVIRONMENT/"

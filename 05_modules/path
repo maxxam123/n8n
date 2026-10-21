@@ -2,6 +2,7 @@ test-repo-01
 ../02_template/go-mdls/organization/values.yaml
 ../02_template/go-mdls/organization/temp.yaml
 organization
+github-oidc-provider
 
 
 

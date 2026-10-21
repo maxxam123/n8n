@@ -25,11 +25,11 @@ type AWSAccount struct {
 }
 
 type ConfigValues struct {
-	Environment         string    `yaml:"environment"`
-	Region              string    `yaml:"region"`
+	Environment         string       `yaml:"environment"`
+	Region              string       `yaml:"region"`
 	Repo                string       `yaml:"repo"`
-	OrganizationalUnits []OrgUnit `yaml:"organizationalUnits"`
-    AwsAccounts         []AWSAccount `yaml:"awsAccounts"`
+	OrganizationalUnits []OrgUnit    `yaml:"organizationalUnits"`
+	AwsAccounts         []AWSAccount `yaml:"awsAccounts"`
 }
 
 func main() {
@@ -47,7 +47,6 @@ func main() {
 	var lines []string
 	scanner := bufio.NewScanner(file02)
 	for scanner.Scan() {
-		// Trim hidden padding whitespace and string quote characters instantly
 		cleanedLine := strings.TrimSpace(scanner.Text())
 		cleanedLine = strings.Trim(cleanedLine, "\"")
 		cleanedLine = strings.Trim(cleanedLine, "'")
@@ -57,7 +56,6 @@ func main() {
 	}
 	file02.Close()
 
-	// Ensure the file contains exactly what the project requires
 	if len(lines) < 3 {
 		fmt.Printf("Error: %s must contain at least 3 valid text line parameters (got %d)\n", customerFile, len(lines))
 		os.Exit(1)
@@ -68,8 +66,11 @@ func main() {
 	dynamicValues   := lines[1] // Line 2: e.g. "../02_template/values.yaml"
 	dynamicTemplate := lines[2] // Line 3: e.g. "../02_template/temp.yaml"
 
-	// 2. Compute full safe directory paths relative to the execution engine point
-	destDir  := dynamicPathOrName(dynamicDestDir)
+	// ==========================================
+	// 2. FIXED PATH CALCULATIONS
+	// ==========================================
+	// We explicitly prepend ".." so it always writes one directory above the current "go" execution folder
+	destDir  := filepath.Join("..", dynamicPathOrName(dynamicDestDir))
 	destFile := filepath.Join(destDir, filepath.Base(dynamicTemplate))
 
 	// ==========================================
@@ -116,11 +117,9 @@ func main() {
 	fmt.Printf("Successfully templated %s inside dynamic directory %s\n", destFile, destDir)
 }
 
-// Helper to keep formatting clean if a path prefix rule was already written in line 1
+// Helper to keep formatting clean by sanitizing leading directory shortcuts safely
 func dynamicPathOrName(s string) string {
 	s = strings.TrimPrefix(s, "../")
-	return strings.TrimPrefix(s, "./")
+	s = strings.TrimPrefix(s, "./")
+	return s
 }
-
-
-

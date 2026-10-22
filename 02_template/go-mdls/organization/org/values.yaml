@@ -8,3 +8,15 @@ organizationalUnits:
     name: "Workload"
   - id: "infra_ou"
     name: "infra"
+
+awsAccounts:
+  security:
+    name: "security-account"
+    email: "aws-security-admin@yourdomain.com"
+    roleName: "OrganizationAccountAccessRole"
+    ouKey: "core_ou"
+  development:
+    name: "development-account"
+    email: "aws-dev-admin@yourdomain.com"
+    roleName: "OrganizationAccountAccessRole"
+    ouKey: "workloads_ou"

@@ -1,0 +1,11 @@
+users:
+  breakglass_admin:
+    userName: "breakglass.admin"
+    givenName: "BreakGlass"
+    familyName: "Admin"
+    email: "security-ops@company.com"
+  breakglass_admin_01:
+    userName: "breakglass_01.admin_01"
+    givenName: "BreakGlass_01"
+    familyName: "Admin_01"
+    email: "security-ops_01@company.com"

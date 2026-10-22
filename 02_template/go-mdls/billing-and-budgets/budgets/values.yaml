@@ -1,1 +1,22 @@
+# values.yaml
+budget:
+  name: "BUDGETS_ACCOUNT"
+  limitAmount: "5000.0"
+  notifications:
+    halfway:
+      comparisonOperator: "GREATER_THAN"
+      threshold: 50
+      thresholdType: "PERCENTAGE"
+      notificationType: "ACTUAL"
+      subscriberEmailAddresses:
+        - "finops-alerts@mycompany.com"
+        - "staging-owner@mycompany.com"
+    warning:
+      comparisonOperator: "GREATER_THAN"
+      threshold: 80
+      thresholdType: "PERCENTAGE"
+      notificationType: "ACTUAL"
+      subscriberEmailAddresses:
+        - "finops-alerts@mycompany.com"
+        - "staging-owner@mycompany.com"
 

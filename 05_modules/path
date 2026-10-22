@@ -1,7 +1,7 @@
 test-repo-01
 security
-waf-global.hcl
-waf-global
+cloudfront.hcl
+cloudfront
 01
 
 

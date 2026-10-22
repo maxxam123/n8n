@@ -29,61 +29,48 @@ awsServiceAccessPrincipals:
   - "guardduty.amazonaws.com"
   - "backup.amazonaws.com"
 
+# values.yaml
 serviceControlPolicies:
   deny_root_user:
     name: "deny-root-user-activity"
     description: "Enforces a strict ban on root credential usage across all member accounts."
-    ou_target: "workloads_ou"
-    policy_json:
-      Version: "2012-10-17"
-      Statement:
-        - Sid: "DenyRootUsage"
-          Effect: "Deny"
-          Action:
-            - "*"
-          Resource: "*"
-          Condition:
-            StringLike:
-              "aws:PrincipalArn":
-                - "arn:aws:iam::*:root"
+    ouTarget: "workloads_ou"
+    statement:
+      sid: "DenyRootUsage"
+      effect: "Deny"
+      action: ["*"]
+      resource: "*"
+      condition:
+        stringLike:
+          "aws:PrincipalArn": ["arn:aws:iam::*:root"]
 
 region_restriction:
     name: "enforce-region-lock"
     description: "Restricts resource provisioning strictly to approved geographic regions."
-    ou_target: "workloads_ou"
-    policy_json:
-      Version: "2012-10-17"
-      Statement:
-        - Sid: "DenyUnapprovedRegions"
-          Effect: "Deny"
-          NotAction:
-            - "iam:*"
-            - "organizations:*"
-            - "route53:*"
-            - "support:*"
-            - "waf:*"
-          Resource: "*"
-          Condition:
-            StringNotEquals:
-              "aws:RequestedRegion":
-                - "eu-central-1"
-                - "us-east-1"
+    ouTarget: "workloads_ou"
+    statement:
+      sid: "DenyUnapprovedRegions"
+      effect: "Deny"
+      notAction: ["iam:*", "organizations:*", "route53:*", "support:*", "waf:*"]
+      resource: "*"
+      condition:
+        stringNotEquals:
+          "aws:RequestedRegion": ["eu-central-1", "us-east-1"]
 
 protect_security_tools:
     name: "protect-core-security-tooling"
     description: "Prevents modification or deletion of centralized guardrails and logging configurations."
-    ou_target: "workloads_ou"
-    policy_json:
-      Version: "2012-10-17"
-      Statement:
-        - Sid: "DenySecurityTampering"
-          Effect: "Deny"
-          Action:
-            - "cloudtrail:DeleteTrail"
-            - "cloudtrail:StopLogging"
-            - "guardduty:DeleteDetector"
-            - "guardduty:DisassociateFromMasterAccount"
-            - "securityhub:DeleteDetector"
-          Resource: "*"
+    ouTarget: "workloads_ou"
+    statement:
+      sid: "DenySecurityTampering"
+      effect: "Deny"
+      action:
+        - "cloudtrail:DeleteTrail"
+        - "cloudtrail:StopLogging"
+        - "guardduty:DeleteDetector"
+        - "guardduty:DisassociateFromMasterAccount"
+        - "securityhub:DeleteDetector"
+      resource: "*"
+
 
 

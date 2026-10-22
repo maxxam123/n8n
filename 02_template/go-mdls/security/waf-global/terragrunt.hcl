@@ -11,11 +11,11 @@ include "envcommon" {
 
 # Override or force the region constraint for CloudFront WAF deployments
 inputs = {
-  environment = "dev"
-  aws_region  = "us-east-1" # 👈 MUST be us-east-1 for CloudFront scope!
+  environment = "{{ .Env }}"
+  aws_region  = "{{ .Region }}" # 👈 MUST be us-east-1 for CloudFront scope!
 
   # Custom rate-limiting configuration specific to the dev sandbox environment
-  rate_limit_threshold = 2000 # Block any IP exceeding 2000 requests per 5 minutes
+  rate_limit_threshold = {{ .Threshold }} # Block any IP exceeding 2000 requests per 5 minutes
 
   global_tags = merge(
     include.envcommon.inputs.global_tags,

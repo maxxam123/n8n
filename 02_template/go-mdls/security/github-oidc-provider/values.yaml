@@ -2,6 +2,10 @@ environment: "staging"
 region: "us-east-1"
 repo: "infrastructure-live-01"
 roleName: "github-oidc-provider-role"
+org: "my-org"
+repoDev: "repo-dev"
+repoLive: "repo-live"
+expRole: "github-role"
 
 organizationalUnits:
   - id: "core_ou"

@@ -1,6 +1,8 @@
 package main
 
 import (
+	"encoding/json"
+	
 	"bufio"
 	"fmt"
 	"os"
@@ -48,6 +50,25 @@ type ConfigValues struct {
 }
 
 func main() {
+
+	
+	funcMap := template.FuncMap{
+		"jsonencode": func(v interface{}) (string, error) {
+			bytes, err := json.Marshal(v)
+			if err != nil {
+				return "", err
+			}
+			return string(bytes), nil
+		},
+	}
+
+	// 2. Attach the FuncMap BEFORE calling ParseFiles/Parse
+	tmpl, err := template.New("terragrunt.hcl").Funcs(funcMap).ParseFiles("../02_template/go-mdls/organization/org/terragrunt.hcl")
+	if err != nil {
+		panic(err)
+	}
+
+	
 	customerFile := "../05_modules/path"
 
 	// ==========================================

@@ -43,10 +43,36 @@ service_control_policies = {
     name        = "{{ $policy.Name }}"
     description = "{{ $policy.Description }}"
     ou_target   = "{{ $policy.OuTarget }}"
-    policy_json = {{ jsonencode $policy.PolicyJson }}
+    policy_json = {
+      Version = "2012-10-17"
+      Statement = [
+        {
+          Sid      = "{{ $policy.Statement.Sid }}"
+          Effect   = "{{ $policy.Statement.Effect }}"
+          {{- if $policy.Statement.Action }}
+          Action   = [{{ range $i, $a := $policy.Statement.Action }}{{ if $i }}, {{ end }}"{{ $a }}"{{ end }}]
+          {{- else if $policy.Statement.NotAction }}
+          NotAction = [{{ range $i, $na := $policy.Statement.NotAction }}{{ if $i }}, {{ end }}"{{ $na }}"{{ end }}]
+          {{- end }}
+          Resource = "{{ $policy.Statement.Resource }}"
+          {{- if $policy.Statement.Condition }}
+          Condition = {
+            {{- range $condType, $condMap := $policy.Statement.Condition }}
+            {{ $condType }} = {
+              {{- range $ctxKey, $ctxVals := $condMap }}
+              "{{ $ctxKey }}" = [{{ range $i, $v := $ctxVals }}{{ if $i }}, {{ end }}"{{ $v }}"{{ end }}]
+              {{- end }}
+            }
+            {{- end }}
+          }
+          {{- end }}
+        }
+      ]
+    }
   }
   {{- end }}
 }
+
 
   # Dynamic Service Control Policies map
   service_control_policies = {

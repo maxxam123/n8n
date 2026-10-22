@@ -1,15 +1,14 @@
 package main
 
 import (
-	
 	"bufio"
 	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
 	"text/template"
-
 	"gopkg.in/yaml.v3"
+	"myproject/models"
 )
 
 type OrgUnit struct {

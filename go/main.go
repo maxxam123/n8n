@@ -86,6 +86,11 @@ type PermissionSet struct {
 	InlinePolicy    string   `yaml:"inlinePolicy"`
 }
 
+type Membership struct {
+	GroupName string   `yaml:"groupName"`
+	UserKeys  []string `yaml:"userKeys"`
+}
+
 
 type ConfigValues struct {
 	Environment         string       `yaml:"environment"`
@@ -100,6 +105,7 @@ type ConfigValues struct {
 	Threshold            string       `yaml:"threshold"`
 	PathWaf            string       `yaml:"pathWaf"`
 	PathAlb            string       `yaml:"pathAlb"`
+	Memberships []Membership `yaml:"memberships"`
 	PermissionSets map[string]PermissionSet `yaml:"permissionSets"`
 	Users map[string]UserDefinition `yaml:"users"`
 	GroupAccountAssignments []AccountAssignment `yaml:"groupAccountAssignments"`

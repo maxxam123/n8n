@@ -21,5 +21,13 @@ awsAccounts:
     roleName: "OrganizationAccountAccessRole"
     ouKey: "workloads_ou"
 
+awsServiceAccessPrincipals:
+  - "controltower.amazonaws.com"
+  - "sso.amazonaws.com"
+  - "ram.amazonaws.com"
+  - "securityhub.amazonaws.com"
+  - "guardduty.amazonaws.com"
+  - "backup.amazonaws.com"
+
 
 

@@ -44,7 +44,7 @@ serviceControlPolicies:
         stringLike:
           "aws:PrincipalArn": ["arn:aws:iam::*:root"]
 
-region_restriction:
+  region_restriction:
     name: "enforce-region-lock"
     description: "Restricts resource provisioning strictly to approved geographic regions."
     ouTarget: "workloads_ou"
@@ -57,7 +57,7 @@ region_restriction:
         stringNotEquals:
           "aws:RequestedRegion": ["eu-central-1", "us-east-1"]
 
-protect_security_tools:
+  protect_security_tools:
     name: "protect-core-security-tooling"
     description: "Prevents modification or deletion of centralized guardrails and logging configurations."
     ouTarget: "workloads_ou"

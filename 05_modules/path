@@ -1,7 +1,7 @@
 test-repo-01
-security
-github-oidc-provider.hcl
-github-oidc-provider
+organization
+org.hcl
+org
 01
 
 

@@ -8,7 +8,7 @@ files:
       inputs = {
         # List of core cross-account services to activate trust for
         aws_service_access_principals = [
-      {{- range $index, $element := .awsServiceAccessPrincipals }}
+      {{- range $index, $element := .AwsServiceAccessPrincipals }}
           {{- if $index }},{{ end }}
           "{{ $element }}"
       {{- end }}

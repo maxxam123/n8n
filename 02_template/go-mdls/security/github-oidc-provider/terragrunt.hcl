@@ -11,7 +11,7 @@ include "envcommon" {
 
 # Override or supply specific inputs for this environment
 inputs = {
-  role_name = "{{ .Region }}"
+  role_name = "{{ .Rolename }}"
   
   # Limit authentication to exact GitHub repositories and branches
   repositories = [

@@ -41,6 +41,12 @@ type SCPolicy struct {
 	Statement   SCPStatement `yaml:"statement"`
 }
 
+type ManagedRule struct {
+	Name       string `yaml:"name"`
+	Priority   int    `yaml:"priority"`
+	VendorName string `yaml:"vendorName"`
+}
+
 type ConfigValues struct {
 	Environment         string       `yaml:"environment"`
 	Region              string       `yaml:"region"`
@@ -57,7 +63,8 @@ type ConfigValues struct {
 	AwsServiceAccessPrincipals []string     `yaml:"awsServiceAccessPrincipals"`
 	DelegatedAdministrators    []string     `yaml:"delegatedAdministrators"`
 	ServiceControlPolicies map[string]SCPolicy `yaml:"serviceControlPolicies"`
-
+	ManagedRules []ManagedRule `yaml:"managedRules"`
+}
 
 func main() {
 	

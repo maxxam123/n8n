@@ -37,6 +37,17 @@ delegated_administrators = [
   {{- end }}
 ]
 
+service_control_policies = {
+  {{- range $key, $policy := .ServiceControlPolicies }}
+  {{ $key }} = {
+    name        = "{{ $policy.Name }}"
+    description = "{{ $policy.Description }}"
+    ou_target   = "{{ $policy.OuTarget }}"
+    policy_json = {{ jsonencode $policy.PolicyJson }}
+  }
+  {{- end }}
+}
+
   # Dynamic Service Control Policies map
   service_control_policies = {
     deny_leave_org = {

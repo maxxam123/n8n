@@ -1,19 +1,35 @@
-# _global/identity-center/terragrunt.hcl
+# accounts/management-account/global/identity-center/groups/terragrunt.hcl
 
 include "root" {
-  path = find_in_parent_folders()
+  path = find_in_parent_folders("root.hcl")
 }
 
-locals {
-  common_identity = read_terragrunt_config(find_in_parent_folders("_envcommon/identity-center.hcl"))
+include "envcommon" {
+  path   = "${dirname(find_in_parent_folders("root.hcl"))}/_envcommon/identity-center-groups.hcl"
+  expose = true
 }
 
-terraform {
-  source = "git::git@github.com:your-github-username/infrastructure-modules.git//identity-center?ref=v1.3.0"
+# 1. Fetch dynamic outputs (user_ids) from the sibling users stack
+dependency "users" {
+  config_path = "../users"
 }
 
-# Pass the clean groups configuration directly down to your terraform resource blocks
 inputs = {
-  groups              = local.common_identity.inputs.identity_groups
-  account_assignments = local.common_identity.inputs.group_account_assignments
+  groups = include.envcommon.inputs.groups
+
+  # 2. Map users dynamically into their corporate groups
+  memberships = [
+    {
+      group_name = "AWS-Platform-Engineering"
+      user_id    = dependency.users.outputs.user_ids["breakglass_admin", "breakglass_admin_02"]
+    },
+    {
+      group_name = "AWS-Platform-Engineering"
+      user_id    = dependency.users.outputs.user_ids["john_doe", "breakglass_admin_03"]
+    },
+    {
+      group_name = "AWS-Security-Operations"
+      user_id    = dependency.users.outputs.user_ids["jane_smith", "breakglass_admin_04"]
+    }
+  ]
 }

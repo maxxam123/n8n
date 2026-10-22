@@ -1,7 +1,7 @@
 test-repo-01
 identity-center
-permission-set.hcl
-permission-set
+groups.hcl
+groups
 01
 
 

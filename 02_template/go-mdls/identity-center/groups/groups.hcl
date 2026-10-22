@@ -26,6 +26,15 @@ terraform {
 
 inputs = {
   groups = [
+    {{- range $i, $group := .Groups }}
+    {{ if $i }},{{ end }}"{{ $group }}"
+    {{- end }}
+  ]
+}
+
+
+inputs = {
+  groups = [
     "AWS-Platform-Engineering",
     "AWS-Security-Operations",
     "AWS-Auditors"

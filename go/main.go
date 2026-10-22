@@ -64,7 +64,8 @@ func main() {
 	repoName        := lines[0] // e.g., "test-repo-01"
 	moduleType      := lines[1] // e.g., "security"
 	secondFileName  := lines[2] // e.g., "github-oidc-provider.hcl"
-	thirdFileName  := lines[3] // e.g., "github-oidc-provider"
+	thirdFileName   := lines[3] // e.g., "github-oidc-provider"
+	Number          := lines[4] // e.g., "01"
 
 	// ==========================================
 	// 2. DEFAULT BASE SCHEMAS & TARGETS
@@ -74,7 +75,7 @@ func main() {
 
 	// File 1 Targets (Deployed under _global)
 	dynamicTemplate1 := fmt.Sprintf("../02_template/go-mdls/%s/%s/terragrunt.hcl", moduleType, thirdFileName)
-	destDir1         := filepath.Clean(fmt.Sprintf("../%s/managment/_global/%s/%s", repoName, moduleType, thirdFileName)) // /%s    , secondFileName
+	destDir1         := filepath.Clean(fmt.Sprintf("../%s/managment/_global/%s/%s-%s", repoName, moduleType, thirdFileName, Number)) // /%s    , secondFileName
 	destFile1        := filepath.Join(destDir1, filepath.Base(dynamicTemplate1))
 
 	dynamicTemplate2 := fmt.Sprintf("../02_template/go-mdls/%s/%s/%s", moduleType, thirdFileName, secondFileName) // /.hcl

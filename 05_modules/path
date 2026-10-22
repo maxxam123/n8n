@@ -1,7 +1,7 @@
 test-repo-01
 identity-center
-groups.hcl
-groups
+users.hcl
+users
 01
 
 

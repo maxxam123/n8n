@@ -5,7 +5,7 @@ roleName: "github-oidc-provider-role"
 org: "maxxam123"
 repoDev: "test-repo-01"
 repoLive: "test-repo-01"
-expRole: "administratorAccess"
+expRole: "AdministratorAccess"
 
 organizationalUnits:
   - id: "core_ou"

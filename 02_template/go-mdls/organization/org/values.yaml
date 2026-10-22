@@ -10,22 +10,16 @@ organizationalUnits:
     name: "infra"
 
 awsAccounts:
-  security:
+  - key: "security"
     name: "security-account"
     email: "aws-security-admin@yourdomain.com"
     roleName: "OrganizationAccountAccessRole"
     ouKey: "core_ou"
-  development:
+  - key: "development"
     name: "development-account"
     email: "aws-dev-admin@yourdomain.com"
     roleName: "OrganizationAccountAccessRole"
     ouKey: "workloads_ou"
 
-awsServiceAccessPrincipals:
-  - "controltower.amazonaws.com"
-  - "sso.amazonaws.com"
-  - "ram.amazonaws.com"
-  - "securityhub.amazonaws.com"
-  - "guardduty.amazonaws.com"
-  - "backup.amazonaws.com"
+
 

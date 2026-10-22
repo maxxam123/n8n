@@ -1,6 +1,8 @@
 environment: "staging"
 region: "us-east-1"
 repo: "infrastructure-live-01"
+threshold: "2000"
+env: "dev"
 
 # values.yaml
 managedRules:

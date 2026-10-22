@@ -12,6 +12,8 @@ inputs = {
   }
 }
 
+
+
 inputs = {
   # 1. Blueprint definitions for groups to ensure they exist in the identity store
   identity_groups = {
@@ -32,6 +34,17 @@ inputs = {
       description  = "Billing administrators and cost management teams."
     }
   }
+
+  group_account_assignments = [
+    {{- range .GroupAccountAssignments }}
+    {
+      group_key       = "{{ .GroupKey }}"
+      account_id      = "{{ .AccountId }}"
+      permission_sets = [{{ range $i, $perm := .PermissionSets }}{{ if $i }}, {{ end }}"{{ $perm }}"{{ end }}]
+    },
+    {{- end }}
+  ]
+}
 
   # 2. Multi-Account Permission Assignment Matrix for Groups
   # Maps your logical group keys to target AWS accounts and their respective permission sets

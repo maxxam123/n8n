@@ -28,6 +28,11 @@ type ConfigValues struct {
 	Environment         string       `yaml:"environment"`
 	Region              string       `yaml:"region"`
 	Repo                string       `yaml:"repo"`
+	RoleName            string       `yaml:"roleName"`
+    ExpRole             string       `yaml:"expRole"`
+    Org                 string       `yaml:"org"`
+	RepoDev             string       `yaml:"repoDev"`
+	RepoLive            string       `yaml:"repoLive"`
 	OrganizationalUnits []OrgUnit    `yaml:"organizationalUnits"`
 	AwsAccounts         []AWSAccount `yaml:"awsAccounts"`
 }

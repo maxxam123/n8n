@@ -5,12 +5,12 @@ include "root" {
 inputs = {
   # List of core cross-account services to activate trust for
   aws_service_access_principals = [
-    "://amazonaws.com",
-    "://amazonaws.com",
-    "://amazonaws.com",
-    "://amazonaws.com",
-    "://amazonaws.com",
-    "://amazonaws.com"
+    "controltower.amazonaws.com",      # AWS Control Tower
+    "sso.amazonaws.com",               # AWS IAM Identity Center (Successor to Single Sign-On)
+    "ram.amazonaws.com",               # AWS Resource Access Manager
+    "securityhub.amazonaws.com",       # AWS Security Hub
+    "guardduty.amazonaws.com",          # AWS GuardDuty
+    "backup.amazonaws.com"             # AWS Backup
   ]
 
   # Dynamic Map of Organizational Units (OUs) to provision

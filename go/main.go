@@ -47,6 +47,20 @@ type ManagedRule struct {
 	VendorName string `yaml:"vendorName"`
 }
 
+type Notification struct {
+	ComparisonOperator       string   `yaml:"comparisonOperator"`
+	Threshold                int      `yaml:"threshold"`
+	ThresholdType            string   `yaml:"thresholdType"`
+	NotificationType         string   `yaml:"notificationType"`
+	SubscriberEmailAddresses []string `yaml:"subscriberEmailAddresses"`
+}
+
+type BudgetConfig struct {
+	Name          string                  `yaml:"name"`
+	LimitAmount   string                  `yaml:"limitAmount"`
+	Notifications map[string]Notification `yaml:"notifications"`
+}
+
 type ConfigValues struct {
 	Environment         string       `yaml:"environment"`
 	Region              string       `yaml:"region"`
@@ -60,6 +74,7 @@ type ConfigValues struct {
 	Threshold            string       `yaml:"threshold"`
 	PathWaf            string       `yaml:"pathWaf"`
 	PathAlb            string       `yaml:"pathAlb"`
+	Budget              BudgetConfig `yaml:"budget"`
 	OrganizationalUnits []OrgUnit    `yaml:"organizationalUnits"`
 	AwsAccounts         []AWSAccount `yaml:"awsAccounts"`
 	AwsServiceAccessPrincipals []string     `yaml:"awsServiceAccessPrincipals"`

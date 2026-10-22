@@ -5,7 +5,7 @@ include "root" {
 
 # Pull the core module logic from the common directory
 include "envcommon" {
-  path   = "${dirname(find_in_parent_folders())}/_envcommon/github-oidc-provider.hcl"
+  path   = "${dirname(find_in_parent_folders())}/_envcommon/security/github-oidc-provider.hcl"
   expose = true
 }
 

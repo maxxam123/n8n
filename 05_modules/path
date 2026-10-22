@@ -1,7 +1,7 @@
 test-repo-01
 identity-center
-users.hcl
-users
+permission-set.hcl
+permission-set
 01
 
 

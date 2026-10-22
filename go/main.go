@@ -36,6 +36,7 @@ type ConfigValues struct {
 	OrganizationalUnits []OrgUnit    `yaml:"organizationalUnits"`
 	AwsAccounts         []AWSAccount `yaml:"awsAccounts"`
 	AwsServiceAccessPrincipals []string     `yaml:"awsServiceAccessPrincipals"`
+	DelegatedAdministrators    []string     `yaml:"delegatedAdministrators"`
 }
 
 func main() {

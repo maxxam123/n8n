@@ -1,0 +1,14 @@
+# values.yaml
+permissionSets:
+  AdministratorAccess:
+    description: "Full Administrative permissions"
+    sessionDuration: "PT4H"
+    managedPolicies: 
+      - "arn:aws:iam::aws:policy/AdministratorAccess"
+    inlinePolicy: ""
+  ReadOnlyAccess:
+    description: "Global Read Only permissions for auditing"
+    sessionDuration: "PT8H"
+    managedPolicies: 
+      - "arn:aws:iam::aws:policy/ReadOnlyAccess"
+    inlinePolicy: ""

@@ -1,38 +1,14 @@
 # values.yaml
-identityGroups:
-  platform_eng:
-    displayName: "AWS-Platform-Engineering"
-    description: "Cloud platform architects and systems administrators."
-  security_ops:
-    displayName: "AWS-Security-Operations"
-    description: "Security compliance officers and incident response teams."
-  developers:
-    displayName: "AWS-Application-Developers"
-    description: "Product engineering teams with access to non-prod workloads."
-  finops:
-    displayName: "AWS-Finance-Operations"
-    description: "Billing administrators and cost management teams."
-
-
-    # values.yaml
-groupAccountAssignments:
-  - groupKey: "platform_eng"
-    accountId: "111122223333"
-    permissionSets: ["AdministratorAccess"]
-  - groupKey: "finops"
-    accountId: "111122223333"
-    permissionSets: ["Billing"]
-  - groupKey: "security_ops"
-    accountId: "444455556666"
-    permissionSets: ["AdministratorAccess", "SecurityAudit"]
-  - groupKey: "platform_eng"
-    accountId: "444455556666"
-    permissionSets: ["ReadOnlyAccess"]
-  - groupKey: "developers"
-    accountId: "777788889999"
-    permissionSets: ["PowerUserAccess"]
-  - groupKey: "platform_eng"
-    accountId: "777788889999"
-    permissionSets: ["AdministratorAccess"]
-
-
+memberships:
+  - groupName: "AWS-Platform-Engineering"
+    userKeys: 
+      - "breakglass_admin"
+      - "breakglass_admin_02"
+  - groupName: "AWS-Platform-Engineering"
+    userKeys: 
+      - "john_doe"
+      - "breakglass_admin_03"
+  - groupName: "AWS-Security-Operations"
+    userKeys: 
+      - "jane_smith"
+      - "breakglass_admin_04"

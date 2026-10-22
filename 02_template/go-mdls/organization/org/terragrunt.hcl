@@ -32,7 +32,7 @@ aws_accounts = {
 
   # Service principals delegated to the security account
 delegated_administrators = [
-  {{- range $index, $admin := .DelegatedAdministrators }}
+  {{- range $index, $admin := .AwsServiceAccessPrincipals  }}
   {{ if $index }},{{ end }}"{{ $admin }}"
   {{- end }}
 ]

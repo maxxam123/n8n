@@ -2,6 +2,19 @@ environment: "staging"
 region: "us-east-1"
 repo: "infrastructure-live-01"
 
+# values.yaml
+managedRules:
+  - name: "AWSManagedRulesCommonRuleSet"
+    priority: 10
+    vendorName: "AWS"
+  - name: "AWSManagedRulesKnownBadInputsRuleSet"
+    priority: 20
+    vendorName: "AWS"
+  - name: "AWSManagedRulesAmazonIpReputationList"
+    priority: 30
+    vendorName: "AWS"
+
+
 organizationalUnits:
   - id: "core_ou"
     name: "Core"

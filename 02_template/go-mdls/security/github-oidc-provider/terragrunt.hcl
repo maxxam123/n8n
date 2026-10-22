@@ -1,72 +1,28 @@
-# prod/github-oidc-provider/terragrunt.hcl
-
-# 1. Inherit root terragrunt.hcl configuration (remote state tracking, AWS provider generation)
+# Automatically inherit remote state, provider, and account configurations from root
 include "root" {
   path = find_in_parent_folders()
 }
 
-# 2. Inherit common component specifications 
+# Pull the core module logic from the common directory
 include "envcommon" {
-  path = "${get_terragrunt_dir()}/../../_envcommon/github-oidc-provider.hcl"
+  path   = "${dirname(find_in_parent_folders())}/_envcommon/github-oidc-provider.hcl"
+  expose = true
 }
 
-# 3. Supply environment specific variables overrides
+# Override or supply specific inputs for this environment
 inputs = {
-  # Limit token access strictly to your GitHub organization and repositories
-  # Supports classic formats and post-2026 immutable subject claim formats (owner@id/repo@id)
+  role_name = "ROLE_NAME"
+  
+  # Limit authentication to exact GitHub repositories and branches
   repositories = [
-    "{{ .Repo }}",
-    "{{ .Repo }}"
+  #  "my-organization/my-application-repo:ref:refs/heads/main",
+  #  "my-organization/infrastructure-live-repo:*"
+    "ORG/APP_REPO:ref:refs/heads/main",
+    "ORG/LIVE_REPO:*"
   ]
-}
 
-
-cluster_name = "my-cluster-{{ .Environment }}"
-aws_region   = "{{ .Region }}"
-cluster_name = "my-cluster-{{ .Environment }}"
-aws_region   = "{{ .Region }}"
-cluster_name = "my-cluster-{{ .Environment }}"
-aws_region   = "{{ .Region }}"
-
-organizational_units = {
-  {{- range .OrganizationalUnits }}
-  {{ .ID }} = { name = "{{ .Name }}" },
-  {{- end }}
-}
-
-organizational_units = {
-{{- range $index, $element := .OrganizationalUnits }}
-  {{- if $index }},{{ end }}
-  {{ $element.ID }}_ou = { name = "{{ $element.Name }}" }
-{{- end }}
-}
-
-organizational_units = {
-{{- range .OrganizationalUnits }}
-  {{ .ID }}_ou = { name = "{{ .Name }}" }
-{{- end }}
-}
-
-aws_accounts = {
-{{- range $index, $account := .AwsAccounts }}
-  {{- if $index }}
-{{ end }}
-  {{- $account.Key }} = {
-    name      = "{{ $account.Name }}"
-    email     = "{{ $account.Email }}"
-    role_name = "{{ $account.RoleName }}"
-    ou_key    = "{{ $account.OuKey }}"{{ if eq $account.Key "security" }} # References key in organizational_units{{ end }}
-  }
-{{- end }}
-}
-
-aws_accounts = {
-{{- range .AwsAccounts }}
-  {{ .Key }} = {
-    name      = "{{ .Name }}"
-    email     = "{{ .Email }}"
-    role_name = "{{ .RoleName }}"
-    ou_key    = "{{ .OuKey }}"
-  }
-{{- end }}
+  # Attach explicit roles needed by the GitHub workspace
+  oidc_role_attach_policies = [
+    "arn:aws:iam::aws:policy/EXPLICIT_ROLE"
+  ]
 }

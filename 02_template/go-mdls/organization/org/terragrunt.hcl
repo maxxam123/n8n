@@ -31,10 +31,11 @@ aws_accounts = {
 }
 
   # Service principals delegated to the security account
-  delegated_administrators = [
-    "://amazonaws.com",
-    "://amazonaws.com"
-  ]
+delegated_administrators = [
+  {{- range $index, $admin := .DelegatedAdministrators }}
+  {{ if $index }},{{ end }}"{{ $admin }}"
+  {{- end }}
+]
 
   # Dynamic Service Control Policies map
   service_control_policies = {

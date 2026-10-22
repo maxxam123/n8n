@@ -52,7 +52,7 @@ func main() {
 	// ==========================================
 	// Common Shared Values Source File
 	dynamicValues := fmt.Sprintf("../02_template/go-mdls/%s/%s/values.yaml", moduleType, thirdFileName)
-	# dynamicValues02 := fmt.Sprintf("../02_template/go-mdls/%s/%s/values-02.yaml", moduleType, thirdFileName)
+	// dynamicValues02 := fmt.Sprintf("../02_template/go-mdls/%s/%s/values-02.yaml", moduleType, thirdFileName)
 
 	// File 1 Targets (Deployed under _global)
 	dynamicTemplate1 := fmt.Sprintf("../02_template/go-mdls/%s/%s/terragrunt.hcl", moduleType, thirdFileName)

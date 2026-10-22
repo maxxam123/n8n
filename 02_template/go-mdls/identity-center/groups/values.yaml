@@ -12,3 +12,10 @@ memberships:
     userKeys: 
       - "jane_smith"
       - "breakglass_admin_04"
+
+      # values.yaml
+groups:
+  - "AWS-Platform-Engineering"
+  - "AWS-Security-Operations"
+  - "AWS-Auditors"
+

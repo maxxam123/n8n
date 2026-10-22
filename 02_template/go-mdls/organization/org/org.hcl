@@ -2,7 +2,7 @@
 
 # Define the base module source location
 terraform {
-  source = "tfr:///terraform-aws-modules/iam/aws//modules/iam-github-oidc-provider?version=5.48.0"
+  source = "../../../../../modules/github-oidc-provider/"
 }
 
 # Baseline default inputs shared across any account using this component

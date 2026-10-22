@@ -13,12 +13,16 @@ include "envcommon" {
 
 # 3. Dynamic dependency mapping to fetch the global WAF ARN securely
 dependency "waf" {
-  config_path = "../../_global/security/waf-gl"
+  config_path = "{{ .PathWaf }}/waf-global"
+}
+
+dependency "alb" {
+  config_path = "{{ .PathAlb }}/alb"
 }
 
 # 4. Inject development-specific routing and origin endpoints
 inputs = {
-  environment = "dev"
+  environment = "{{ .Env }}"
 
   # Link the Edge WAF Web ACL ARN directly out of upstream state outputs
   web_acl_id = dependency.waf.outputs.web_acl_arn

@@ -18,7 +18,7 @@ inputs = {
   #  "my-organization/my-application-repo:ref:refs/heads/main",
   #  "my-organization/infrastructure-live-repo:*"
     "{{ .Region }}/APP_REPO:ref:refs/heads/main",
-    "{{ .Region }}/LIVE_REPO:*"
+    "{{ .Region }}/{{ .Environment }}:*"
   ]
 
   # Attach explicit roles needed by the GitHub workspace

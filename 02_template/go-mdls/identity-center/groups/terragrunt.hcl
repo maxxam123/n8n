@@ -14,6 +14,21 @@ dependency "users" {
   config_path = "../users"
 }
 
+
+inputs = {
+  groups = include.envcommon.inputs.groups
+
+  # 2. Map users dynamically into their corporate groups
+  memberships = [
+    {{- range .Memberships }}
+    {
+      group_name = "{{ .GroupName }}"
+      user_id    = dependency.users.outputs.user_ids[{{ range $i, $key := .UserKeys }}{{ if $i }}, {{ end }}"{{ $key }}"{{ end }}]
+    },
+    {{- end }}
+  ]
+}
+
 inputs = {
   groups = include.envcommon.inputs.groups
 

@@ -8,7 +8,7 @@ import (
 	"strings"
 	"text/template"
 	"gopkg.in/yaml.v3"
-	"myproject/models"
+	"go/models"
 )
 
 func main() {

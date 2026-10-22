@@ -14,22 +14,23 @@ include "envcommon" {
 # ENVIRONMENT OVERRIDES & COST TARGETS
 # ---------------------------------------------------------------------------------------------------------------------
 
-inputs:
-  name: "{{ .Name }}"
-  limit_amount: "{{ .LimitAmount }}"
+inputs = {
+  name         = "{{ .Budget.Name }}"
+  limit_amount = "{{ .Budget.LimitAmount }}" # Enforce a hard ${{ .Budget.LimitAmount }}/month threshold target for this account
 
-  notifications:
-    {{- range $key, $alert := .Notifications }}
-    {{ $key }}:
-      comparison_operator:        "{{ $alert.ComparisonOperator }}"
-      threshold:                  {{ $alert.Threshold }}
-      threshold_type:             "{{ $alert.ThresholdType }}"
-      notification_type:          "{{ $alert.NotificationType }}"
-      subscriber_email_addresses:
-        {{- range $email := $alert.Subscribers }}
-        - "{{ $email }}"
-        {{- end }}
+  # Add custom notifications or expand subscribers for this specific instance if necessary
+  notifications = {
+    {{- range $key, $notif := .Budget.Notifications }}
+    {{ $key }} = {
+      comparison_operator        = "{{ $notif.ComparisonOperator }}"
+      threshold                  = {{ $notif.Threshold }}
+      threshold_type             = "{{ $notif.ThresholdType }}"
+      notification_type          = "{{ $notif.NotificationType }}"
+      subscriber_email_addresses = [{{ range $i, $email := $notif.SubscriberEmailAddresses }}{{ if $i }}, {{ end }}"{{ $email }}"{{ end }}]
+    }
     {{- end }}
+  }
+}
 
 
 inputs = {

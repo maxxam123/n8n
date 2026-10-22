@@ -2,6 +2,12 @@ include "root" {
   path = find_in_parent_folders()
 }
 
+data "aws_organizations_organization" "org" {}
+
+output "root_id" {
+  value = data.aws_organizations_organization.org.roots[0].id
+}
+
 inputs = {
   # List of core cross-account services to activate trust for
   aws_service_access_principals = [

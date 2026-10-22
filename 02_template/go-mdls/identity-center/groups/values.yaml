@@ -13,3 +13,26 @@ identityGroups:
     displayName: "AWS-Finance-Operations"
     description: "Billing administrators and cost management teams."
 
+
+    # values.yaml
+groupAccountAssignments:
+  - groupKey: "platform_eng"
+    accountId: "111122223333"
+    permissionSets: ["AdministratorAccess"]
+  - groupKey: "finops"
+    accountId: "111122223333"
+    permissionSets: ["Billing"]
+  - groupKey: "security_ops"
+    accountId: "444455556666"
+    permissionSets: ["AdministratorAccess", "SecurityAudit"]
+  - groupKey: "platform_eng"
+    accountId: "444455556666"
+    permissionSets: ["ReadOnlyAccess"]
+  - groupKey: "developers"
+    accountId: "777788889999"
+    permissionSets: ["PowerUserAccess"]
+  - groupKey: "platform_eng"
+    accountId: "777788889999"
+    permissionSets: ["AdministratorAccess"]
+
+

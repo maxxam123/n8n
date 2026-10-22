@@ -1,10 +1,15 @@
 # values.yaml
-pathUsers: "../../tetst/test"
+identityGroups:
+  platform_eng:
+    displayName: "AWS-Platform-Engineering"
+    description: "Cloud platform architects and systems administrators."
+  security_ops:
+    displayName: "AWS-Security-Operations"
+    description: "Security compliance officers and incident response teams."
+  developers:
+    displayName: "AWS-Application-Developers"
+    description: "Product engineering teams with access to non-prod workloads."
+  finops:
+    displayName: "AWS-Finance-Operations"
+    description: "Billing administrators and cost management teams."
 
-memberships:
-  - groupName: "AWS-Platform-Engineering"
-    userKey: "breakglass_admin"
-  - groupName: "AWS-Platform-Engineering"
-    userKey: "john_doe"
-  - groupName: "AWS-Security-Operations"
-    userKey: "jane_smith"

@@ -79,6 +79,14 @@ type UserDefinition struct {
 	Email      string `yaml:"email"`
 }
 
+type PermissionSet struct {
+	Description     string   `yaml:"description"`
+	SessionDuration string   `yaml:"sessionDuration"`
+	ManagedPolicies []string `yaml:"managedPolicies"`
+	InlinePolicy    string   `yaml:"inlinePolicy"`
+}
+
+
 type ConfigValues struct {
 	Environment         string       `yaml:"environment"`
 	Region              string       `yaml:"region"`
@@ -92,6 +100,7 @@ type ConfigValues struct {
 	Threshold            string       `yaml:"threshold"`
 	PathWaf            string       `yaml:"pathWaf"`
 	PathAlb            string       `yaml:"pathAlb"`
+	PermissionSets map[string]PermissionSet `yaml:"permissionSets"`
 	Users map[string]UserDefinition `yaml:"users"`
 	GroupAccountAssignments []AccountAssignment `yaml:"groupAccountAssignments"`
 	IdentityGroups map[string]IdentityGroup `yaml:"identityGroups"`

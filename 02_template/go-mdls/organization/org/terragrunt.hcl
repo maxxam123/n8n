@@ -2,19 +2,6 @@ include "root" {
   path = find_in_parent_folders()
 }
 
-files:
-  - path: "infrastructure/organizations.hcl"
-    content: |
-      inputs = {
-        # List of core cross-account services to activate trust for
-        aws_service_access_principals = [
-      {{- range $index, $element := .awsServiceAccessPrincipals }}
-          {{- if $index }},{{ end }}
-          "{{ $element }}"
-      {{- end }}
-        ]
-      }
-
   # Dynamic Map of Organizational Units (OUs) to provision
   organizational_units = {
   {{- range .OrganizationalUnits }}

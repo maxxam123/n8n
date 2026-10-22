@@ -10,6 +10,13 @@ include "envcommon" {
   path = "${get_terragrunt_dir()}/../../../../_envcommon/billing-and-budgets/budgets.hcl"
 }
 
+inputs = {
+  budget_type   = path.inputs.budget_type
+  limit_unit    = path.inputs.limit_unit
+  time_unit     = path.inputs.time_unit
+  notifications = path.inputs.notifications
+}
+
 # ---------------------------------------------------------------------------------------------------------------------
 # ENVIRONMENT OVERRIDES & COST TARGETS
 # ---------------------------------------------------------------------------------------------------------------------

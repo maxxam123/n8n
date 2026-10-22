@@ -105,6 +105,7 @@ type ConfigValues struct {
 	Threshold            string       `yaml:"threshold"`
 	PathWaf            string       `yaml:"pathWaf"`
 	PathAlb            string       `yaml:"pathAlb"`
+	Groups []string `yaml:"groups"`
 	Memberships []Membership `yaml:"memberships"`
 	PermissionSets map[string]PermissionSet `yaml:"permissionSets"`
 	Users map[string]UserDefinition `yaml:"users"`

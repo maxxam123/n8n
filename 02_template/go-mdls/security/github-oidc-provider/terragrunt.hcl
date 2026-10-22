@@ -11,18 +11,18 @@ include "envcommon" {
 
 # Override or supply specific inputs for this environment
 inputs = {
-  role_name = "ROLE_NAME"
+  role_name = "{{ .Region }}"
   
   # Limit authentication to exact GitHub repositories and branches
   repositories = [
   #  "my-organization/my-application-repo:ref:refs/heads/main",
   #  "my-organization/infrastructure-live-repo:*"
-    "ORG/APP_REPO:ref:refs/heads/main",
-    "ORG/LIVE_REPO:*"
+    "{{ .Region }}/APP_REPO:ref:refs/heads/main",
+    "{{ .Region }}/LIVE_REPO:*"
   ]
 
   # Attach explicit roles needed by the GitHub workspace
   oidc_role_attach_policies = [
-    "arn:aws:iam::aws:policy/EXPLICIT_ROLE"
+    "arn:aws:iam::aws:policy/{{ .Region }}"
   ]
 }

@@ -1,7 +1,7 @@
 test-repo-01
-organization
-org.hcl
-org
+security
+waf-global.hcl
+waf-global
 01
 
 

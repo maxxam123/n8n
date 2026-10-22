@@ -25,11 +25,20 @@ type AWSAccount struct {
 	OuKey    string `yaml:"ouKey"`
 }
 
-type SCPPolicy struct {
-	Name        string      `yaml:"name"`
-	Description string      `yaml:"description"`
-	OuTarget    string      `yaml:"ou_target"`
-	PolicyJson  interface{} `yaml:"policy_json"`
+type SCPStatement struct {
+	Sid       string                           `yaml:"sid"`
+	Effect    string                           `yaml:"effect"`
+	Action    []string                         `yaml:"action,omitempty"`
+	NotAction []string                         `yaml:"notAction,omitempty"`
+	Resource  string                           `yaml:"resource"`
+	Condition map[string]map[string][]string   `yaml:"condition,omitempty"`
+}
+
+type SCPolicy struct {
+	Name        string       `yaml:"name"`
+	Description string       `yaml:"description"`
+	OuTarget    string       `yaml:"ouTarget"`
+	Statement   SCPStatement `yaml:"statement"`
 }
 
 type ConfigValues struct {
@@ -45,7 +54,7 @@ type ConfigValues struct {
 	AwsAccounts         []AWSAccount `yaml:"awsAccounts"`
 	AwsServiceAccessPrincipals []string     `yaml:"awsServiceAccessPrincipals"`
 	DelegatedAdministrators    []string     `yaml:"delegatedAdministrators"`
-	ServiceControlPolicies     map[string]SCPPolicy `yaml:"serviceControlPolicies"`
+	ServiceControlPolicies map[string]SCPolicy `yaml:"serviceControlPolicies"`
 }
 
 func main() {

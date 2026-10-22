@@ -2,16 +2,18 @@ include "root" {
   path = find_in_parent_folders()
 }
 
-inputs = {
-  # List of core cross-account services to activate trust for
-  aws_service_access_principals = [
-    "controltower.amazonaws.com",      # AWS Control Tower
-    "sso.amazonaws.com",               # AWS IAM Identity Center (Successor to Single Sign-On)
-    "ram.amazonaws.com",               # AWS Resource Access Manager
-    "securityhub.amazonaws.com",       # AWS Security Hub
-    "guardduty.amazonaws.com",          # AWS GuardDuty
-    "backup.amazonaws.com"             # AWS Backup
-  ]
+files:
+  - path: "infrastructure/organizations.hcl"
+    content: |
+      inputs = {
+        # List of core cross-account services to activate trust for
+        aws_service_access_principals = [
+      {{- range $index, $element := .awsServiceAccessPrincipals }}
+          {{- if $index }},{{ end }}
+          "{{ $element }}"
+      {{- end }}
+        ]
+      }
 
   # Dynamic Map of Organizational Units (OUs) to provision
   organizational_units = {

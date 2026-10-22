@@ -35,6 +35,7 @@ type ConfigValues struct {
 	RepoLive            string       `yaml:"repoLive"`
 	OrganizationalUnits []OrgUnit    `yaml:"organizationalUnits"`
 	AwsAccounts         []AWSAccount `yaml:"awsAccounts"`
+	AwsServiceAccessPrincipals []string `yaml:"awsServiceAccessPrincipals"`
 }
 
 func main() {

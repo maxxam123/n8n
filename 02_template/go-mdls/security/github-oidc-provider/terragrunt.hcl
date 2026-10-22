@@ -17,7 +17,7 @@ inputs = {
   repositories = [
   #  "my-organization/my-application-repo:ref:refs/heads/main",
   #  "my-organization/infrastructure-live-repo:*"
-    "{{ .Org }}/{{ .RepoDev }}:ref:refs/heads/main",
+  #  "{{ .Org }}/{{ .RepoDev }}:ref:refs/heads/main",
     "{{ .Org }}/{{ .RepoLive }}:*"
   ]
 

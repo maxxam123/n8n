@@ -1,7 +1,7 @@
 test-repo-01
-organization
-org.hcl
-org
+security
+cloudtrail.hcl
+cloudtrail
 
 
 

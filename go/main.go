@@ -72,6 +72,13 @@ type AccountAssignment struct {
 	PermissionSets []string `yaml:"permissionSets"`
 }
 
+type UserDefinition struct {
+	UserName   string `yaml:"userName"`
+	GivenName  string `yaml:"givenName"`
+	FamilyName string `yaml:"familyName"`
+	Email      string `yaml:"email"`
+}
+
 type ConfigValues struct {
 	Environment         string       `yaml:"environment"`
 	Region              string       `yaml:"region"`
@@ -85,6 +92,7 @@ type ConfigValues struct {
 	Threshold            string       `yaml:"threshold"`
 	PathWaf            string       `yaml:"pathWaf"`
 	PathAlb            string       `yaml:"pathAlb"`
+	Users map[string]UserDefinition `yaml:"users"`
 	GroupAccountAssignments []AccountAssignment `yaml:"groupAccountAssignments"`
 	IdentityGroups map[string]IdentityGroup `yaml:"identityGroups"`
 	Budget              BudgetConfig `yaml:"budget"`

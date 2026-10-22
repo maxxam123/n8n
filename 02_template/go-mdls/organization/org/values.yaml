@@ -22,16 +22,10 @@ awsAccounts:
     ouKey: "workloads_ou"
 
 awsServiceAccessPrincipals:
-  - principal: "controltower.amazonaws.com"
-    comment: "AWS Control Tower"
-  - principal: "sso.amazonaws.com"
-    comment: "AWS IAM Identity Center (Successor to Single Sign-On)"
-  - principal: "ram.amazonaws.com"
-    comment: "AWS Resource Access Manager"
-  - principal: "securityhub.amazonaws.com"
-    comment: "AWS Security Hub"
-  - principal: "guardduty.amazonaws.com"
-    comment: "AWS GuardDuty"
-  - principal: "backup.amazonaws.com"
-    comment: "AWS Backup"
+  - "controltower.amazonaws.com"
+  - "sso.amazonaws.com"
+  - "ram.amazonaws.com"
+  - "securityhub.amazonaws.com"
+  - "guardduty.amazonaws.com"
+  - "backup.amazonaws.com"
 

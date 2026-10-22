@@ -1,0 +1,10 @@
+# values.yaml
+pathUsers: "../../tetst/test"
+
+memberships:
+  - groupName: "AWS-Platform-Engineering"
+    userKey: "breakglass_admin"
+  - groupName: "AWS-Platform-Engineering"
+    userKey: "john_doe"
+  - groupName: "AWS-Security-Operations"
+    userKey: "jane_smith"

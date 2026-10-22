@@ -61,6 +61,11 @@ type BudgetConfig struct {
 	Notifications map[string]Notification `yaml:"notifications"`
 }
 
+type IdentityGroup struct {
+	DisplayName string `yaml:"displayName"`
+	Description string `yaml:"description"`
+}
+
 type ConfigValues struct {
 	Environment         string       `yaml:"environment"`
 	Region              string       `yaml:"region"`
@@ -74,6 +79,7 @@ type ConfigValues struct {
 	Threshold            string       `yaml:"threshold"`
 	PathWaf            string       `yaml:"pathWaf"`
 	PathAlb            string       `yaml:"pathAlb"`
+	IdentityGroups map[string]IdentityGroup `yaml:"identityGroups"`
 	Budget              BudgetConfig `yaml:"budget"`
 	OrganizationalUnits []OrgUnit    `yaml:"organizationalUnits"`
 	AwsAccounts         []AWSAccount `yaml:"awsAccounts"`

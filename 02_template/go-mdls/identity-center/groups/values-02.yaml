@@ -1,0 +1,20 @@
+# values.yaml
+memberships:
+  - groupName: "AWS-Platform-Engineering"
+    userKeys: 
+      - "breakglass_admin"
+      - "breakglass_admin_02"
+  - groupName: "AWS-Platform-Engineering"
+    userKeys: 
+      - "john_doe"
+      - "breakglass_admin_03"
+  - groupName: "AWS-Security-Operations"
+    userKeys: 
+      - "jane_smith"
+      - "breakglass_admin_04"
+
+      # values.yaml
+groups:
+  - "AWS-Platform-Engineering"
+  - "AWS-Security-Operations"
+  - "AWS-Auditors"

@@ -58,6 +58,8 @@ type ConfigValues struct {
 	RepoLive            string       `yaml:"repoLive"`
 	Env                 string       `yaml:"env"`
 	Threshold            string       `yaml:"threshold"`
+	PathWaf            string       `yaml:"pathWaf"`
+	PathAlb            string       `yaml:"pathAlb"`
 	OrganizationalUnits []OrgUnit    `yaml:"organizationalUnits"`
 	AwsAccounts         []AWSAccount `yaml:"awsAccounts"`
 	AwsServiceAccessPrincipals []string     `yaml:"awsServiceAccessPrincipals"`

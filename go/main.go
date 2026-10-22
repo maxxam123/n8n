@@ -66,6 +66,12 @@ type IdentityGroup struct {
 	Description string `yaml:"description"`
 }
 
+type AccountAssignment struct {
+	GroupKey       string   `yaml:"groupKey"`
+	AccountId      string   `yaml:"accountId"`
+	PermissionSets []string `yaml:"permissionSets"`
+}
+
 type ConfigValues struct {
 	Environment         string       `yaml:"environment"`
 	Region              string       `yaml:"region"`
@@ -79,6 +85,7 @@ type ConfigValues struct {
 	Threshold            string       `yaml:"threshold"`
 	PathWaf            string       `yaml:"pathWaf"`
 	PathAlb            string       `yaml:"pathAlb"`
+	GroupAccountAssignments []AccountAssignment `yaml:"groupAccountAssignments"`
 	IdentityGroups map[string]IdentityGroup `yaml:"identityGroups"`
 	Budget              BudgetConfig `yaml:"budget"`
 	OrganizationalUnits []OrgUnit    `yaml:"organizationalUnits"`

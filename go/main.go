@@ -52,6 +52,7 @@ func main() {
 	// ==========================================
 	// Common Shared Values Source File
 	dynamicValues := fmt.Sprintf("../02_template/go-mdls/%s/%s/values.yaml", moduleType, thirdFileName)
+	# dynamicValues02 := fmt.Sprintf("../02_template/go-mdls/%s/%s/values-02.yaml", moduleType, thirdFileName)
 
 	// File 1 Targets (Deployed under _global)
 	dynamicTemplate1 := fmt.Sprintf("../02_template/go-mdls/%s/%s/terragrunt.hcl", moduleType, thirdFileName)
@@ -79,6 +80,21 @@ func main() {
 		fmt.Printf("Error parsing dynamic YAML config: %v\n", err)
 		os.Exit(1)
 	}
+
+	// yamlFile02, err := os.ReadFile(dynamicValues02)
+    // if err != nil {
+	// 	fmt.Printf("Error reading dynamic values file (%s): %v\n", dynamicValues02, err)
+	// 	os.Exit(1)
+	//}
+
+	// Updated to point to the newly imported structural package
+	// var values02 models.ConfigValues
+	// err = yaml.Unmarshal(yamlFile02, &values02)
+	// if err != nil {
+	//	fmt.Printf("Error parsing dynamic YAML config: %v\n", err)
+	//	os.Exit(1)
+	//}
+
 
 	// ==========================================
 	// 4. EXECUTION 1: Template First File
@@ -131,6 +147,7 @@ func main() {
 	}
 
 	err = tmpl2.ExecuteTemplate(outputFile2, baseName2, values)
+	// err = tmpl2.ExecuteTemplate(outputFile2, baseName2, values02)
 	outputFile2.Close()
 	if err != nil {
 		fmt.Printf("Error executing template 2: %v\n", err)

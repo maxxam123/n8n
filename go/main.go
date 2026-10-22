@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 	"text/template"
-	"./models"
+	"github-actions-file-manager/models"
 	"gopkg.in/yaml.v3"
 )
 

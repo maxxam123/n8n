@@ -1,0 +1,23 @@
+environment: "staging"
+region: "us-east-1"
+repo: "infrastructure-live-01"
+
+organizationalUnits:
+  - id: "core_ou"
+    name: "Core"
+  - id: "workload_ou"
+    name: "Workload"
+  - id: "infra_ou"
+    name: "infra"
+
+awsAccounts:
+  - key: "security"
+    name: "security-account"
+    email: "aws-security-admin@yourdomain.com"
+    roleName: "OrganizationAccountAccessRole"
+    ouKey: "core_ou"
+  - key: "development"
+    name: "development-account"
+    email: "aws-dev-admin@yourdomain.com"
+    roleName: "OrganizationAccountAccessRole"
+    ouKey: "workloads_ou"

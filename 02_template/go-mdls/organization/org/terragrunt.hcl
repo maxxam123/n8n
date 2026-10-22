@@ -21,20 +21,16 @@ inputs = {
 }
 
   # Dynamic Map of AWS Accounts map to create and assign to OUs
-  aws_accounts = {
-    security = {
-      name      = "security-account"
-      email     = "aws-security-admin@yourdomain.com"
-      role_name = "OrganizationAccountAccessRole"
-      ou_key    = "core_ou" # References key in organizational_units
-    }
-    development = {
-      name      = "development-account"
-      email     = "aws-dev-admin@yourdomain.com"
-      role_name = "OrganizationAccountAccessRole"
-      ou_key    = "workloads_ou"
-    }
+aws_accounts = {
+  {{- range $key, $account := .AwsAccounts }}
+  {{ $key }} = {
+    name      = "{{ $account.Name }}"
+    email     = "{{ $account.Email }}"
+    role_name = "{{ $account.RoleName }}"
+    ou_key    = "{{ $account.OuKey }}"
   }
+  {{- end }}
+}
 
   # Service principals delegated to the security account
   delegated_administrators = [

@@ -56,6 +56,8 @@ type ConfigValues struct {
     Org                 string       `yaml:"org"`
 	RepoDev             string       `yaml:"repoDev"`
 	RepoLive            string       `yaml:"repoLive"`
+	Env                 string       `yaml:"env"`
+	Threshold            string       `yaml:"threshold"`
 	OrganizationalUnits []OrgUnit    `yaml:"organizationalUnits"`
 	AwsAccounts         []AWSAccount `yaml:"awsAccounts"`
 	AwsServiceAccessPrincipals []string     `yaml:"awsServiceAccessPrincipals"`

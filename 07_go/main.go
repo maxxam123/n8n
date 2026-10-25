@@ -101,19 +101,14 @@ func main() {
 			mainTemplateName := filepath.Base(mainTemplatePath)
 			fmt.Printf("  -> Haupt-Template: %s\n", mainTemplateName)
 
-			// 3. Template-Gruppe initialisieren (mit Error-Option bei fehlenden Variablen)
-			tmplGroup := template.New(templateKey).Option("missingkey=error")
+			// 3. Template-Gruppe initialisieren und alle .yaml Dateien laden
+			tmplGroup := template.New(templateKey)
 			combinedData := make(map[string]interface{})
 
 			for _, yamlPath := range yamlFiles {
 				tName := filepath.Base(yamlPath)
 
-				// FIX: Template-Inhalt einlesen und explizit unter dem reinen Dateinamen (z.B. main.yaml) registrieren
-				yamlData, err := os.ReadFile(yamlPath)
-				if err != nil {
-					return fmt.Errorf("Fehler beim Lesen des Templates %s: %w", tName, err)
-				}
-				_, err = tmplGroup.New(tName).Parse(string(yamlData))
+				_, err = tmplGroup.ParseFiles(yamlPath)
 				if err != nil {
 					return fmt.Errorf("Fehler beim Parsen des Templates %s: %w", tName, err)
 				}
@@ -139,7 +134,7 @@ func main() {
 				return fmt.Errorf("Zielordner-Fehler: %w", err)
 			}
 
-			// ÄNDERUNG: Zieldateiname ist jetzt identisch mit dem Namen der originalen Template-Datei
+			// Zieldatei heißt nun wie das Haupt-Template (z.B. main.yaml)
 			targetFilePath := filepath.Join(targetDirPath, mainTemplateName)
 			outputFile, err := os.Create(targetFilePath)
 			if err != nil {
@@ -154,9 +149,6 @@ func main() {
 			}
 
 			fmt.Printf("  ✅ Erfolgreich generiert: %s\n", targetFilePath)
-
-			// ÄNDERUNG: "return nil" statt "SkipDir" erlaubt Go, alle weiteren Ordner (file-two etc.) zu bearbeiten
-			return nil 
 		}
 
 		return nil

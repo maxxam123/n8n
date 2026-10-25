@@ -59,9 +59,8 @@ func loadTxtConfig(configSubDir, txtFileName string) (ParsedConfig, error) {
 			key := strings.TrimSpace(parts[0])
 			value := strings.TrimSpace(parts[1])
 			
-			// Optional: Entferne Anführungszeichen falls vorhanden (z.B. "staging" -> staging)
+			// Säubert eventuelle Anführungszeichen (z.B. "staging" -> staging)
 			value = strings.Trim(value, `"'`)
-			
 			config.Vars[key] = value
 		}
 	}
@@ -105,24 +104,12 @@ func main() {
 			mainTemplateName := filepath.Base(mainTemplatePath)
 			fmt.Printf("  -> Haupt-Template: %s\n", mainTemplateName)
 
-			// 3. Template-Gruppe initialisieren (mit Error-Option bei fehlenden Variablen)
-			tmplGroup := template.New(templateKey).Option("missingkey=error")
+			// 3. Daten-Map vorbereiten
 			combinedData := make(map[string]interface{})
 
 			for _, yamlPath := range yamlFiles {
 				tName := filepath.Base(yamlPath)
 
-				// Template-Inhalt einlesen und unter dem reinen Dateinamen registrieren
-				yamlData, err := os.ReadFile(yamlPath)
-				if err != nil {
-					return fmt.Errorf("Fehler beim Lesen des Templates %s: %w", tName, err)
-				}
-				_, err = tmplGroup.New(tName).Parse(string(yamlData))
-				if err != nil {
-					return fmt.Errorf("Fehler beim Parsen des Templates %s: %w", tName, err)
-				}
-
-				// 4. Zugehörige .txt Datei im config-pool suchen
 				baseNameWithoutExt := strings.TrimSuffix(tName, filepath.Ext(tName))
 				txtFileName := baseNameWithoutExt + ".txt"
 				configSubDir := filepath.Join(ConfigPoolDir, templateKey)
@@ -132,18 +119,25 @@ func main() {
 					return fmt.Errorf("Fehler beim Laden der Config %s: %w", txtFileName, err)
 				}
 
-				// Key für das Template säubern (Bindestriche zu Unterstrichen)
+				// Speicher die Config-Struktur traditionell ab (z.B. für Sub-Templates)
 				cleanKey := strings.ReplaceAll(baseNameWithoutExt, "-", "_")
 				combinedData[cleanKey] = configData
 
-				// HIER IST DIE KORREKTUR FÜR DIE VARIABLEN:
-				// Wenn diese Schleife gerade die Konfiguration der HAUPT-DATEI (z.B. main.txt) verarbeitet,
-				// spiegeln wir die Werte direkt auf die oberste Ebene, damit {{ .pathWaf }} funktioniert.
+				// LÖSUNG: Wenn es das Haupttemplate (z.B. main.yaml) ist, kopieren wir 
+				// die Variablen zusätzlich flach auf die oberste Ebene.
+				// Dadurch funktionieren deine Aufrufe {{ .pathWaf }} und {{ .pathAlb }} direkt!
 				if yamlPath == mainTemplatePath {
 					for k, v := range configData.Vars {
 						combinedData[k] = v
 					}
 				}
+			}
+
+			// 4. Das Haupttemplate isoliert parsen
+			// Das verhindert Namenskonflikte im Go-Dateisystem komplett
+			tmpl, err := template.ParseFiles(mainTemplatePath)
+			if err != nil {
+				return fmt.Errorf("Fehler beim Parsen von %s: %w", mainTemplateName, err)
 			}
 
 			// 5. Zielstruktur aufbauen
@@ -152,6 +146,7 @@ func main() {
 				return fmt.Errorf("Zielordner-Fehler: %w", err)
 			}
 
+			// Zieldatei erstellen
 			targetFilePath := filepath.Join(targetDirPath, mainTemplateName)
 			outputFile, err := os.Create(targetFilePath)
 			if err != nil {
@@ -159,15 +154,13 @@ func main() {
 			}
 			defer outputFile.Close()
 
-			// 6. Haupt-YAML-Template ausführen
-			err = tmplGroup.ExecuteTemplate(outputFile, mainTemplateName, combinedData)
+			// 6. Template direkt ausführen (Nutzt Execute statt ExecuteTemplate)
+			err = tmpl.Execute(outputFile, combinedData)
 			if err != nil {
 				return fmt.Errorf("Rendering-Fehler für %s: %w", mainTemplateName, err)
 			}
 
 			fmt.Printf("  ✅ Erfolgreich generiert: %s\n", targetFilePath)
-
-			return nil // Erlaubt Go, zum nächsten Ordner (z.B. file-two) überzugehen
 		}
 
 		return nil

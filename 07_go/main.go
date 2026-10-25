@@ -45,13 +45,13 @@ func main() {
 			var config map[string]interface{}
 			fileName := d.Name()
 
-			// DYNAMISCH: Prüfen, ob es sich um IRGENDEINE .hcl Datei handelt
-			if strings.HasSuffix(fileName, ".hcl") {
-				// Ermittle den Basisnamen (schneidet die Endung .hcl ab, z.B. "mein-service")
-				baseName := strings.TrimSuffix(fileName, ".hcl")
+			// DYNAMISCH: Prüfen, ob es sich um IRGENDEINE .yaml Datei handelt
+			if strings.HasSuffix(fileName, ".yaml") {
+				// Ermittle den Basisnamen (schneidet die Endung .yaml ab, z.B. "mein-service")
+				baseName := strings.TrimSuffix(fileName, ".yaml")
 				
 				// Baue den Pfad zur namensgleichen YAML-Datei (z.B. "../values/mein-service.yaml")
-				yamlPath := filepath.Join(valuesDir, baseName+".yaml")
+				yamlPath := filepath.Join(valuesDir, baseName+".hcl")
 
 				// Versuche die spezifische YAML-Datei einzulesen
 				yamlData, err := os.ReadFile(yamlPath)
@@ -67,7 +67,7 @@ func main() {
 				}
 			}
 
-			// Datei einlesen, Template anwenden (egal ob .hcl mit Werten oder andere Dateien ohne Werte) und ins Ziel schreiben
+			// Datei einlesen, Template anwenden (egal ob .yaml mit Werten oder andere Dateien ohne Werte) und ins Ziel schreiben
 			err := templateFile(path, targetPath, config)
 			if err != nil {
 				return fmt.Errorf("Fehler beim Templating der Datei %s: %w", targetPath, err)

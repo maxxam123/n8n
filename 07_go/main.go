@@ -98,7 +98,7 @@ func main() {
 				return nil // Keine Templates gefunden, weitergehen
 			}
 
-			// 2. Das Haupttemplate bestimmen (enthält "main" or "template", sonst das erste Element)
+			// 2. Das Haupttemplate bestimmen (enthält "main" oder "template", sonst das erste Element)
 			var mainTemplatePath string
 			for _, file := range yamlFiles {
 				lowerName := strings.ToLower(filepath.Base(file))
@@ -140,11 +140,9 @@ func main() {
 					return fmt.Errorf("Fehler beim Laden der Config %s: %w", txtFileName, err)
 				}
 
-				// --- INTEGRATION DEINES CODE-SCHNIPPELS START ---
 				cleanKey := strings.ReplaceAll(baseNameWithoutExt, "-", "_")
 				combinedData[cleanKey] = configData
 
-				// ZUSATZ FÜR OPTION B:
 				// Wenn es sich um das Haupt-Template handelt, spiele die Variablen 
 				// direkt auf die oberste Ebene ein, damit sie mit {{ .variable }} erreichbar sind.
 				if yamlPath == mainTemplatePath {
@@ -152,7 +150,6 @@ func main() {
 						combinedData[k] = v
 					}
 				}
-				// --- INTEGRATION DEINES CODE-SCHNIPPELS ENDE ---
 			}
 
 			// 5. Zielstruktur aufbauen
@@ -176,7 +173,8 @@ func main() {
 
 			fmt.Printf("  ✅ Erfolgreich generiert: %s\n", targetFilePath)
 
-			return filepath.SkipDir // Unterordner abgearbeitet
+			// KORREKTUR: "return nil" statt "SkipDir" sorgt dafür, dass Go zum nächsten Ordner springt
+			return nil 
 		}
 
 		return nil

@@ -1,3 +1,4 @@
 exclude_dirs:
   - "file-one"
   - "infra-components/environments/dev/eu-central/velero"
+  - "infra-components/environments/dev/eu-central/cert-manager/values.yaml"

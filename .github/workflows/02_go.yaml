@@ -44,7 +44,7 @@ jobs:
         run: ls -la 07_go/
 
       - name: Verify Generated Output
-        run: ls -la 07_go/newStruct
+        run: ls -la newStruct
 
     #  - name: repo original
     #    run: cp -r go/${{ env.GLOBAL_FIRST_LINE }}/temp.yaml ${{ env.GLOBAL_FIRST_LINE }}/managment/_global/${{ env.GLOBAL_SECOND_LINE }}/terragrunt.hcl

@@ -58,6 +58,10 @@ func loadTxtConfig(configSubDir, txtFileName string) (ParsedConfig, error) {
 		if parts := strings.SplitN(line, "=", 2); len(parts) == 2 {
 			key := strings.TrimSpace(parts[0])
 			value := strings.TrimSpace(parts[1])
+			
+			// Optional: Entferne Anführungszeichen falls vorhanden (z.B. "staging" -> staging)
+			value = strings.Trim(value, `"'`)
+			
 			config.Vars[key] = value
 		}
 	}
@@ -101,14 +105,19 @@ func main() {
 			mainTemplateName := filepath.Base(mainTemplatePath)
 			fmt.Printf("  -> Haupt-Template: %s\n", mainTemplateName)
 
-			// 3. Template-Gruppe initialisieren und alle .yaml Dateien laden
-			tmplGroup := template.New(templateKey)
+			// 3. Template-Gruppe initialisieren (mit Error-Option bei fehlenden Variablen)
+			tmplGroup := template.New(templateKey).Option("missingkey=error")
 			combinedData := make(map[string]interface{})
 
 			for _, yamlPath := range yamlFiles {
 				tName := filepath.Base(yamlPath)
 
-				_, err = tmplGroup.ParseFiles(yamlPath)
+				// Template-Inhalt einlesen und unter dem reinen Dateinamen registrieren
+				yamlData, err := os.ReadFile(yamlPath)
+				if err != nil {
+					return fmt.Errorf("Fehler beim Lesen des Templates %s: %w", tName, err)
+				}
+				_, err = tmplGroup.New(tName).Parse(string(yamlData))
 				if err != nil {
 					return fmt.Errorf("Fehler beim Parsen des Templates %s: %w", tName, err)
 				}
@@ -126,6 +135,15 @@ func main() {
 				// Key für das Template säubern (Bindestriche zu Unterstrichen)
 				cleanKey := strings.ReplaceAll(baseNameWithoutExt, "-", "_")
 				combinedData[cleanKey] = configData
+
+				// HIER IST DIE KORREKTUR FÜR DIE VARIABLEN:
+				// Wenn diese Schleife gerade die Konfiguration der HAUPT-DATEI (z.B. main.txt) verarbeitet,
+				// spiegeln wir die Werte direkt auf die oberste Ebene, damit {{ .pathWaf }} funktioniert.
+				if yamlPath == mainTemplatePath {
+					for k, v := range configData.Vars {
+						combinedData[k] = v
+					}
+				}
 			}
 
 			// 5. Zielstruktur aufbauen
@@ -134,7 +152,6 @@ func main() {
 				return fmt.Errorf("Zielordner-Fehler: %w", err)
 			}
 
-			// Zieldatei heißt nun wie das Haupt-Template (z.B. main.yaml)
 			targetFilePath := filepath.Join(targetDirPath, mainTemplateName)
 			outputFile, err := os.Create(targetFilePath)
 			if err != nil {
@@ -149,6 +166,8 @@ func main() {
 			}
 
 			fmt.Printf("  ✅ Erfolgreich generiert: %s\n", targetFilePath)
+
+			return nil // Erlaubt Go, zum nächsten Ordner (z.B. file-two) überzugehen
 		}
 
 		return nil

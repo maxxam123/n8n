@@ -49,7 +49,10 @@ jobs:
       - name: Verify Generated Output_02
         run: ls -la 07_go/newStruct/test_01
         
-      - name: Verify Generated Output_03
+      - name: Verify Generated Output_01
+        run: cat 07_go/newStruct/test_01/ordner_01/ord_01.hcl
+
+      - name: Verify Generated Output_02
         run: cat 07_go/newStruct/test_02/ordner_02/ord_02.hcl
 
     #  - name: repo original

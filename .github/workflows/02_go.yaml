@@ -44,19 +44,12 @@ jobs:
         run: ls -la 07_go/
 
       - name: Verify Generated Output
-        run: ls -la 07_go/newStruct
+        run: ls -la 07_go/outputDeployment
 
       - name: Verify Generated Output_02
-        run: ls -la 07_go/newStruct/test_01
+        run: ls -la 07_go/outputDeployment
         
-      - name: Verify Generated Output_01
-        run: cat 07_go/newStruct/test_01/ordner_01/ord_01.yaml
 
-      - name: Verify Generated Output_02
-        run: cat 07_go/newStruct/test_02/ordner_02/ord_02.yaml
-
-      - name: Verify Generated Output_03
-        run: cat 07_go/newStruct/test_03/ordner_03/ord_03.yaml
 
     #  - name: repo original
     #    run: cp -r go/${{ env.GLOBAL_FIRST_LINE }}/temp.yaml ${{ env.GLOBAL_FIRST_LINE }}/managment/_global/${{ env.GLOBAL_SECOND_LINE }}/terragrunt.hcl

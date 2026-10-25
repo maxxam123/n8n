@@ -106,60 +106,35 @@ func main() {
 			combinedData := make(map[string]interface{})
 			configSubDir := filepath.Join(ConfigPoolDir, templateKey)
 
-			// 1. ZUERST: Lade eine Fallback-Config, die wie der Ordner heißt (z.B. file-two.txt)
-			folderConfigName := templateKey + ".txt"
-			folderConfig, err := loadTxtConfig(configSubDir, folderConfigName)
-			if err == nil {
-				for k, v := range folderConfig.Vars {
-					combinedData[k] = v
-				}
-				cleanFolderKey := strings.ReplaceAll(templateKey, "-", "_")
-				combinedData[cleanFolderKey] = folderConfig
-			}
-
-			var mainConfigData ParsedConfig
-			mainConfigFound := false
-
-			// 2. Alle YAML-spezifischen Konfigurationsdateien im Ordner sammeln
-			for _, yamlPath := range yamlFiles {
-				tName := filepath.Base(yamlPath)
-				baseNameWithoutExt := strings.TrimSuffix(tName, filepath.Ext(tName))
-				txtFileName := baseNameWithoutExt + ".txt"
+			// NEW APPROACH: Scan and read EVERY single .txt file in the folder 
+			// regardless of its filename convention.
+			txtFiles, _ := filepath.Glob(filepath.Join(configSubDir, "*.txt"))
+			for _, txtPath := range txtFiles {
+				txtFileName := filepath.Base(txtPath)
+				baseNameWithoutExt := strings.TrimSuffix(txtFileName, filepath.Ext(txtFileName))
 
 				configData, err := loadTxtConfig(configSubDir, txtFileName)
 				if err != nil {
 					return fmt.Errorf("Fehler beim Laden der Config %s: %w", txtFileName, err)
 				}
 
+				// Keep structured access if templates use {{.file_name.Vars.key}}
 				cleanKey := strings.ReplaceAll(baseNameWithoutExt, "-", "_")
 				combinedData[cleanKey] = configData
 
-				// Wenn es Werte gibt, heben wir sie flach an die Oberfläche
+				// Flatten variables to top level for direct access like {{.key}}
 				for k, v := range configData.Vars {
 					combinedData[k] = v
 				}
-
-				// Wenn es die Config der Hauptdatei ist, merken wir sie uns
-				if yamlPath == mainTemplatePath {
-					mainConfigData = configData
-					mainConfigFound = true
-				}
 			}
 
-			// 3. Variablen der Haupt-Konfigurationsdatei (main.txt) überschreiben Duplikate
-			if mainConfigFound {
-				for k, v := range mainConfigData.Vars {
-					combinedData[k] = v
-				}
-			}
-
-			// 4. Das Haupttemplate isoliert parsen
+			// Parse the template file
 			tmpl, err := template.ParseFiles(mainTemplatePath)
 			if err != nil {
 				return fmt.Errorf("Fehler beim Parsen von %s: %w", mainTemplateName, err)
 			}
 
-			// 5. Zielstruktur aufbauen
+			// Set up target directories and paths
 			targetDirPath := filepath.Join(OutputDir, templateKey)
 			if err := os.MkdirAll(targetDirPath, 0755); err != nil {
 				return fmt.Errorf("Zielordner-Fehler: %w", err)
@@ -172,7 +147,7 @@ func main() {
 			}
 			defer outputFile.Close()
 
-			// 6. Template ausführen
+			// Execute template evaluation
 			err = tmpl.Execute(outputFile, combinedData)
 			if err != nil {
 				return fmt.Errorf("Rendering-Fehler für %s: %w", mainTemplateName, err)

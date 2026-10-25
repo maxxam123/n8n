@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"io/fs"
 	"os"
@@ -13,7 +14,7 @@ import (
 
 func main() {
 	// Verzeichnisse definieren
-	valuesDir := "../values" // Ordner, in dem ord_01.yaml und ord_02.yaml liegen
+	valuesDir := "../values" // Ordner, in dem die passenden .yaml-Dateien liegen
 	srcDir := "../infrastructure-live"
 	dstDir := "newStruct"
 
@@ -44,12 +45,12 @@ func main() {
 			var config map[string]interface{}
 			fileName := d.Name()
 
-			// Prüfen, ob es sich um eine ord_XX.hcl Datei handelt
-			if strings.HasPrefix(fileName, "ord_") && strings.HasSuffix(fileName, ".hcl") {
-				// Ermittle die Nummer/Basisname (z.B. "ord_01" aus "ord_01.hcl")
+			// DYNAMISCH: Prüfen, ob es sich um IRGENDEINE .hcl Datei handelt
+			if strings.HasSuffix(fileName, ".hcl") {
+				// Ermittle den Basisnamen (schneidet die Endung .hcl ab, z.B. "mein-service")
 				baseName := strings.TrimSuffix(fileName, ".hcl")
 				
-				// Baue den Pfad zur passenden YAML-Datei (z.B. "../values/ord_01.yaml")
+				// Baue den Pfad zur namensgleichen YAML-Datei (z.B. "../values/mein-service.yaml")
 				yamlPath := filepath.Join(valuesDir, baseName+".yaml")
 
 				// Versuche die spezifische YAML-Datei einzulesen
@@ -66,7 +67,7 @@ func main() {
 				}
 			}
 
-			// Datei einlesen, Template anwenden und ins Ziel schreiben
+			// Datei einlesen, Template anwenden (egal ob .hcl mit Werten oder andere Dateien ohne Werte) und ins Ziel schreiben
 			err := templateFile(path, targetPath, config)
 			if err != nil {
 				return fmt.Errorf("Fehler beim Templating der Datei %s: %w", targetPath, err)
@@ -84,44 +85,46 @@ func main() {
 	fmt.Println("Struktur erfolgreich repliziert und dynamisch gerendert!")
 }
 
-// Hilfsfunktion: Übernimmt den Dateiinhalt, ersetzt Platzhalter und schreibt das Ergebnis ins Ziel
+// Hilfsfunktion: Übernimmt den Dateiinhalt, ersetzt Platzhalter sequenziell im Speicher und schreibt ins Ziel
 func templateFile(src, dst string, data map[string]interface{}) error {
 	content, err := os.ReadFile(src)
 	if err != nil {
 		return err
 	}
 
-	// 1. Runde: Custom Delimiter [[ ]] vorbereiten
-	tmplCustom := template.New(filepath.Base(src) + "_custom").Option("missingkey=zero").Delims("[[", "]]")
-	tmplCustom, err = tmplCustom.Parse(string(content))
+	// 1. Runde: Custom Delimiter [[ ]] im Arbeitsspeicher verarbeiten
+	tmplCustom, err := template.New(filepath.Base(src) + "_custom").
+		Option("missingkey=zero").
+		Delims("[[", "]]").
+		Parse(string(content))
 	if err != nil {
 		return fmt.Errorf("Fehler beim Parsen des [[ ]]-Templates: %w", err)
 	}
 
-	outputFile, err := os.Create(dst)
+	var bufRound1 bytes.Buffer
+	err = tmplCustom.Execute(&bufRound1, data)
 	if err != nil {
-		return err
-	}
-	defer outputFile.Close()
-
-	// [[ ]] Variablen ersetzen und in Datei schreiben
-	err = tmplCustom.Execute(outputFile, data)
-	if err != nil {
-		return fmt.Errorf("Fehler beim Ausführen des Templates: %w", err)
+		return fmt.Errorf("Fehler beim Ausführen des [[ ]]-Templates: %w", err)
 	}
 
-	// 2. Runde: Falls klassische {{ }} verwendet wurden, diese nachträglich verarbeiten
-	updatedContent, err := os.ReadFile(dst)
-	if err == nil {
-		tmplStandard := template.New(filepath.Base(src) + "_std").Option("missingkey=zero")
-		tmplStandard, err = tmplStandard.Parse(string(updatedContent))
-		if err == nil {
-			outputFileSeek, err := os.OpenFile(dst, os.O_WRONLY|os.O_TRUNC, 0644)
-			if err == nil {
-				defer outputFileSeek.Close()
-				_ = tmplStandard.Execute(outputFileSeek, data)
-			}
-		}
+	// 2. Runde: Klassische {{ }} auf das Zwischenergebnis im Arbeitsspeicher anwenden
+	tmplStandard, err := template.New(filepath.Base(src) + "_std").
+		Option("missingkey=zero").
+		Parse(bufRound1.String())
+	if err != nil {
+		return fmt.Errorf("Fehler beim Parsen des {{ }}-Templates: %w", err)
+	}
+
+	var bufRound2 bytes.Buffer
+	err = tmplStandard.Execute(&bufRound2, data)
+	if err != nil {
+		return fmt.Errorf("Fehler beim Ausführen des {{ }}-Templates: %w", err)
+	}
+
+	// Finale Runde: Das vollständig gerenderte Ergebnis einmalig auf die Festplatte schreiben
+	err = os.WriteFile(dst, bufRound2.Bytes(), 0644)
+	if err != nil {
+		return fmt.Errorf("Fehler beim Schreiben der Zieldatei: %w", err)
 	}
 
 	return nil

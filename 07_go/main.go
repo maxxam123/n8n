@@ -122,6 +122,12 @@ func main() {
 				cleanKey := strings.ReplaceAll(baseNameWithoutExt, "-", "_")
 				combinedData[cleanKey] = configData
 
+				// SICHERHEIT: Alle Variablen aus ALLEN gefundenen Config-Dateien flach auf die 
+				// oberste Ebene legen, falls die Template-Platzhalter direkt darauf zugreifen.
+				for k, v := range configData.Vars {
+					combinedData[k] = v
+				}
+
 				// Wenn es die Config der Hauptdatei ist, merken wir sie uns
 				if yamlPath == mainTemplatePath {
 					mainConfigData = configData
@@ -129,8 +135,8 @@ func main() {
 				}
 			}
 
-			// 2. KORREKTUR: Unabhängig von der Schleifenreihenfolge werden die Variablen 
-			// der Haupt-Konfigurationsdatei GARANTIERT auf der obersten Ebene platziert.
+			// 2. Variablen der Haupt-Konfigurationsdatei überschreiben eventuelle Duplikate,
+			// damit sie garantiert die höchste Priorität haben.
 			if mainConfigFound {
 				for k, v := range mainConfigData.Vars {
 					combinedData[k] = v

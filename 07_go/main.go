@@ -29,7 +29,7 @@ func main() {
 	srcDir := "../template-pool"
 	configDir := "../config-pool"
 	dstDir := "../output-deployments"
-	excludeFile := fmt.Sprintf("../exclude/%s/exclude.yaml, environmentName"
+	excludeFile := fmt.Sprintf("../exclude/%s/exclude.yaml", environmentName)
 
 	// Load exclusion list before walking the directory tree
 	exclusions, err := loadExclusions(excludeFile)

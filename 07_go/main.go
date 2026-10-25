@@ -19,7 +19,7 @@ const (
 // ParsedConfig hält sowohl den rohen Text als auch die extrahierten Schlüssel-Wert-Paare einer .txt-Datei
 type ParsedConfig struct {
 	RawText string                 // Der gesamte Inhalt der .txt-Datei als String
-	Vars    map[string]interface{} // Einzelne Variablen, falls im Format "KEY=VALUE" geschrieben
+	Vars    map[string]interface{} // Einzelne Variablen, falls im Format "KEY=VALUE" oder "KEY: VALUE" geschrieben
 }
 
 // Hilfsfunktion zum Einlesen und Parsen einer .txt Konfigurationsdatei
@@ -40,7 +40,7 @@ func loadTxtConfig(configSubDir, txtFileName string) (ParsedConfig, error) {
 	}
 	config.RawText = string(data)
 
-	// 2. Datei zeilenweise parsen für KEY=VALUE Paare
+	// 2. Datei zeilenweise parsen
 	file, err := os.Open(txtPath)
 	if err != nil {
 		return config, err
@@ -54,13 +54,24 @@ func loadTxtConfig(configSubDir, txtFileName string) (ParsedConfig, error) {
 		if line == "" || strings.HasPrefix(line, "#") || strings.HasPrefix(line, "//") {
 			continue
 		}
-		// Splitte am ersten "=" Zeichen
-		if parts := strings.SplitN(line, "=", 2); len(parts) == 2 {
+
+		// Dynamische Erkennung des Trennzeichens (unterstützt : und =)
+		var separator string
+		if strings.Contains(line, "=") {
+			separator = "="
+		} else if strings.Contains(line, ":") {
+			separator = ":"
+		} else {
+			continue // Keine gültige Zuweisung gefunden
+		}
+
+		if parts := strings.SplitN(line, separator, 2); len(parts) == 2 {
 			key := strings.TrimSpace(parts[0])
 			value := strings.TrimSpace(parts[1])
-			
-			// Säubert eventuelle Anführungszeichen (z.B. "staging" -> staging)
+
+			// Entfernt führende und schließende Anführungszeichen (z.B. "staging" -> staging)
 			value = strings.Trim(value, `"'`)
+
 			config.Vars[key] = value
 		}
 	}
@@ -119,13 +130,11 @@ func main() {
 					return fmt.Errorf("Fehler beim Laden der Config %s: %w", txtFileName, err)
 				}
 
-				// Speicher die Config-Struktur traditionell ab (z.B. für Sub-Templates)
+				// Speicher die Config-Struktur ab
 				cleanKey := strings.ReplaceAll(baseNameWithoutExt, "-", "_")
 				combinedData[cleanKey] = configData
 
-				// LÖSUNG: Wenn es das Haupttemplate (z.B. main.yaml) ist, kopieren wir 
-				// die Variablen zusätzlich flach auf die oberste Ebene.
-				// Dadurch funktionieren deine Aufrufe {{ .pathWaf }} und {{ .pathAlb }} direkt!
+				// Wenn es das Haupttemplate ist, kopieren wir die Variablen flach auf die oberste Ebene
 				if yamlPath == mainTemplatePath {
 					for k, v := range configData.Vars {
 						combinedData[k] = v
@@ -133,8 +142,7 @@ func main() {
 				}
 			}
 
-			// 4. Das Haupttemplate isoliert parsen
-			// Das verhindert Namenskonflikte im Go-Dateisystem komplett
+			// 4. Das Haupttemplate isoliert parsen (fixt Go-interne Pfadkonflikte)
 			tmpl, err := template.ParseFiles(mainTemplatePath)
 			if err != nil {
 				return fmt.Errorf("Fehler beim Parsen von %s: %w", mainTemplateName, err)
@@ -154,7 +162,7 @@ func main() {
 			}
 			defer outputFile.Close()
 
-			// 6. Template direkt ausführen (Nutzt Execute statt ExecuteTemplate)
+			// 6. Template direkt ausführen
 			err = tmpl.Execute(outputFile, combinedData)
 			if err != nil {
 				return fmt.Errorf("Rendering-Fehler für %s: %w", mainTemplateName, err)

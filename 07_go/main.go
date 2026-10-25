@@ -14,6 +14,7 @@ const (
 	TemplatePoolDir = "../template-pool"
 	ConfigPoolDir   = "../config-pool"
 	OutputDir       = "../output-deployments"
+	TargetFileName  = "target.conf"
 )
 
 // ParsedConfig hält sowohl den rohen Text als auch die extrahierten Schlüssel-Wert-Paare einer .txt-Datei
@@ -54,24 +55,10 @@ func loadTxtConfig(configSubDir, txtFileName string) (ParsedConfig, error) {
 		if line == "" || strings.HasPrefix(line, "#") || strings.HasPrefix(line, "//") {
 			continue
 		}
-		
-		// Unterstützung für Doppelpunkt ":" oder Gleichheitszeichen "=" als Trenner
-		var separator string
-		if strings.Contains(line, "=") {
-			separator = "="
-		} else if strings.Contains(line, ":") {
-			separator = ":"
-		} else {
-			continue
-		}
-
-		if parts := strings.SplitN(line, separator, 2); len(parts) == 2 {
-			// GEFIXT: Index-Klammern [0] und [1] wieder hinzugefügt
+		// Splitte am ersten "=" Zeichen
+		if parts := strings.SplitN(line, "=", 2); len(parts) == 2 {
 			key := strings.TrimSpace(parts[0])
 			value := strings.TrimSpace(parts[1])
-			
-			// Entfernt optionale Anführungszeichen um den Wert (z.B. "staging" -> staging)
-			value = strings.Trim(value, `"'`)
 			config.Vars[key] = value
 		}
 	}
@@ -115,23 +102,19 @@ func main() {
 			mainTemplateName := filepath.Base(mainTemplatePath)
 			fmt.Printf("  -> Haupt-Template: %s\n", mainTemplateName)
 
-			// 3. Template-Gruppe initialisieren
-			tmplGroup := template.New(templateKey).Option("missingkey=error")
+			// 3. Template-Gruppe initialisieren und alle .yaml Dateien laden
+			tmplGroup := template.New(templateKey)
 			combinedData := make(map[string]interface{})
 
 			for _, yamlPath := range yamlFiles {
 				tName := filepath.Base(yamlPath)
 
-				// Datei manuell einlesen und unter dem reinen Dateinamen registrieren
-				yamlData, err := os.ReadFile(yamlPath)
-				if err != nil {
-					return fmt.Errorf("Fehler beim Lesen des Templates %s: %w", tName, err)
-				}
-				_, err = tmplGroup.New(tName).Parse(string(yamlData))
+				_, err = tmplGroup.ParseFiles(yamlPath)
 				if err != nil {
 					return fmt.Errorf("Fehler beim Parsen des Templates %s: %w", tName, err)
 				}
 
+				// 4. Zugehörige .txt Datei im config-pool suchen
 				baseNameWithoutExt := strings.TrimSuffix(tName, filepath.Ext(tName))
 				txtFileName := baseNameWithoutExt + ".txt"
 				configSubDir := filepath.Join(ConfigPoolDir, templateKey)
@@ -141,16 +124,9 @@ func main() {
 					return fmt.Errorf("Fehler beim Laden der Config %s: %w", txtFileName, err)
 				}
 
+				// Key für das Template säubern (Bindestriche zu Unterstrichen)
 				cleanKey := strings.ReplaceAll(baseNameWithoutExt, "-", "_")
 				combinedData[cleanKey] = configData
-
-				// Wenn es sich um das Haupt-Template handelt, spiele die Variablen 
-				// direkt auf die oberste Ebene ein, damit sie mit {{ .variable }} erreichbar sind.
-				if yamlPath == mainTemplatePath {
-					for k, v := range configData.Vars {
-						combinedData[k] = v
-					}
-				}
 			}
 
 			// 5. Zielstruktur aufbauen
@@ -159,7 +135,7 @@ func main() {
 				return fmt.Errorf("Zielordner-Fehler: %w", err)
 			}
 
-			targetFilePath := filepath.Join(targetDirPath, mainTemplateName)
+			targetFilePath := filepath.Join(targetDirPath, TargetFileName)
 			outputFile, err := os.Create(targetFilePath)
 			if err != nil {
 				return fmt.Errorf("Zieldatei-Fehler: %w", err)
@@ -174,9 +150,7 @@ func main() {
 
 			fmt.Printf("  ✅ Erfolgreich generiert: %s\n", targetFilePath)
 
-			// GEFIXT: Wechsel von SkipDir auf return nil, damit file-two, file-three etc. 
-			// ebenfalls prozessiert werden und der Loop nicht stoppt!
-			return nil 
+			return filepath.SkipDir // Unterordner abgearbeitet
 		}
 
 		return nil

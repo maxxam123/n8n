@@ -1,0 +1,5 @@
+environment: "prod"
+region: "us-prod-1"
+env: "prod"
+pathWaf: "../../test/prod/03"
+pathAlb: "../../test/prod/03/"

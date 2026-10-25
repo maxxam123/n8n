@@ -46,6 +46,9 @@ jobs:
       - name: Verify Generated Output
         run: ls -la output-deployments
 
+      - name: Verify Generated Output_00
+        run: ls -la output-deployments/infra-components/environments/dev/eu-central
+
       - name: Verify Generated Output_01
         run: cat output-deployments/file-one/main.yaml
         

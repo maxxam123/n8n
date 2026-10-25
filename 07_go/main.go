@@ -104,15 +104,26 @@ func main() {
 			fmt.Printf("  -> Haupt-Template: %s\n", mainTemplateName)
 
 			combinedData := make(map[string]interface{})
+			configSubDir := filepath.Join(ConfigPoolDir, templateKey)
+
+			// 1. Lade zuerst eine Konfiguration, die wie der Ordner heißt (z.B. file-two.txt)
+			folderConfigName := templateKey + ".txt"
+			folderConfig, err := loadTxtConfig(configSubDir, folderConfigName)
+			if err == nil {
+				for k, v := range folderConfig.Vars {
+					combinedData[k] = v
+				}
+				combinedData[strings.ReplaceAll(templateKey, "-", "_")] = folderConfig
+			}
+
 			var mainConfigData ParsedConfig
 			mainConfigFound := false
 
-			// 1. Alle Konfigurationsdateien im Ordner sammeln
+			// 2. Alle YAML-spezifischen Konfigurationsdateien sammeln
 			for _, yamlPath := range yamlFiles {
 				tName := filepath.Base(yamlPath)
 				baseNameWithoutExt := strings.TrimSuffix(tName, filepath.Ext(tName))
 				txtFileName := baseNameWithoutExt + ".txt"
-				configSubDir := filepath.Join(ConfigPoolDir, templateKey)
 
 				configData, err := loadTxtConfig(configSubDir, txtFileName)
 				if err != nil {
@@ -122,34 +133,31 @@ func main() {
 				cleanKey := strings.ReplaceAll(baseNameWithoutExt, "-", "_")
 				combinedData[cleanKey] = configData
 
-				// SICHERHEIT: Alle Variablen aus ALLEN gefundenen Config-Dateien flach auf die 
-				// oberste Ebene legen, falls die Template-Platzhalter direkt darauf zugreifen.
+				// Lege die Variablen flach auf die oberste Ebene
 				for k, v := range configData.Vars {
 					combinedData[k] = v
 				}
 
-				// Wenn es die Config der Hauptdatei ist, merken wir sie uns
 				if yamlPath == mainTemplatePath {
 					mainConfigData = configData
 					mainConfigFound = true
 				}
 			}
 
-			// 2. Variablen der Haupt-Konfigurationsdatei überschreiben eventuelle Duplikate,
-			// damit sie garantiert die höchste Priorität haben.
+			// 3. Variablen der Haupt-Konfigurationsdatei haben höchste Priorität
 			if mainConfigFound {
 				for k, v := range mainConfigData.Vars {
 					combinedData[k] = v
 				}
 			}
 
-			// 3. Das Haupttemplate isoliert parsen
+			// 4. Das Haupttemplate isoliert parsen
 			tmpl, err := template.ParseFiles(mainTemplatePath)
 			if err != nil {
 				return fmt.Errorf("Fehler beim Parsen von %s: %w", mainTemplateName, err)
 			}
 
-			// 4. Zielstruktur aufbauen
+			// 5. Zielstruktur aufbauen
 			targetDirPath := filepath.Join(OutputDir, templateKey)
 			if err := os.MkdirAll(targetDirPath, 0755); err != nil {
 				return fmt.Errorf("Zielordner-Fehler: %w", err)
@@ -162,7 +170,7 @@ func main() {
 			}
 			defer outputFile.Close()
 
-			// 5. Template ausführen
+			// 6. Template ausführen
 			err = tmpl.Execute(outputFile, combinedData)
 			if err != nil {
 				return fmt.Errorf("Rendering-Fehler für %s: %w", mainTemplateName, err)

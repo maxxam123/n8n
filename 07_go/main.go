@@ -12,7 +12,7 @@ func main() {
 	sourceRoot := "./infrastructure-live"
 	outputDir  := "./newStruct"
 
-	// Standardize paths to ensure matching patterns work reliably
+	// Standardize names to ensure matching works perfectly
 	cleanSource := filepath.Clean(sourceRoot)
 	cleanOutput := filepath.Clean(outputDir)
 
@@ -23,39 +23,41 @@ func main() {
 			return nil // Skip access errors gracefully
 		}
 
-		// Handle directories
+		// 1. Handle Skip Directories up front
 		if d.IsDir() {
-			// Prevent infinite loop if output directory is inside the source folder
+			// Skip cache, git, and prevent infinite loop over our output folder
 			if d.Name() == ".git" || d.Name() == ".terragrunt-cache" || path == cleanOutput {
 				return filepath.SkipDir
 			}
-			return nil // Keep walking deeper into this directory
+			// DO NOT return nil here. Let execution drop down so WalkDir reads files inside.
 		}
 
-		// Handle files (this replaces the !d.IsDir check cleanly)
-		// Extract relative path from sourceRoot (e.g., "infrastructure-live/dev/vpc/file.txt" -> "dev/vpc/file.txt")
-		relPath, err := filepath.Rel(cleanSource, path)
-		if err != nil {
-			return fmt.Errorf("failed to calculate relative path for %s: %w", path, err)
+		// 2. Process Files Only
+		if !d.IsDir() {
+			// Strip the root prefix so folders align directly inside newStruct
+			relPath, err := filepath.Rel(cleanSource, path)
+			if err != nil {
+				return fmt.Errorf("failed to get relative path: %w", err)
+			}
+
+			destinationPath := filepath.Join(cleanOutput, relPath)
+			destinationDir  := filepath.Dir(destinationPath)
+
+			// Create the folders
+			err = os.MkdirAll(destinationDir, 0755)
+			if err != nil {
+				return fmt.Errorf("failed to create directory %s: %w", destinationDir, err)
+			}
+
+			// Copy the file contents
+			err = copyFile(path, destinationPath)
+			if err != nil {
+				return fmt.Errorf("failed to copy file to %s: %w", destinationPath, err)
+			}
+
+			fmt.Printf("Replicated: %s\n", destinationPath)
 		}
 
-		// Map to the new target folder: "./newStruct/dev/vpc/file.txt"
-		destinationPath := filepath.Join(cleanOutput, relPath)
-		destinationDir  := filepath.Dir(destinationPath)
-
-		// 1. Physically create the parent directory chain inside newStruct
-		err = os.MkdirAll(destinationDir, 0755)
-		if err != nil {
-			return fmt.Errorf("failed to create directory %s: %w", destinationDir, err)
-		}
-
-		// 2. Stream and write the contents
-		err = copyFile(path, destinationPath)
-		if err != nil {
-			return fmt.Errorf("failed to copy file to %s: %w", destinationPath, err)
-		}
-
-		fmt.Printf("Replicated: %s\n", destinationPath)
 		return nil
 	})
 
@@ -67,7 +69,6 @@ func main() {
 	fmt.Println("Structure replication complete.")
 }
 
-// Helper function to handle copying the actual file content
 func copyFile(src, dst string) error {
 	sourceFile, err := os.Open(src)
 	if err != nil {

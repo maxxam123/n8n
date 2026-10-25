@@ -44,10 +44,7 @@ jobs:
         run: ls -la 07_go/
 
       - name: Verify Generated Output
-        run: ls -la 07_go/outputDeployment
-
-      - name: Verify Generated Output_02
-        run: ls -la 07_go/outputDeployment
+        run: ls -la output-deployments
         
 
 

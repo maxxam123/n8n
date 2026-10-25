@@ -50,7 +50,7 @@ jobs:
         run: ls -la 07_go/newStruct/test_01
         
       - name: Verify Generated Output_03
-        run: ls -la 07_go/newStruct/test_02
+        run: cat 07_go/newStruct/test_02/ordner_02/ord_02.txt
 
     #  - name: repo original
     #    run: cp -r go/${{ env.GLOBAL_FIRST_LINE }}/temp.yaml ${{ env.GLOBAL_FIRST_LINE }}/managment/_global/${{ env.GLOBAL_SECOND_LINE }}/terragrunt.hcl

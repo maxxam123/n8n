@@ -17,10 +17,19 @@ type ExcludeConfig struct {
 }
 
 func main() {
+
+	if len(os.Args) < 2 {
+		fmt.Println("Error: Missing directory name. Usage: go run main.go <dir_name>")
+		return
+	}
+
+	// 2. Capture the value (e.g., "dev-eu-central")
+	environmentName := os.Args[1]
+	
 	srcDir := "../template-pool"
 	configDir := "../config-pool"
 	dstDir := "../output-deployments"
-	excludeFile := "../exclude/exclude.yaml"
+	excludeFile := fmt.Sprintf("../exclude/%s/exclude.yaml, environmentName"
 
 	// Load exclusion list before walking the directory tree
 	exclusions, err := loadExclusions(excludeFile)

@@ -54,10 +54,23 @@ func loadTxtConfig(configSubDir, txtFileName string) (ParsedConfig, error) {
 		if line == "" || strings.HasPrefix(line, "#") || strings.HasPrefix(line, "//") {
 			continue
 		}
-		// Splitte am ersten "=" Zeichen
-		if parts := strings.SplitN(line, "=", 2); len(parts) == 2 {
+		
+		// Unterstützt sowohl "key=value" als auch "key: value"
+		var separator string
+		if strings.Contains(line, "=") {
+			separator = "="
+		} else if strings.Contains(line, ":") {
+			separator = ":"
+		} else {
+			continue
+		}
+
+		if parts := strings.SplitN(line, separator, 2); len(parts) == 2 {
 			key := strings.TrimSpace(parts[0])
 			value := strings.TrimSpace(parts[1])
+			
+			// Bereinigt eventuelle Anführungszeichen um den Wert (z.B. "staging" -> staging)
+			value = strings.Trim(value, `"'`)
 			config.Vars[key] = value
 		}
 	}
@@ -101,14 +114,20 @@ func main() {
 			mainTemplateName := filepath.Base(mainTemplatePath)
 			fmt.Printf("  -> Haupt-Template: %s\n", mainTemplateName)
 
-			// 3. Template-Gruppe initialisieren und alle .yaml Dateien laden
-			tmplGroup := template.New(templateKey)
+			// 3. Template-Gruppe initialisieren und mit Fehlermeldung bei fehlenden Keys versehen
+			tmplGroup := template.New(templateKey).Option("missingkey=error")
 			combinedData := make(map[string]interface{})
 
 			for _, yamlPath := range yamlFiles {
 				tName := filepath.Base(yamlPath)
 
-				_, err = tmplGroup.ParseFiles(yamlPath)
+				// KORREKTUR: Liest die Datei explizit unter dem REINEN Dateinamen (z.B. main.yaml) ein,
+				// statt des vollständigen Pfades. Das fixt das "Template wird nicht gefunden"-Problem.
+				yamlData, err := os.ReadFile(yamlPath)
+				if err != nil {
+					return fmt.Errorf("Fehler beim Lesen des Templates %s: %w", tName, err)
+				}
+				_, err = tmplGroup.New(tName).Parse(string(yamlData))
 				if err != nil {
 					return fmt.Errorf("Fehler beim Parsen des Templates %s: %w", tName, err)
 				}
@@ -123,9 +142,17 @@ func main() {
 					return fmt.Errorf("Fehler beim Laden der Config %s: %w", txtFileName, err)
 				}
 
-				// Key für das Template säubern (Bindestriche zu Unterstrichen)
+				// Verschachtelter Zugriff bleibt als Fallback aktiv (z.B. {{ .main.Vars.key }})
 				cleanKey := strings.ReplaceAll(baseNameWithoutExt, "-", "_")
 				combinedData[cleanKey] = configData
+
+				// KORREKTUR: Flachklopfen der Variablen der Hauptdatei. 
+				// Kopiert alle Keys direkt nach combinedData, damit {{ .pathWaf }} funktioniert.
+				if yamlPath == mainTemplatePath {
+					for k, v := range configData.Vars {
+						combinedData[k] = v
+					}
+				}
 			}
 
 			// 5. Zielstruktur aufbauen
@@ -149,7 +176,9 @@ func main() {
 
 			fmt.Printf("  ✅ Erfolgreich generiert: %s\n", targetFilePath)
 
-			return filepath.SkipDir // Unterordner abgearbeitet
+			// KORREKTUR: "return nil" statt "SkipDir" sorgt dafür, dass Go nach Ordner 1 
+			// NICHT stoppt, sondern sauber mit Ordner 2 fortfährt!
+			return nil 
 		}
 
 		return nil

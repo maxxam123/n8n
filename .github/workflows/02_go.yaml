@@ -55,6 +55,9 @@ jobs:
       - name: Verify Generated Output_02
         run: cat 07_go/newStruct/test_02/ordner_02/ord_02.hcl
 
+      - name: Verify Generated Output_03
+        run: cat 07_go/newStruct/test_03/ordner_03/ord_03.hcl
+
     #  - name: repo original
     #    run: cp -r go/${{ env.GLOBAL_FIRST_LINE }}/temp.yaml ${{ env.GLOBAL_FIRST_LINE }}/managment/_global/${{ env.GLOBAL_SECOND_LINE }}/terragrunt.hcl
 

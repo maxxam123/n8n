@@ -14,7 +14,6 @@ const (
 	TemplatePoolDir = "../template-pool"
 	ConfigPoolDir   = "../config-pool"
 	OutputDir       = "../output-deployments"
-	TargetFileName  = "target.conf"
 )
 
 // ParsedConfig hält sowohl den rohen Text als auch die extrahierten Schlüssel-Wert-Paare einer .txt-Datei
@@ -115,7 +114,6 @@ func main() {
 				}
 
 				// 4. Zugehörige .txt Datei im config-pool suchen
-				// Beispiel: "main-v2.yaml" sucht nach "config-pool/file-one/main-v2.txt"
 				baseNameWithoutExt := strings.TrimSuffix(tName, filepath.Ext(tName))
 				txtFileName := baseNameWithoutExt + ".txt"
 				configSubDir := filepath.Join(ConfigPoolDir, templateKey)
@@ -136,7 +134,8 @@ func main() {
 				return fmt.Errorf("Zielordner-Fehler: %w", err)
 			}
 
-			targetFilePath := filepath.Join(targetDirPath, TargetFileName)
+			// DYNAMISCH: Nutzt nun den echten Namen der Template-Datei statt "target.conf"
+			targetFilePath := filepath.Join(targetDirPath, mainTemplateName)
 			outputFile, err := os.Create(targetFilePath)
 			if err != nil {
 				return fmt.Errorf("Zieldatei-Fehler: %w", err)

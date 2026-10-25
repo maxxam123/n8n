@@ -12,7 +12,7 @@ import (
 
 func main() {
 	// Pfade definieren
-	valuesFile := "./values/ord_01.yaml"
+	valuesFile := "../values/ord_01.yaml"
 	srcDir := "../infrastructure-live"
 	dstDir := "newStruct"
 

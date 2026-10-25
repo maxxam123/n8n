@@ -55,7 +55,7 @@ func loadTxtConfig(configSubDir, txtFileName string) (ParsedConfig, error) {
 			continue
 		}
 		
-		// Unterstützt sowohl "key=value" als auch "key: value"
+		// Unterstützung für Doppelpunkt ":" oder Gleichheitszeichen "=" als Trenner
 		var separator string
 		if strings.Contains(line, "=") {
 			separator = "="
@@ -66,10 +66,11 @@ func loadTxtConfig(configSubDir, txtFileName string) (ParsedConfig, error) {
 		}
 
 		if parts := strings.SplitN(line, separator, 2); len(parts) == 2 {
+			// GEFIXT: Index-Klammern [0] und [1] wieder hinzugefügt
 			key := strings.TrimSpace(parts[0])
 			value := strings.TrimSpace(parts[1])
 			
-			// Bereinigt eventuelle Anführungszeichen um den Wert (z.B. "staging" -> staging)
+			// Entfernt optionale Anführungszeichen um den Wert (z.B. "staging" -> staging)
 			value = strings.Trim(value, `"'`)
 			config.Vars[key] = value
 		}
@@ -114,15 +115,14 @@ func main() {
 			mainTemplateName := filepath.Base(mainTemplatePath)
 			fmt.Printf("  -> Haupt-Template: %s\n", mainTemplateName)
 
-			// 3. Template-Gruppe initialisieren und mit Fehlermeldung bei fehlenden Keys versehen
+			// 3. Template-Gruppe initialisieren
 			tmplGroup := template.New(templateKey).Option("missingkey=error")
 			combinedData := make(map[string]interface{})
 
 			for _, yamlPath := range yamlFiles {
 				tName := filepath.Base(yamlPath)
 
-				// KORREKTUR: Liest die Datei explizit unter dem REINEN Dateinamen (z.B. main.yaml) ein,
-				// statt des vollständigen Pfades. Das fixt das "Template wird nicht gefunden"-Problem.
+				// Datei manuell einlesen und unter dem reinen Dateinamen registrieren
 				yamlData, err := os.ReadFile(yamlPath)
 				if err != nil {
 					return fmt.Errorf("Fehler beim Lesen des Templates %s: %w", tName, err)
@@ -132,7 +132,6 @@ func main() {
 					return fmt.Errorf("Fehler beim Parsen des Templates %s: %w", tName, err)
 				}
 
-				// 4. Zugehörige .txt Datei im config-pool suchen
 				baseNameWithoutExt := strings.TrimSuffix(tName, filepath.Ext(tName))
 				txtFileName := baseNameWithoutExt + ".txt"
 				configSubDir := filepath.Join(ConfigPoolDir, templateKey)
@@ -142,12 +141,11 @@ func main() {
 					return fmt.Errorf("Fehler beim Laden der Config %s: %w", txtFileName, err)
 				}
 
-				// Verschachtelter Zugriff bleibt als Fallback aktiv (z.B. {{ .main.Vars.key }})
 				cleanKey := strings.ReplaceAll(baseNameWithoutExt, "-", "_")
 				combinedData[cleanKey] = configData
 
-				// KORREKTUR: Flachklopfen der Variablen der Hauptdatei. 
-				// Kopiert alle Keys direkt nach combinedData, damit {{ .pathWaf }} funktioniert.
+				// Wenn es sich um das Haupt-Template handelt, spiele die Variablen 
+				// direkt auf die oberste Ebene ein, damit sie mit {{ .variable }} erreichbar sind.
 				if yamlPath == mainTemplatePath {
 					for k, v := range configData.Vars {
 						combinedData[k] = v
@@ -176,8 +174,8 @@ func main() {
 
 			fmt.Printf("  ✅ Erfolgreich generiert: %s\n", targetFilePath)
 
-			// KORREKTUR: "return nil" statt "SkipDir" sorgt dafür, dass Go nach Ordner 1 
-			// NICHT stoppt, sondern sauber mit Ordner 2 fortfährt!
+			// GEFIXT: Wechsel von SkipDir auf return nil, damit file-two, file-three etc. 
+			// ebenfalls prozessiert werden und der Loop nicht stoppt!
 			return nil 
 		}
 

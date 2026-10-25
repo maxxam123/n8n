@@ -11,19 +11,19 @@ import (
 )
 
 func main() {
-	// Pfade definieren
+	// Pfade definieren (Anführungszeichen korrigiert)
 	valuesFile := "./values/org_01.yaml"
 	srcDir := "../infrastructure-live"
 	dstDir := "newStruct"
 
-	// 1. YAML-Wertedatei einlesen und parsen
+	// 1. YAML-Wertedatei einlesen
 	yamlData, err := os.ReadFile(valuesFile)
 	if err != nil {
 		fmt.Printf("Fehler beim Lesen der YAML-Datei: %v\n", err)
 		return
 	}
 
-	// Flexibles Map-Interface für die Vorlagen-Variablen
+	// YAML in eine Map parsen, damit die Werte im Template verfügbar sind
 	var config map[string]interface{}
 	err = yaml.Unmarshal(yamlData, &config)
 	if err != nil {
@@ -37,27 +37,27 @@ func main() {
 			return err
 		}
 
-		// Relativen Pfad berechnen
+		// Errechne den relativen Pfad vom Quellordner aus
 		relPath, err := filepath.Rel(srcDir, path)
 		if err != nil {
 			return err
 		}
 
-		// Zielpfad bestimmen
+		// Bestimme den neuen Zielpfad unter newStruct
 		targetPath := filepath.Join(dstDir, relPath)
 
 		if d.IsDir() {
-			// Ordner im Zielverzeichnis erstellen
+			// 3. Wenn es ein Ordner ist, erstelle ihn im Zielverzeichnis
 			err := os.MkdirAll(targetPath, os.ModePerm)
 			if err != nil {
 				return fmt.Errorf("Fehler beim Erstellen des Ordners %s: %w", targetPath, err)
 			}
 			fmt.Println("Ordner erstellt:", targetPath)
 		} else {
-			// 3. Datei-Inhalt templaten und schreiben
+			// 4. Wenn es eine Datei ist, lies sie ein, wende das Template an und schreibe sie ins Ziel
 			err := templateFile(path, targetPath, config)
 			if err != nil {
-				return fmt.Errorf("Fehler beim Templating von %s: %w", path, err)
+				return fmt.Errorf("Fehler beim Templating der Datei %s: %w", targetPath, err)
 			}
 			fmt.Println("Datei gerendert:", targetPath)
 		}
@@ -69,34 +69,35 @@ func main() {
 		return
 	}
 
-	fmt.Println("Struktur erfolgreich mit YAML-Werten repliziert!")
+	fmt.Println("Struktur erfolgreich unter newStruct repliziert und gerendert!")
 }
 
-// Hilfsfunktion, die eine Datei liest, die Platzhalter ersetzt und im Ziel speichert
+// Hilfsfunktion: Übernimmt den Dateiinhalt, ersetzt Platzhalter und schreibt das Ergebnis ins Ziel
 func templateFile(src, dst string, data map[string]interface{}) error {
-	// Quelltext der Datei einlesen
+	// 1. Inhalt der originalen Datei einlesen
 	content, err := os.ReadFile(src)
 	if err != nil {
 		return err
 	}
 
-	// Go-Template initialisieren (Option "missingkey=error" wirft Fehler bei fehlenden Variablen)
+	// 2. Template mit dem Namen der Datei erstellen und parsen
+	// .Option("missingkey=error") sorgt dafür, dass das Skript abbricht, wenn eine Variable in der YAML fehlt.
 	tmpl, err := template.New(filepath.Base(src)).Option("missingkey=error").Parse(string(content))
 	if err != nil {
-		return err
+		return fmt.Errorf("Fehler beim Parsen des Templates: %w", err)
 	}
 
-	// Zieldatei zum Schreiben öffnen
-	outputFile, err := os.OpenFile(dst, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
+	// 3. Zieldatei zum Schreiben erstellen
+	outputFile, err := os.Create(dst)
 	if err != nil {
 		return err
 	}
 	defer outputFile.Close()
 
-	// Template mit den YAML-Daten rendern und in die Zieldatei schreiben
+	// 4. Template ausführen und in die Zieldatei schreiben
 	err = tmpl.Execute(outputFile, data)
 	if err != nil {
-		return err
+		return fmt.Errorf("Fehler beim Ausführen des Templates: %w", err)
 	}
 
 	return nil

@@ -2,86 +2,54 @@ package main
 
 import (
 	"fmt"
-	"io"
 	"io/fs"
 	"os"
 	"path/filepath"
 )
 
 func main() {
-	sourceRoot := "./infrastructure-live"
-	outputDir  := "newStruct"
+	// ".." springt eine Ebene höher, um nach "infrastructure-live" zu suchen
+	srcDir := "../infrastructure-live"
+	dstDir := "newStruct"
 
-	// Standardize names to ensure matching works perfectly
-	cleanSource := filepath.Clean(sourceRoot)
-	cleanOutput := filepath.Clean(outputDir)
-
-	fmt.Printf("Scanning '%s' and replicating structure under '%s'...\n", cleanSource, cleanOutput)
-
-	err := filepath.WalkDir(cleanSource, func(path string, d fs.DirEntry, err error) error {
+	// 1. Quellverzeichnis rekursiv durchlaufen
+	err := filepath.WalkDir(srcDir, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
-			return nil // Skip access errors gracefully
+			return err
 		}
 
-		// 1. Handle Skip Directories up front
+		// Errechne den relativen Pfad vom Quellordner aus
+		relPath, err := filepath.Rel(srcDir, path)
+		if err != nil {
+			return err
+		}
+
+		// Bestimme den neuen Zielpfad unter newStruct
+		targetPath := filepath.Join(dstDir, relPath)
+
 		if d.IsDir() {
-			// Skip cache, git, and prevent infinite loop over our output folder
-			if d.Name() == ".git" || d.Name() == ".terragrunt-cache" || path == cleanOutput {
-				return filepath.SkipDir
+			// 2. Wenn es ein Ordner ist, erstelle ihn im Zielverzeichnis
+			err := os.MkdirAll(targetPath, os.ModePerm)
+			if err != nil {
+				return fmt.Errorf("Fehler beim Erstellen des Ordners %s: %w", targetPath, err)
 			}
-			// DO NOT return nil here. Let execution drop down so WalkDir reads files inside.
+			fmt.Println("Ordner erstellt:", targetPath)
+		} else {
+			// 3. Wenn es eine Datei ist, erstelle eine leere Datei im Zielverzeichnis
+			file, err := os.OpenFile(targetPath, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
+			if err != nil {
+				return fmt.Errorf("Fehler beim Erstellen der Datei %s: %w", targetPath, err)
+			}
+			file.Close() // Datei direkt wieder schließen
+			fmt.Println("Datei erstellt:", targetPath)
 		}
-
-		// 2. Process Files Only
-		if !d.IsDir() {
-			// Strip the root prefix so folders align directly inside newStruct
-			relPath, err := filepath.Rel(cleanSource, path)
-			if err != nil {
-				return fmt.Errorf("failed to get relative path: %w", err)
-			}
-
-			destinationPath := filepath.Join(cleanOutput, relPath)
-			destinationDir  := filepath.Dir(destinationPath)
-
-			// Create the folders
-			err = os.MkdirAll(destinationDir, 0755)
-			if err != nil {
-				return fmt.Errorf("failed to create directory %s: %w", destinationDir, err)
-			}
-
-			// Copy the file contents
-			err = copyFile(path, destinationPath)
-			if err != nil {
-				return fmt.Errorf("failed to copy file to %s: %w", destinationPath, err)
-			}
-
-			fmt.Printf("Replicated: %s\n", destinationPath)
-		}
-
 		return nil
 	})
 
 	if err != nil {
-		fmt.Printf("Error processing directories: %v\n", err)
+		fmt.Printf("Fehler beim Generieren der Struktur: %v\n", err)
 		return
 	}
 
-	fmt.Println("Structure replication complete.")
-}
-
-func copyFile(src, dst string) error {
-	sourceFile, err := os.Open(src)
-	if err != nil {
-		return err
-	}
-	defer sourceFile.Close()
-
-	destinationFile, err := os.Create(dst)
-	if err != nil {
-		return err
-	}
-	defer destinationFile.Close()
-
-	_, err = io.Copy(destinationFile, sourceFile)
-	return err
+	fmt.Println("Struktur erfolgreich unter newStruct repliziert!")
 }

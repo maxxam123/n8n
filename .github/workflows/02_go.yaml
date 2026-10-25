@@ -58,11 +58,8 @@ jobs:
       - name: Verify Generated Output_00
         run: ls -la output-deployments/infra-components/environments/dev/eu-central/cert-manager
         
-      - name: Verify Generated Output_02
-        run: cat output-deployments/file-two/main.yaml
-        
-      - name: Verify Generated Output_03
-        run: cat output-deployments/file-one/patch.yaml
+      - name: Verify Generated Output_00
+        run: ls -la output-deployments/infra-components/apps
 
     #  - name: repo original
     #    run: cp -r go/${{ env.GLOBAL_FIRST_LINE }}/temp.yaml ${{ env.GLOBAL_FIRST_LINE }}/managment/_global/${{ env.GLOBAL_SECOND_LINE }}/terragrunt.hcl

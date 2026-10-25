@@ -10,7 +10,7 @@ import (
 
 func main() {
 	sourceRoot := "./infrastructure-live"
-	outputDir  := "./newStruct"
+	outputDir  := "newStruct"
 
 	// Standardize names to ensure matching works perfectly
 	cleanSource := filepath.Clean(sourceRoot)

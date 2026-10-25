@@ -11,7 +11,6 @@ import (
 )
 
 func main() {
-	// Pfade definieren (Anführungszeichen korrigiert)
 	valuesFile := "./values/ord_01.yaml"
 	srcDir := "../infrastructure-live"
 	dstDir := "newStruct"
@@ -19,15 +18,21 @@ func main() {
 	// 1. YAML-Wertedatei einlesen
 	yamlData, err := os.ReadFile(valuesFile)
 	if err != nil {
-		fmt.Printf("Fehler beim Lesen der YAML-Datei: %v\n", err)
+		fmt.Printf("ABBRUCH: Fehler beim Lesen der YAML-Datei: %v\n", err)
 		return
 	}
 
-	// YAML in eine Map parsen, damit die Werte im Template verfügbar sind
 	var config map[string]interface{}
 	err = yaml.Unmarshal(yamlData, &config)
 	if err != nil {
-		fmt.Printf("Fehler beim Parsen der YAML-Datei: %v\n", err)
+		fmt.Printf("ABBRUCH: Fehler beim Parsen der YAML-Datei: %v\n", err)
+		return
+	}
+
+	// ABSICHERUNG 1: Basis-Zielordner explizit vorab erstellen
+	err = os.MkdirAll(dstDir, os.ModePerm)
+	if err != nil {
+		fmt.Printf("ABBRUCH: Kann Basisordner %s nicht erstellen: %v\n", dstDir, err)
 		return
 	}
 
@@ -35,6 +40,11 @@ func main() {
 	err = filepath.WalkDir(srcDir, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
 			return err
+		}
+
+		// ABSICHERUNG 2: Das Quellverzeichnis selbst nicht als Unterordner duplizieren
+		if path == srcDir {
+			return nil
 		}
 
 		// Errechne den relativen Pfad vom Quellordner aus
@@ -47,14 +57,14 @@ func main() {
 		targetPath := filepath.Join(dstDir, relPath)
 
 		if d.IsDir() {
-			// 3. Wenn es ein Ordner ist, erstelle ihn im Zielverzeichnis
+			// Wenn es ein Ordner ist, erstelle ihn im Zielverzeichnis
 			err := os.MkdirAll(targetPath, os.ModePerm)
 			if err != nil {
 				return fmt.Errorf("Fehler beim Erstellen des Ordners %s: %w", targetPath, err)
 			}
 			fmt.Println("Ordner erstellt:", targetPath)
 		} else {
-			// 4. Wenn es eine Datei ist, lies sie ein, wende das Template an und schreibe sie ins Ziel
+			// Wenn es eine Datei ist, wende das Template an
 			err := templateFile(path, targetPath, config)
 			if err != nil {
 				return fmt.Errorf("Fehler beim Templating der Datei %s: %w", targetPath, err)
@@ -65,36 +75,36 @@ func main() {
 	})
 
 	if err != nil {
-		fmt.Printf("Fehler beim Generieren der Struktur: %v\n", err)
+		fmt.Printf("\nLaufzeitfehler während der Generierung: %v\n", err)
 		return
 	}
 
-	fmt.Println("Struktur erfolgreich unter newStruct repliziert und gerendert!")
+	fmt.Println("\nStruktur erfolgreich unter newStruct repliziert und gerendert!")
 }
 
-// Hilfsfunktion: Übernimmt den Dateiinhalt, ersetzt Platzhalter und schreibt das Ergebnis ins Ziel
 func templateFile(src, dst string, data map[string]interface{}) error {
-	// 1. Inhalt der originalen Datei einlesen
+	// ABSICHERUNG 3: Sicherstellen, dass der übergeordnete Ordner existiert
+	dir := filepath.Dir(dst)
+	if err := os.MkdirAll(dir, os.ModePerm); err != nil {
+		return fmt.Errorf("Zielverzeichnis existiert nicht: %w", err)
+	}
+
 	content, err := os.ReadFile(src)
 	if err != nil {
 		return err
 	}
 
-	// 2. Template mit dem Namen der Datei erstellen und parsen
-	// .Option("missingkey=error") sorgt dafür, dass das Skript abbricht, wenn eine Variable in der YAML fehlt.
 	tmpl, err := template.New(filepath.Base(src)).Option("missingkey=error").Parse(string(content))
 	if err != nil {
 		return fmt.Errorf("Fehler beim Parsen des Templates: %w", err)
 	}
 
-	// 3. Zieldatei zum Schreiben erstellen
 	outputFile, err := os.Create(dst)
 	if err != nil {
 		return err
 	}
 	defer outputFile.Close()
 
-	// 4. Template ausführen und in die Zieldatei schreiben
 	err = tmpl.Execute(outputFile, data)
 	if err != nil {
 		return fmt.Errorf("Fehler beim Ausführen des Templates: %w", err)

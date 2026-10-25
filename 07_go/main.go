@@ -129,16 +129,16 @@ func main() {
 				}
 			}
 
-			// 2. KORREKTUR: Unabhängig von der Schleifenreihenfolge werden die Variablen 
-			// der Haupt-Konfigurationsdatei GARANTIERT auf der obersten Ebene platziert.
+			// 2. Variablen der Haupt-Konfigurationsdatei auf der obersten Ebene platzieren.
 			if mainConfigFound {
 				for k, v := range mainConfigData.Vars {
 					combinedData[k] = v
 				}
 			}
 
-			// 3. Das Haupttemplate isoliert parsen
-			tmpl, err := template.ParseFiles(mainTemplatePath)
+			// 3. Das Haupttemplate initialisieren und Fehlermodus aktivieren
+			tmpl := template.New(mainTemplateName).Option("missingkey=error")
+			tmpl, err = tmpl.ParseFiles(mainTemplatePath)
 			if err != nil {
 				return fmt.Errorf("Fehler beim Parsen von %s: %w", mainTemplateName, err)
 			}
@@ -154,10 +154,10 @@ func main() {
 			if err != nil {
 				return fmt.Errorf("Zieldatei-Fehler: %w", err)
 			}
-			defer outputFile.Close()
 
 			// 5. Template ausführen
 			err = tmpl.Execute(outputFile, combinedData)
+			outputFile.Close() // Vor der Fehlerauswertung schließen, um Dateihandles freizugeben
 			if err != nil {
 				return fmt.Errorf("Rendering-Fehler für %s: %w", mainTemplateName, err)
 			}

@@ -104,35 +104,28 @@ func main() {
 			fmt.Printf("  -> Haupt-Template: %s\n", mainTemplateName)
 
 			combinedData := make(map[string]interface{})
-			var mainConfigData ParsedConfig
-			mainConfigFound := false
+			configSubDir := filepath.Join(ConfigPoolDir, templateKey)
 
-			// 1. Alle Konfigurationsdateien im Ordner sammeln
-			for _, yamlPath := range yamlFiles {
-				tName := filepath.Base(yamlPath)
-				baseNameWithoutExt := strings.TrimSuffix(tName, filepath.Ext(tName))
-				txtFileName := baseNameWithoutExt + ".txt"
-				configSubDir := filepath.Join(ConfigPoolDir, templateKey)
+			// 1. Lese ALLE .txt Dateien im Konfigurationsordner
+			txtFiles, err := filepath.Glob(filepath.Join(configSubDir, "*.txt"))
+			if == nil && len(txtFiles) > 0 {
+				for _, txtPath := range txtFiles {
+					txtFileName := filepath.Base(txtPath)
+					baseNameWithoutExt := strings.TrimSuffix(txtFileName, filepath.Ext(txtFileName))
 
-				configData, err := loadTxtConfig(configSubDir, txtFileName)
-				if err != nil {
-					return fmt.Errorf("Fehler beim Laden der Config %s: %w", txtFileName, err)
-				}
+					configData, err := loadTxtConfig(configSubDir, txtFileName)
+					if err != nil {
+						return fmt.Errorf("Fehler beim Laden der Config %s: %w", txtFileName, err)
+					}
 
-				cleanKey := strings.ReplaceAll(baseNameWithoutExt, "-", "_")
-				combinedData[cleanKey] = configData
+					// Biete die Konfig via Namens-Key an (z.B. {{.file_one.Vars.key}})
+					cleanKey := strings.ReplaceAll(baseNameWithoutExt, "-", "_")
+					combinedData[cleanKey] = configData
 
-				// Wenn es die Config der Hauptdatei ist, merken wir sie uns
-				if yamlPath == mainTemplatePath {
-					mainConfigData = configData
-					mainConfigFound = true
-				}
-			}
-
-			// 2. Variablen der Haupt-Konfigurationsdatei auf der obersten Ebene platzieren.
-			if mainConfigFound {
-				for k, v := range mainConfigData.Vars {
-					combinedData[k] = v
+					// 2. ALLE Variablen aus ALLEN Textdateien direkt auf die oberste Ebene heben
+					for k, v := range configData.Vars {
+						combinedData[k] = v
+					}
 				}
 			}
 
@@ -157,7 +150,7 @@ func main() {
 
 			// 5. Template ausführen
 			err = tmpl.Execute(outputFile, combinedData)
-			outputFile.Close() // Vor der Fehlerauswertung schließen, um Dateihandles freizugeben
+			outputFile.Close() 
 			if err != nil {
 				return fmt.Errorf("Rendering-Fehler für %s: %w", mainTemplateName, err)
 			}

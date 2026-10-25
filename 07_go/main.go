@@ -14,7 +14,6 @@ const (
 	TemplatePoolDir = "../template-pool"
 	ConfigPoolDir   = "../config-pool"
 	OutputDir       = "../output-deployments"
-	TargetFileName  = "target.conf"
 )
 
 // ParsedConfig hält sowohl den rohen Text als auch die extrahierten Schlüssel-Wert-Paare einer .txt-Datei
@@ -102,20 +101,24 @@ func main() {
 			mainTemplateName := filepath.Base(mainTemplatePath)
 			fmt.Printf("  -> Haupt-Template: %s\n", mainTemplateName)
 
-			// 3. Template-Gruppe initialisieren und alle .yaml Dateien laden
-			tmplGroup := template.New(templateKey)
+			// 3. Template-Gruppe initialisieren (mit Error-Option bei fehlenden Variablen)
+			tmplGroup := template.New(templateKey).Option("missingkey=error")
 			combinedData := make(map[string]interface{})
 
 			for _, yamlPath := range yamlFiles {
 				tName := filepath.Base(yamlPath)
 
-				_, err = tmplGroup.ParseFiles(yamlPath)
+				// FIX: Template-Inhalt einlesen und explizit unter dem reinen Dateinamen (z.B. main.yaml) registrieren
+				yamlData, err := os.ReadFile(yamlPath)
+				if err != nil {
+					return fmt.Errorf("Fehler beim Lesen des Templates %s: %w", tName, err)
+				}
+				_, err = tmplGroup.New(tName).Parse(string(yamlData))
 				if err != nil {
 					return fmt.Errorf("Fehler beim Parsen des Templates %s: %w", tName, err)
 				}
 
 				// 4. Zugehörige .txt Datei im config-pool suchen
-				// Beispiel: "main-v2.yaml" sucht nach "config-pool/file-one/main-v2.txt"
 				baseNameWithoutExt := strings.TrimSuffix(tName, filepath.Ext(tName))
 				txtFileName := baseNameWithoutExt + ".txt"
 				configSubDir := filepath.Join(ConfigPoolDir, templateKey)
@@ -136,7 +139,8 @@ func main() {
 				return fmt.Errorf("Zielordner-Fehler: %w", err)
 			}
 
-			targetFilePath := filepath.Join(targetDirPath, TargetFileName)
+			// ÄNDERUNG: Zieldateiname ist jetzt identisch mit dem Namen der originalen Template-Datei
+			targetFilePath := filepath.Join(targetDirPath, mainTemplateName)
 			outputFile, err := os.Create(targetFilePath)
 			if err != nil {
 				return fmt.Errorf("Zieldatei-Fehler: %w", err)
@@ -151,7 +155,8 @@ func main() {
 
 			fmt.Printf("  ✅ Erfolgreich generiert: %s\n", targetFilePath)
 
-			return filepath.SkipDir // Unterordner abgearbeitet
+			// ÄNDERUNG: "return nil" statt "SkipDir" erlaubt Go, alle weiteren Ordner (file-two etc.) zu bearbeiten
+			return nil 
 		}
 
 		return nil

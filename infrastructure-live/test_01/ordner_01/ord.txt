@@ -1,1 +1,6 @@
+dependency "waf" {
+  config_path = "{{ .PathWaf }}/waf-global"
+}
 
+dependency "alb" {
+  config_path = "{{ .PathAlb }}/alb"

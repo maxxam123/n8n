@@ -10,8 +10,7 @@ import (
 
 func main() {
 	sourceRoot := "./infrastructure-live"
-	targetFile := "terragrunt.hcl"
-	outputDir := "newStruct"
+	outputDir  := "newStruct"
 
 	fmt.Printf("Scanning '%s' and replicating structure under '%s'...\n", sourceRoot, outputDir)
 
@@ -28,12 +27,11 @@ func main() {
 			return nil
 		}
 
-		// Found a matching target file
-		if d.Name() == targetFile {
+		// Process every file found in the directories
+		if !d.IsDir() {
 			// 1. Calculate the new relative path destination
-			// Example: "infrastructure-live/prod/vpc/terragrunt.hcl" -> "newStruct/infrastructure-live/prod/vpc/terragrunt.hcl"
 			destinationPath := filepath.Join(outputDir, path)
-			destinationDir := filepath.Dir(destinationPath)
+			destinationDir  := filepath.Dir(destinationPath)
 
 			// 2. Recreate the parent directory tree inside newStruct
 			err := os.MkdirAll(destinationDir, 0755)

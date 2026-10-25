@@ -1,131 +1,165 @@
 package main
 
 import (
-	"bytes"
+	"bufio"
 	"fmt"
 	"io/fs"
 	"os"
 	"path/filepath"
 	"strings"
 	"text/template"
-
-	"gopkg.in/yaml.v3"
 )
 
+const (
+	TemplatePoolDir = "../template-pool"
+	ConfigPoolDir   = "../config-pool"
+	OutputDir       = "../output-deployments"
+	TargetFileName  = "target.conf"
+)
+
+// ParsedConfig hält sowohl den rohen Text als auch die extrahierten Schlüssel-Wert-Paare einer .txt-Datei
+type ParsedConfig struct {
+	RawText string                 // Der gesamte Inhalt der .txt-Datei als String
+	Vars    map[string]interface{} // Einzelne Variablen, falls im Format "KEY=VALUE" geschrieben
+}
+
+// Hilfsfunktion zum Einlesen und Parsen einer .txt Konfigurationsdatei
+func loadTxtConfig(configSubDir, txtFileName string) (ParsedConfig, error) {
+	txtPath := filepath.Join(configSubDir, txtFileName)
+	config := ParsedConfig{
+		Vars: make(map[string]interface{}),
+	}
+
+	if _, err := os.Stat(txtPath); os.IsNotExist(err) {
+		return config, nil // Datei ist optional
+	}
+
+	// 1. Gesamte Datei als rohen Text einlesen
+	data, err := os.ReadFile(txtPath)
+	if err != nil {
+		return config, err
+	}
+	config.RawText = string(data)
+
+	// 2. Datei zeilenweise parsen für KEY=VALUE Paare
+	file, err := os.Open(txtPath)
+	if err != nil {
+		return config, err
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		line := strings.TrimSpace(scanner.Text())
+		// Ignoriere Leerzeilen und Kommentare
+		if line == "" || strings.HasPrefix(line, "#") || strings.HasPrefix(line, "//") {
+			continue
+		}
+		// Splitte am ersten "=" Zeichen
+		if parts := strings.SplitN(line, "=", 2); len(parts) == 2 {
+			key := strings.TrimSpace(parts[0])
+			value := strings.TrimSpace(parts[1])
+			config.Vars[key] = value
+		}
+	}
+
+	return config, nil
+}
+
 func main() {
-	// Verzeichnisse definieren
-	valuesDir := "../values" // Ordner, in dem die passenden .yaml-Dateien liegen
-	srcDir := "../infrastructure-live"
-	dstDir := "newStruct"
+	fmt.Println("Starte Pipeline (.yaml Templates + .txt Configs)...")
+	fmt.Println("==================================================")
 
-	// Quellverzeichnis rekursiv durchlaufen
-	err := filepath.WalkDir(srcDir, func(path string, d fs.DirEntry, err error) error {
+	err := filepath.WalkDir(TemplatePoolDir, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
 
-		// Errechne den relativen Pfad vom Quellordner aus
-		relPath, err := filepath.Rel(srcDir, path)
-		if err != nil {
-			return err
-		}
+		// Wir verarbeiten jeden Unterordner einzeln
+		if d.IsDir() && path != TemplatePoolDir {
+			templateKey := filepath.Base(path)
+			fmt.Printf("Verarbeite Ordner: %s\n", templateKey)
 
-		// Bestimme den neuen Zielpfad unter newStruct
-		targetPath := filepath.Join(dstDir, relPath)
-
-		if d.IsDir() {
-			// Wenn es ein Ordner ist, erstelle ihn im Zielverzeichnis
-			err := os.MkdirAll(targetPath, os.ModePerm)
-			if err != nil {
-				return fmt.Errorf("Fehler beim Erstellen des Ordners %s: %w", targetPath, err)
+			// 1. Alle .yaml Template-Dateien in DIESEM Ordner finden
+			yamlFiles, err := filepath.Glob(filepath.Join(path, "*.yaml"))
+			if err != nil || len(yamlFiles) == 0 {
+				return nil // Keine Templates gefunden, weitergehen
 			}
-			fmt.Println("Ordner erstellt:", targetPath)
-		} else {
-			// Wir initialisieren eine leere Map für die Variablen
-			var config map[string]interface{}
-			fileName := d.Name()
 
-			// DYNAMISCH: Prüfen, ob es sich um IRGENDEINE .yaml Datei handelt
-			if strings.HasSuffix(fileName, ".yaml") {
-				// Ermittle den Basisnamen (schneidet die Endung .yaml ab, z.B. "mein-service")
-				baseName := strings.TrimSuffix(fileName, ".yaml")
-				
-				// Baue den Pfad zur namensgleichen YAML-Datei (z.B. "../values/mein-service.yaml")
-				yamlPath := filepath.Join(valuesDir, baseName+".hcl")
-
-				// Versuche die spezifische YAML-Datei einzulesen
-				yamlData, err := os.ReadFile(yamlPath)
-				if err != nil {
-					fmt.Printf("Hinweis: Keine spezifische YAML unter %s gefunden (%v). Nutze leere Werte.\n", yamlPath, err)
-				} else {
-					err = yaml.Unmarshal(yamlData, &config)
-					if err != nil {
-						fmt.Printf("Fehler beim Parsen der YAML-Datei %s: %v. Nutze leere Werte.\n", yamlPath, err)
-					} else {
-						fmt.Printf("Datei %s wird mit Werten aus %s gerendert.\n", fileName, baseName+".yaml")
-					}
+			// 2. Das Haupttemplate bestimmen (enthält "main" oder "template", sonst das erste Element)
+			var mainTemplatePath string
+			for _, file := range yamlFiles {
+				lowerName := strings.ToLower(filepath.Base(file))
+				if strings.Contains(lowerName, "main") || strings.Contains(lowerName, "template") {
+					mainTemplatePath = file
+					break
 				}
 			}
-
-			// Datei einlesen, Template anwenden (egal ob .yaml mit Werten oder andere Dateien ohne Werte) und ins Ziel schreiben
-			err := templateFile(path, targetPath, config)
-			if err != nil {
-				return fmt.Errorf("Fehler beim Templating der Datei %s: %w", targetPath, err)
+			if mainTemplatePath == "" {
+				mainTemplatePath = yamlFiles[0]
 			}
-			fmt.Println("Datei gerendert:", targetPath)
+
+			mainTemplateName := filepath.Base(mainTemplatePath)
+			fmt.Printf("  -> Haupt-Template: %s\n", mainTemplateName)
+
+			// 3. Template-Gruppe initialisieren und alle .yaml Dateien laden
+			tmplGroup := template.New(templateKey)
+			combinedData := make(map[string]interface{})
+
+			for _, yamlPath := range yamlFiles {
+				tName := filepath.Base(yamlPath)
+
+				_, err = tmplGroup.ParseFiles(yamlPath)
+				if err != nil {
+					return fmt.Errorf("Fehler beim Parsen des Templates %s: %w", tName, err)
+				}
+
+				// 4. Zugehörige .txt Datei im config-pool suchen
+				// Beispiel: "main-v2.yaml" sucht nach "config-pool/file-one/main-v2.txt"
+				baseNameWithoutExt := strings.TrimSuffix(tName, filepath.Ext(tName))
+				txtFileName := baseNameWithoutExt + ".txt"
+				configSubDir := filepath.Join(ConfigPoolDir, templateKey)
+
+				configData, err := loadTxtConfig(configSubDir, txtFileName)
+				if err != nil {
+					return fmt.Errorf("Fehler beim Laden der Config %s: %w", txtFileName, err)
+				}
+
+				// Key für das Template säubern (Bindestriche zu Unterstrichen)
+				cleanKey := strings.ReplaceAll(baseNameWithoutExt, "-", "_")
+				combinedData[cleanKey] = configData
+			}
+
+			// 5. Zielstruktur aufbauen
+			targetDirPath := filepath.Join(OutputDir, templateKey)
+			if err := os.MkdirAll(targetDirPath, 0755); err != nil {
+				return fmt.Errorf("Zielordner-Fehler: %w", err)
+			}
+
+			targetFilePath := filepath.Join(targetDirPath, TargetFileName)
+			outputFile, err := os.Create(targetFilePath)
+			if err != nil {
+				return fmt.Errorf("Zieldatei-Fehler: %w", err)
+			}
+			defer outputFile.Close()
+
+			// 6. Haupt-YAML-Template ausführen
+			err = tmplGroup.ExecuteTemplate(outputFile, mainTemplateName, combinedData)
+			if err != nil {
+				return fmt.Errorf("Rendering-Fehler für %s: %w", mainTemplateName, err)
+			}
+
+			fmt.Printf("  ✅ Erfolgreich generiert: %s\n", targetFilePath)
+
+			return filepath.SkipDir // Unterordner abgearbeitet
 		}
+
 		return nil
 	})
 
 	if err != nil {
-		fmt.Printf("Fehler beim Generieren der Struktur: %v\n", err)
-		return
+		fmt.Printf("\n❌ Fehler: %v\n", err)
+	} else {
+		fmt.Println("\n🎉 Pipeline erfolgreich beendet!")
 	}
-
-	fmt.Println("Struktur erfolgreich repliziert und dynamisch gerendert!")
-}
-
-// Hilfsfunktion: Übernimmt den Dateiinhalt, ersetzt Platzhalter sequenziell im Speicher und schreibt ins Ziel
-func templateFile(src, dst string, data map[string]interface{}) error {
-	content, err := os.ReadFile(src)
-	if err != nil {
-		return err
-	}
-
-	// 1. Runde: Custom Delimiter [[ ]] im Arbeitsspeicher verarbeiten
-	tmplCustom, err := template.New(filepath.Base(src) + "_custom").
-		Option("missingkey=zero").
-		Delims("[[", "]]").
-		Parse(string(content))
-	if err != nil {
-		return fmt.Errorf("Fehler beim Parsen des [[ ]]-Templates: %w", err)
-	}
-
-	var bufRound1 bytes.Buffer
-	err = tmplCustom.Execute(&bufRound1, data)
-	if err != nil {
-		return fmt.Errorf("Fehler beim Ausführen des [[ ]]-Templates: %w", err)
-	}
-
-	// 2. Runde: Klassische {{ }} auf das Zwischenergebnis im Arbeitsspeicher anwenden
-	tmplStandard, err := template.New(filepath.Base(src) + "_std").
-		Option("missingkey=zero").
-		Parse(bufRound1.String())
-	if err != nil {
-		return fmt.Errorf("Fehler beim Parsen des {{ }}-Templates: %w", err)
-	}
-
-	var bufRound2 bytes.Buffer
-	err = tmplStandard.Execute(&bufRound2, data)
-	if err != nil {
-		return fmt.Errorf("Fehler beim Ausführen des {{ }}-Templates: %w", err)
-	}
-
-	// Finale Runde: Das vollständig gerenderte Ergebnis einmalig auf die Festplatte schreiben
-	err = os.WriteFile(dst, bufRound2.Bytes(), 0644)
-	if err != nil {
-		return fmt.Errorf("Fehler beim Schreiben der Zieldatei: %w", err)
-	}
-
-	return nil
 }

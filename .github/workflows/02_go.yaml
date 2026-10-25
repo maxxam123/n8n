@@ -38,7 +38,7 @@ jobs:
           go get gopkg.in/yaml.v3
           
           # 3. Run your template compilation script
-          go run main.go
+          go run main.go ${{ env.GLOBAL_FIRST_LINE }}
 
       - name: List contents of test-repo-01
         run: ls -la 07_go/

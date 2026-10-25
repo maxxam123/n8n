@@ -104,34 +104,41 @@ func main() {
 			fmt.Printf("  -> Haupt-Template: %s\n", mainTemplateName)
 
 			combinedData := make(map[string]interface{})
-			configSubDir := filepath.Join(ConfigPoolDir, templateKey)
+			var mainConfigData ParsedConfig
+			mainConfigFound := false
 
-			// 1. Lese ALLE .txt Dateien im Konfigurationsordner
-			txtFiles, err := filepath.Glob(filepath.Join(configSubDir, "*.txt"))
-			if == nil && len(txtFiles) > 0 {
-				for _, txtPath := range txtFiles {
-					txtFileName := filepath.Base(txtPath)
-					baseNameWithoutExt := strings.TrimSuffix(txtFileName, filepath.Ext(txtFileName))
+			// 1. Alle Konfigurationsdateien im Ordner sammeln
+			for _, yamlPath := range yamlFiles {
+				tName := filepath.Base(yamlPath)
+				baseNameWithoutExt := strings.TrimSuffix(tName, filepath.Ext(tName))
+				txtFileName := baseNameWithoutExt + ".txt"
+				configSubDir := filepath.Join(ConfigPoolDir, templateKey)
 
-					configData, err := loadTxtConfig(configSubDir, txtFileName)
-					if err != nil {
-						return fmt.Errorf("Fehler beim Laden der Config %s: %w", txtFileName, err)
-					}
+				configData, err := loadTxtConfig(configSubDir, txtFileName)
+				if err != nil {
+					return fmt.Errorf("Fehler beim Laden der Config %s: %w", txtFileName, err)
+				}
 
-					// Biete die Konfig via Namens-Key an (z.B. {{.file_one.Vars.key}})
-					cleanKey := strings.ReplaceAll(baseNameWithoutExt, "-", "_")
-					combinedData[cleanKey] = configData
+				cleanKey := strings.ReplaceAll(baseNameWithoutExt, "-", "_")
+				combinedData[cleanKey] = configData
 
-					// 2. ALLE Variablen aus ALLEN Textdateien direkt auf die oberste Ebene heben
-					for k, v := range configData.Vars {
-						combinedData[k] = v
-					}
+				// Wenn es die Config der Hauptdatei ist, merken wir sie uns
+				if yamlPath == mainTemplatePath {
+					mainConfigData = configData
+					mainConfigFound = true
 				}
 			}
 
-			// 3. Das Haupttemplate initialisieren und Fehlermodus aktivieren
-			tmpl := template.New(mainTemplateName).Option("missingkey=error")
-			tmpl, err = tmpl.ParseFiles(mainTemplatePath)
+			// 2. KORREKTUR: Unabhängig von der Schleifenreihenfolge werden die Variablen 
+			// der Haupt-Konfigurationsdatei GARANTIERT auf der obersten Ebene platziert.
+			if mainConfigFound {
+				for k, v := range mainConfigData.Vars {
+					combinedData[k] = v
+				}
+			}
+
+			// 3. Das Haupttemplate isoliert parsen
+			tmpl, err := template.ParseFiles(mainTemplatePath)
 			if err != nil {
 				return fmt.Errorf("Fehler beim Parsen von %s: %w", mainTemplateName, err)
 			}
@@ -147,10 +154,10 @@ func main() {
 			if err != nil {
 				return fmt.Errorf("Zieldatei-Fehler: %w", err)
 			}
+			defer outputFile.Close()
 
 			// 5. Template ausführen
 			err = tmpl.Execute(outputFile, combinedData)
-			outputFile.Close() 
 			if err != nil {
 				return fmt.Errorf("Rendering-Fehler für %s: %w", mainTemplateName, err)
 			}

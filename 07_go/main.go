@@ -55,13 +55,13 @@ func GenerateStructure(srcDir, configDir, dstDir string, exclusions map[string]b
 		}
 
 		// Check if the current relative path is matched in the exclusion configurations
-		// Cleans paths to avoid trailing slash or format inconsistencies
 		cleanRelPath := filepath.Clean(relPath)
 		if exclusions[cleanRelPath] {
 			if info.IsDir() {
-				// Tells filepath.Walk to skip this directory and all files/folders inside it completely
+				// Tells filepath.Walk to skip this directory and all its contents completely
 				return filepath.SkipDir
 			}
+			// FIXED: Return nil to safely skip this specific file without breaking the walk loop
 			return nil
 		}
 
@@ -75,9 +75,7 @@ func GenerateStructure(srcDir, configDir, dstDir string, exclusions map[string]b
 
 		// 2. Process template files ending in .yaml (or .tmpl if preferred)
 		if strings.HasSuffix(info.Name(), ".yaml") || strings.HasSuffix(info.Name(), ".yml") {
-			// Locate the corresponding config file in config-pool with the exact same relative structure
 			configFile := filepath.Join(configDir, relPath)
-			
 			return renderTemplateWithMatchingConfig(path, configFile, targetPath, info.Mode())
 		}
 

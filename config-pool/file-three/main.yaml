@@ -1,0 +1,5 @@
+environment: "staging"
+region: "us-east-1"
+env: "dev"
+pathWaf: "../../test/test/02"
+pathAlb: "../../test/test/02"

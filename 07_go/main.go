@@ -10,7 +10,7 @@ import (
 
 func main() {
 	sourceRoot := "./infrastructure-live"
-	outputDir  := "newStruct"
+	outputDir  := "./newStruct"
 
 	fmt.Printf("Scanning '%s' and replicating structure under '%s'...\n", sourceRoot, outputDir)
 

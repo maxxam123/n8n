@@ -31,6 +31,8 @@ func main() {
 	dstDir := "../output-deployments"
 	excludeFile := fmt.Sprintf("../exclude/%s/exclude.yaml", environmentName)
 
+	fmt.Println("Target Directory Path:", excludeFile)
+
 	// Load exclusion list before walking the directory tree
 	exclusions, err := loadExclusions(excludeFile)
 	if err != nil {

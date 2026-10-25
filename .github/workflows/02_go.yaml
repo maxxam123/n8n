@@ -47,6 +47,12 @@ jobs:
         run: ls -la output-deployments
 
       - name: Verify Generated Output_00
+        run: ls -la output-deployments/infra-components
+
+      - name: Verify Generated Output_00
+        run: ls -la output-deployments/infra-components/environments
+
+      - name: Verify Generated Output_00
         run: ls -la output-deployments/infra-components/environments/dev/eu-central
 
       - name: Verify Generated Output_01

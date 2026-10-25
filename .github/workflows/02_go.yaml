@@ -45,7 +45,12 @@ jobs:
 
       - name: Verify Generated Output
         run: ls -la output-deployments
-        
+
+      - name: Verify Generated Output_01
+        run: cat output-deployments/file_01/main.yaml
+
+      - name: Verify Generated Output_02
+        run: cat output-deployments/file_02/main.yaml
 
 
     #  - name: repo original
